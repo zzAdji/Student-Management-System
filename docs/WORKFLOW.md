@@ -63,16 +63,19 @@ fix/* (corrections de bugs)
 ### Types de Branches
 
 #### `main`
+
 - **Usage** : Version stable et fonctionnelle
 - **Protection** : Aucun commit direct autorisé
 - **Merge depuis** : `develop` uniquement (après validation complète)
 
 #### `develop`
+
 - **Usage** : Branche de développement principal
 - **Mise à jour** : Fusion des features terminées
 - **Protection** : Commits directs déconseillés
 
 #### `feature/*`
+
 - **Usage** : Développement de nouvelles fonctionnalités
 - **Nomenclature** : `feature/nom-fonctionnalite`
 - **Exemples** :
@@ -83,6 +86,7 @@ fix/* (corrections de bugs)
   - `feature/validation-donnees`
 
 #### `fix/*`
+
 - **Usage** : Correction de bugs
 - **Nomenclature** : `fix/description-bug`
 - **Exemples** :
@@ -211,6 +215,7 @@ git push
 1. **Sur GitHub** : Cliquez sur "New Pull Request"
 
 2. **Configuration** :
+
    - **Base** : `develop`
    - **Compare** : `feature/votre-feature`
 
@@ -218,25 +223,30 @@ git push
 
 ```markdown
 ## Description
+
 Ajout de la fonctionnalité de recherche dichotomique pour les étudiants.
 
 ## Type de Changement
+
 - [x] Nouvelle fonctionnalité
 - [ ] Correction de bug
 - [ ] Documentation
 
 ## Modifications
+
 - Ajout de la fonction `recherche_dichotomique()`
 - Modification du menu pour intégrer l'option 6
 - Tests effectués sur 100 étudiants
 
 ## Tests Effectués
+
 - [x] Compilation sans erreurs
 - [x] Tests avec liste triée
 - [x] Tests avec liste vide
 - [x] Tests cas limites
 
 ## Checklist
+
 - [x] Code commenté
 - [x] Respecte les conventions
 - [x] Documentation mise à jour
@@ -288,7 +298,7 @@ git pull origin develop
 
 ```bash
 # Bonnes pratiques ✅
-git commit -m "feat(etudiant): ajout structure Gestion_des_Etudians"
+git commit -m "feat(etudiant): ajout structure Student_Management"
 git commit -m "feat(menu): implémentation menu avec 9 options"
 git commit -m "fix(recherche): correction segfault recherche matricule"
 git commit -m "docs(readme): ajout section installation"
@@ -500,4 +510,4 @@ git stash pop
 
 ---
 
-**Dernière mise à jour** : 20 Décembre 2025
+**Dernière mise à jour** : 21 Décembre 2025

@@ -71,7 +71,6 @@ Student-Management-System/
 │
 ├── docs/                         # Documentation
 │   ├── ARCHITECTURE.md           # Documentation architecture
-│   ├── API.md                    # Documentation des fonctions
 │   └── WORKFLOW.md               # Guide du workflow Git
 │
 ├── tests/                        # Tests (optionnel)
@@ -82,9 +81,7 @@ Student-Management-System/
 │
 ├── .gitignore                    # Fichiers à ignorer par Git
 ├── Makefile                      # Automatisation de la compilation
-├── README.md                     # Ce fichier
-└── LICENSE                       # Licence du projet
-
+└── README.md                     # Ce fichier
 ```
 
 ## 🚀 Installation
@@ -132,8 +129,9 @@ gcc src/*.c -Iinclude -o sms
 ### Premier Lancement
 
 Au premier démarrage, le programme vous demandera :
+
 ```
-Combien d'étudiants souhaitez-vous enregistrer ? 
+Combien d'étudiants souhaitez-vous enregistrer ?
 ```
 
 ### Navigation dans le Menu
@@ -154,7 +152,7 @@ Combien d'étudiants souhaitez-vous enregistrer ?
 9. Afficher tous les étudiants
 0. Quitter
 
-Votre choix : 
+Votre choix :
 ```
 
 ## 🔄 Workflow Git
@@ -169,23 +167,27 @@ Votre choix :
 ### Process de Développement
 
 1. **Récupérer les dernières modifications**
+
    ```bash
    git checkout develop
    git pull origin develop
    ```
 
 2. **Créer une branche pour votre tâche**
+
    ```bash
    git checkout -b feature/nom-de-votre-fonctionnalite
    ```
 
 3. **Développer et commiter régulièrement**
+
    ```bash
    git add .
    git commit -m "feat: description claire de la modification"
    ```
 
 4. **Pousser votre branche**
+
    ```bash
    git push origin feature/nom-de-votre-fonctionnalite
    ```
@@ -197,6 +199,7 @@ Votre choix :
 Format : `type(scope): description`
 
 Types :
+
 - `feat`: Nouvelle fonctionnalité
 - `fix`: Correction de bug
 - `docs`: Documentation
@@ -206,6 +209,7 @@ Types :
 - `chore`: Tâches de maintenance
 
 Exemples :
+
 ```bash
 git commit -m "feat(recherche): ajout recherche dichotomique"
 git commit -m "fix(tri): correction tri alphabétique"
@@ -214,14 +218,14 @@ git commit -m "docs(readme): mise à jour installation"
 
 ## 👥 Équipe
 
-| Nom | Rôle | Responsabilités |
-|-----|------|----------------|
-| Membre 1 | Chef de Projet | Coordination, menu.c, main.c |
-| Membre 2 | Développeur | student.c, operations.c |
-| Membre 3 | Développeur | search.c, sort.c |
-| Membre 4 | Développeur | utils.c, validation.c |
-| Membre 5 | Testeur/Doc | Tests, documentation |
-| Membre 6 | Intégration | Makefile, intégration globale |
+| Nom      | Rôle           | Responsabilités                      |
+| -------- | -------------- | ------------------------------------ |
+| Membre 1 | Chef de Projet | Coordination, menu.c, main.c, data.c |
+| Membre 2 | Développeur    | student.c, operations.c              |
+| Membre 3 | Développeur    | search.c, sort.c                     |
+| Membre 4 | Développeur    | utils.c, validation.c                |
+| Membre 5 | Testeur/Debug  | Tests fonctionnels, Débogage         |
+| Membre 6 | Intégration    | Makefile, config.h, intégration      |
 
 ## 📝 Conventions de Code
 
@@ -231,7 +235,7 @@ git commit -m "docs(readme): mise à jour installation"
 - **Accolades** : Style K&R
 - **Nommage** :
   - Variables : `snake_case` (ex: `student_count`)
-  - Fonctions : `snakecase` (ex: `calculateAge`)
+  - Fonctions : `camelCase` (ex: `calculateAge`)
   - Constantes : `UPPER_CASE` (ex: `MAX_STUDENTS`)
   - Structures : `Pascal_Case` (ex: `Student_Management`)
 
@@ -258,7 +262,7 @@ typedef struct {
 ```c
 /**
  * @brief Calcule l'âge d'un étudiant à partir de sa date de naissance
- * 
+ *
  * @param birth_date Structure Date contenant JJ/MM/AAAA
  * @return int Âge en années
  */
@@ -285,4 +289,4 @@ int calculateAge(Date birth_date);
 
 ---
 
-**Dernière mise à jour** : 20 Décembre 2025  
+**Dernière mise à jour** : 21 Décembre 2025

@@ -33,7 +33,7 @@ Ce document décrit l'architecture technique du système, l'organisation des mod
 
 // Flux d'exécution
 1. Afficher message de bienvenue
-2. Initialiser StudentManagement avec initManagement()
+2. Initialiser Student_Management avec initManagement()
 3. Demander capacité initiale (optionnel, peut être 10 par défaut)
 4. Charger données depuis fichier (si existe)
 5. Boucle menu principal
@@ -58,25 +58,35 @@ Ce document décrit l'architecture technique du système, l'organisation des mod
  * @brief Structure représentant un étudiant
  */
 typedef struct {
+    int day;
+    int month;
+    int year;
+} Date;
+
+/**
+ * @struct Student
+ * @brief Structure représentant un étudiant
+ */
+typedef struct {
     char id[20];              // Matricule unique (ex: STU2024001)
     char name[50];            // Nom de famille
     char surname[50];         // Prénom
-    char birthDate[11];       // Format: DD/MM/YYYY
+    Date birth_date;          // Structure Date
     char gender;              // 'M' ou 'F'
     char department[50];      // Département d'études
     char option[50];          // Filière d'études
-    char nativeRegion[50];    // Région d'origine
+    char native_region[50];   // Région d'origine
 } Student;
 
 /**
- * @struct StudentManagement
+ * @struct Student_Management
  * @brief Structure de gestion dynamique des étudiants
  */
 typedef struct {
     Student *list;            // Tableau dynamique d'étudiants
     int number;               // Nombre actuel d'étudiants
     int capacity;             // Capacité maximale du tableau
-} StudentManagement;
+} Student_Management;
 ```
 
 #### Fonctions de Gestion Mémoire
@@ -87,13 +97,13 @@ typedef struct {
  * Alloue une capacité initiale (par défaut 10)
  * @param management Pointeur vers la structure de gestion
  */
-void initManagement(StudentManagement *management);
+void initManagement(Student_Management *management);
 
 /**
  * Libère toute la mémoire allouée
  * @param management Pointeur vers la structure de gestion
  */
-void freeManagement(StudentManagement *management);
+void freeManagement(Student_Management *management);
 
 /**
  * Redimensionne le tableau si nécessaire
@@ -101,7 +111,7 @@ void freeManagement(StudentManagement *management);
  * @param management Pointeur vers la structure de gestion
  * @return 1 si succès, 0 si échec
  */
-int resizeManagement(StudentManagement *management);
+int resizeManagement(Student_Management *management);
 ```
 
 #### Fonctions de Base
@@ -118,7 +128,7 @@ void viewStudent(Student student, int index);
  * Affiche tous les étudiants
  * @param management Pointeur vers la structure de gestion
  */
-void viewAllStudents(StudentManagement *management);
+void viewAllStudents(Student_Management *management);
 
 /**
  * Compare deux étudiants par nom
@@ -157,7 +167,7 @@ int compareStudentsById(const void *a, const void *b);
  * @param student Étudiant à ajouter
  * @return 1 si succès, 0 sinon
  */
-int addStudent(StudentManagement *management, Student student);
+int addStudent(Student_Management *management, Student student);
 
 /**
  * Obtenir un étudiant par matricule
@@ -165,7 +175,7 @@ int addStudent(StudentManagement *management, Student student);
  * @param id Matricule recherché
  * @return Étudiant trouvé ou étudiant vide si non trouvé
  */
-Student getStudent(StudentManagement *management, const char *id);
+Student getStudent(Student_Management *management, const char *id);
 
 /**
  * Sélectionner un étudiant interactivement
@@ -173,7 +183,7 @@ Student getStudent(StudentManagement *management, const char *id);
  * @param management Pointeur vers la structure de gestion
  * @return Index de l'étudiant ou -1 si non trouvé
  */
-int selectStudent(StudentManagement *management);
+int selectStudent(Student_Management *management);
 
 /**
  * Modifier les informations d'un étudiant
@@ -182,7 +192,7 @@ int selectStudent(StudentManagement *management);
  * @param index Index de l'étudiant à modifier
  * @return 1 si succès, 0 sinon
  */
-int modifyStudent(StudentManagement *management, int index);
+int modifyStudent(Student_Management *management, int index);
 
 /**
  * Supprimer un étudiant
@@ -191,14 +201,14 @@ int modifyStudent(StudentManagement *management, int index);
  * @param index Index de l'étudiant à supprimer
  * @return 1 si supprimé, 0 sinon
  */
-int deleteStudent(StudentManagement *management, int index);
+int deleteStudent(Student_Management *management, int index);
 
 /**
  * Supprimer tous les étudiants
  * Réinitialise la liste
  * @param management Pointeur vers la structure de gestion
  */
-void deleteAllStudents(StudentManagement *management);
+void deleteAllStudents(Student_Management *management);
 
 /**
  * Obtenir les informations d'un étudiant
@@ -207,7 +217,7 @@ void deleteAllStudents(StudentManagement *management);
  * @param index Index de l'étudiant
  * @return 1 si trouvé, 0 sinon
  */
-int getStudentInfo(StudentManagement *management, int index);
+int getStudentInfo(Student_Management *management, int index);
 ```
 
 **Responsable** : Membre 2
@@ -228,7 +238,7 @@ int getStudentInfo(StudentManagement *management, int index);
  * @param id Matricule recherché
  * @return Index si trouvé, -1 sinon
  */
-int linearSearch(StudentManagement *management, const char *id);
+int linearSearch(Student_Management *management, const char *id);
 
 /**
  * Recherche dichotomique (binaire)
@@ -238,7 +248,7 @@ int linearSearch(StudentManagement *management, const char *id);
  * @param id Matricule recherché
  * @return Index si trouvé, -1 sinon
  */
-int binarySearch(StudentManagement *management, const char *id);
+int binarySearch(Student_Management *management, const char *id);
 
 /**
  * Vérifier si la liste est triée par matricule
@@ -246,7 +256,7 @@ int binarySearch(StudentManagement *management, const char *id);
  * @param management Pointeur vers la structure de gestion
  * @return 1 si trié, 0 sinon
  */
-int isSorted(StudentManagement *management);
+int isSorted(Student_Management *management);
 
 /**
  * Recherche intelligente
@@ -255,7 +265,7 @@ int isSorted(StudentManagement *management);
  * @param id Matricule recherché
  * @return Index si trouvé, -1 sinon
  */
-int smartSearch(StudentManagement *management, const char *id);
+int smartSearch(Student_Management *management, const char *id);
 ```
 
 **Responsable** : Membre 3
@@ -274,27 +284,27 @@ int smartSearch(StudentManagement *management, const char *id);
  * Utilise qsort de stdlib.h
  * @param management Pointeur vers la structure de gestion
  */
-void sortAlphabetically(StudentManagement *management);
+void sortAlphabetically(Student_Management *management);
 
 /**
  * Tri par filière
  * Tri stable pour garder l'ordre alphabétique interne
  * @param management Pointeur vers la structure de gestion
  */
-void sortByOption(StudentManagement *management);
+void sortByOption(Student_Management *management);
 
 /**
  * Tri par matricule (pour recherche dichotomique)
  * @param management Pointeur vers la structure de gestion
  */
-void sortById(StudentManagement *management);
+void sortById(Student_Management *management);
 ```
 
 **Implémentation Suggérée**
 
 ```c
-void sortAlphabetically(StudentManagement *management) {
-    qsort(management->list, management->number, 
+void sortAlphabetically(Student_Management *management) {
+    qsort(management->list, management->number,
           sizeof(Student), compareStudentsByName);
 }
 ```
@@ -313,10 +323,10 @@ void sortAlphabetically(StudentManagement *management) {
 /**
  * Calculer l'âge à partir de la date de naissance
  * Prend en compte l'année, mois et jour actuels
- * @param birthDate Date de naissance format DD/MM/YYYY
+ * @param birth_date Date de naissance (structure Date)
  * @return Âge en années
  */
-int calculateAge(const char *birthDate);
+int calculateAge(Date birth_date);
 
 /**
  * Obtenir la date actuelle du système
@@ -374,21 +384,23 @@ void safeCopy(char *dest, const char *src, int size);
 **Implémentation Calcul Âge**
 
 ```c
-int calculateAge(const char *birthDate) {
-    int day, month, year;
-    sscanf(birthDate, "%d/%d/%d", &day, &month, &year);
-    
+int calculateAge(Date birth_date) {
+    // Plus besoin de sscanf car on a déjà les entiers
+    int day = birth_date.day;
+    int month = birth_date.month;
+    int year = birth_date.year;
+
     time_t t = time(NULL);
     struct tm *today = localtime(&t);
-    
+
     int age = (today->tm_year + 1900) - year;
-    
+
     // Ajuster si anniversaire pas encore passé
     if ((today->tm_mon + 1) < month ||
         ((today->tm_mon + 1) == month && today->tm_mday < day)) {
         age--;
     }
-    
+
     return age;
 }
 ```
@@ -458,7 +470,7 @@ void inputValidDate(char *dest, const char *prompt);
  * @param id Matricule à vérifier
  * @return 1 si existe, 0 sinon
  */
-int idExists(StudentManagement *management, const char *id);
+int idExists(Student_Management *management, const char *id);
 
 /**
  * Vérifier si l'année est bissextile
@@ -498,7 +510,7 @@ int getUserChoice(void);
  * @param choice Choix de l'utilisateur
  * @param management Pointeur vers la structure de gestion
  */
-void processChoice(int choice, StudentManagement *management);
+void processChoice(int choice, Student_Management *management);
 
 /**
  * Afficher un en-tête de section
@@ -534,15 +546,15 @@ void displayMenu(void) {
     printf("║        STUDENT MANAGEMENT SYSTEM                  ║\n");
     printf("╚════════════════════════════════════════════════════╝\n");
     printf("\n");
-    printf("  1. 📝 Register a student\n");
-    printf("  2. ✏️  Modify information\n");
-    printf("  3. 🔍 Search (by ID)\n");
-    printf("  4. 🗑️  Delete a student\n");
-    printf("  5. 🔤 Sort alphabetically\n");
-    printf("  6. 🔎 Binary search\n");
-    printf("  7. 🎂 Calculate student age\n");
-    printf("  8. 📚 Sort by option\n");
-    printf("  9. 📋 Display all students\n");
+    printf("  1. Register a student\n");
+    printf("  2. Modify information\n");
+    printf("  3. Search (by ID)\n");
+    printf("  4. Delete a student\n");
+    printf("  5. Sort alphabetically\n");
+    printf("  6. Binary search\n");
+    printf("  7. Calculate student age\n");
+    printf("  8. Sort by option\n");
+    printf("  9. Display all students\n");
     printf("  0. 🚪 Exit\n");
     printf("\n");
     printf("────────────────────────────────────────────────────\n");
@@ -591,6 +603,8 @@ void displayMenu(void) {
 #endif
 ```
 
+**Responsable** : Membre 6
+
 ---
 
 ## 🔄 Flux de Données
@@ -602,7 +616,7 @@ main()
   │
   ├─> Display welcome message
   │
-  ├─> Initialize StudentManagement
+  ├─> Initialize Student_Management
   │   initManagement(&management)
   │   - Allocate initial capacity (10 students)
   │
@@ -650,7 +664,7 @@ while (choice != 0)
       │
       ├─> case 7: Calculate age
       │   ├─> selectStudent(&management) → index
-      │   └─> calculateAge(student.birthDate)
+      │   └─> calculateAge(student.birth_date)
       │
       ├─> case 8: Sort by option
       │   └─> sortByOption(&management)
@@ -685,11 +699,11 @@ Exit (choice == 0)
 /**
  * Initialise la structure de gestion avec capacité initiale
  */
-void initManagement(StudentManagement *management) {
+void initManagement(Student_Management *management) {
     management->capacity = INITIAL_CAPACITY;
     management->number = 0;
     management->list = (Student *)malloc(management->capacity * sizeof(Student));
-    
+
     if (management->list == NULL) {
         fprintf(stderr, "Error: Memory allocation failed\n");
         exit(EXIT_FAILURE);
@@ -700,20 +714,20 @@ void initManagement(StudentManagement *management) {
  * Redimensionne le tableau si nécessaire
  * Double la capacité quand il est plein
  */
-int resizeManagement(StudentManagement *management) {
+int resizeManagement(Student_Management *management) {
     int newCapacity = management->capacity * RESIZE_FACTOR;
-    
-    Student *newList = (Student *)realloc(management->list, 
+
+    Student *newList = (Student *)realloc(management->list,
                                           newCapacity * sizeof(Student));
-    
+
     if (newList == NULL) {
         fprintf(stderr, "Error: Memory reallocation failed\n");
         return FAILURE;
     }
-    
+
     management->list = newList;
     management->capacity = newCapacity;
-    
+
     printf("Info: Capacity increased to %d\n", newCapacity);
     return SUCCESS;
 }
@@ -721,7 +735,7 @@ int resizeManagement(StudentManagement *management) {
 /**
  * Libère toute la mémoire allouée
  */
-void freeManagement(StudentManagement *management) {
+void freeManagement(Student_Management *management) {
     if (management->list != NULL) {
         free(management->list);
         management->list = NULL;
@@ -735,16 +749,16 @@ void freeManagement(StudentManagement *management) {
 
 ```c
 int main(void) {
-    StudentManagement management;
-    
+    Student_Management management;
+
     // Initialisation
     initManagement(&management);
-    
+
     // ... utilisation du programme ...
-    
+
     // Libération avant sortie
     freeManagement(&management);
-    
+
     return 0;
 }
 ```
@@ -753,18 +767,18 @@ int main(void) {
 
 ```c
 // Dans operations.c
-int addStudent(StudentManagement *management, Student student) {
+int addStudent(Student_Management *management, Student student) {
     // Vérifier si redimensionnement nécessaire
     if (management->number >= management->capacity) {
         if (resizeManagement(management) == FAILURE) {
             return FAILURE;
         }
     }
-    
+
     // Ajouter l'étudiant
     management->list[management->number] = student;
     management->number++;
-    
+
     return SUCCESS;
 }
 ```
@@ -792,56 +806,56 @@ Le fichier `data/students.dat` est un fichier binaire.
 
 ```c
 // Sauvegarde
-void saveData(StudentManagement *management) {
+void saveData(Student_Management *management) {
     FILE *file = fopen(DATA_FILE, "wb");
     if (file == NULL) {
         perror("Error opening file for writing");
         return;
     }
-    
+
     // Écrire la capacité et le nombre d'étudiants
     fwrite(&management->capacity, sizeof(int), 1, file);
     fwrite(&management->number, sizeof(int), 1, file);
-    
+
     // Écrire les données des étudiants
     fwrite(management->list, sizeof(Student), management->number, file);
-    
+
     fclose(file);
     printf("Data saved successfully!\n");
 }
 
 // Chargement
-int loadData(StudentManagement *management) {
+int loadData(Student_Management *management) {
     FILE *file = fopen(DATA_FILE, "rb");
     if (file == NULL) {
         return FAILURE;  // Fichier n'existe pas (première exécution)
     }
-    
+
     int capacity, number;
-    
+
     // Lire la capacité et le nombre
     fread(&capacity, sizeof(int), 1, file);
     fread(&number, sizeof(int), 1, file);
-    
+
     // Libérer l'ancien tableau si nécessaire
     if (management->list != NULL) {
         free(management->list);
     }
-    
+
     // Allouer nouvelle mémoire
     management->capacity = capacity;
     management->number = number;
     management->list = (Student *)malloc(capacity * sizeof(Student));
-    
+
     if (management->list == NULL) {
         fprintf(stderr, "Error: Memory allocation failed\n");
         fclose(file);
         return FAILURE;
     }
-    
+
     // Lire les données
     fread(management->list, sizeof(Student), number, file);
-    
+
     fclose(file);
     printf("Data loaded successfully! (%d students)\n", number);
     return SUCCESS;
@@ -858,57 +872,57 @@ int loadData(StudentManagement *management) {
 // tests/test_operations.c
 
 void testCalculateAge() {
-    char birthDate[] = "15/06/2000";
-    int age = calculateAge(birthDate);
+    char birth_date[] = "15/06/2000";
+    int age = calculateAge(birth_date);
     assert(age >= 24);  // En 2024
 }
 
 void testValidateDate() {
     // Année bissextile
     assert(validateDate("29/02/2024") == 1);
-    
+
     // Non bissextile
     assert(validateDate("29/02/2023") == 0);
-    
+
     // Date invalide
     assert(validateDate("32/01/2024") == 0);
 }
 
 void testBinarySearch() {
-    StudentManagement management;
+    Student_Management management;
     initManagement(&management);
-    
+
     // Ajouter des étudiants et trier
     // ...
     sortById(&management);
-    
+
     // Rechercher élément existant
     int index = binarySearch(&management, "STU2024001");
     assert(index != -1);
-    
+
     // Rechercher élément inexistant
     index = binarySearch(&management, "STU9999999");
     assert(index == -1);
-    
+
     freeManagement(&management);
 }
 
 void testResize() {
-    StudentManagement management;
+    Student_Management management;
     initManagement(&management);
-    
+
     int initialCapacity = management.capacity;
-    
+
     // Ajouter plus que la capacité initiale
     for (int i = 0; i < initialCapacity + 5; i++) {
         Student s;
         sprintf(s.id, "STU%04d", i);
         addStudent(&management, s);
     }
-    
+
     // Vérifier que la capacité a augmenté
     assert(management.capacity > initialCapacity);
-    
+
     freeManagement(&management);
 }
 ```
@@ -942,20 +956,22 @@ tableau = realloc(tableau, nouvelle_taille * sizeof(Gestion_des_Etudians));
 
 ### Principes
 
-1. **Vérifier tous les retours de fonctions critiques**
-   - malloc, fopen, scanf, etc.
+1.  **Vérifier tous les retours de fonctions critiques**
 
-2. **Messages d'erreur clairs**
-   ```c
-   if (fichier == NULL) {
-       fprintf(stderr, "Erreur: Impossible d'ouvrir %s\n", nom_fichier);
-       perror("Détails");
-   }
-   ```
+    - malloc, fopen, scanf, etc.
 
-3. **Codes de retour cohérents**
-   - 1 (SUCCES) pour succès
-   - 0 (ECHEC) pour échec
+2.  **Messages d'erreur clairs**
+
+    ```c
+    if (fichier == NULL) {
+        fprintf(stderr, "Erreur: Impossible d'ouvrir %s\n", nom_fichier);
+        perror("Détails");
+    }
+    ```
+
+3.  **Codes de retour cohérents**
+    - 1 (SUCCES) pour succès
+    - 0 (ECHEC) pour échec
 
 ---
 
@@ -977,17 +993,17 @@ tableau = realloc(tableau, nouvelle_taille * sizeof(Gestion_des_Etudians));
 
 ## 👥 Répartition des Responsabilités
 
-| Module | Fichiers | Responsable | Priorité |
-|--------|----------|-------------|----------|
-| Main & Menu | main.c, menu.c/h | Membre 1 | Haute |
-| Structure & CRUD | student.c/h, operations.c/h | Membre 2 | Haute |
-| Search | search.c/h | Membre 3 | Moyenne |
-| Sort | sort.c/h | Membre 3 | Moyenne |
-| Utils | utils.c/h | Membre 4 | Moyenne |
-| Validation | validation.c/h | Membre 4 | Haute |
-| Tests | tests/ | Membre 5 | Basse |
-| Build | Makefile | Membre 6 | Moyenne |
-| Integration | - | Membre 6 | Continue |
+| Module           | Fichiers                    | Responsable | Priorité |
+| :--------------- | :-------------------------- | :---------- | :------- |
+| Main & Menu      | main.c, menu.c/h            | Membre 1    | Haute    |
+| Structure & CRUD | student.c/h, operations.c/h | Membre 2    | Haute    |
+| Search           | search.c/h                  | Membre 3    | Moyenne  |
+| Sort             | sort.c/h                    | Membre 3    | Moyenne  |
+| Utils            | utils.c/h                   | Membre 4    | Moyenne  |
+| Validation       | validation.c/h              | Membre 4    | Haute    |
+| Tests & Debug    | tests/                      | Membre 5    | Haute    |
+| Build & Config   | Makefile, config.h          | Membre 6    | Moyenne  |
+| Integration      | -                           | Membre 6    | Continue |
 
 ---
 
@@ -998,18 +1014,19 @@ tableau = realloc(tableau, nouvelle_taille * sizeof(Gestion_des_Etudians));
 - **Indentation** : 4 espaces (pas de tabulations)
 - **Accolades** : Style K&R
 - **Nommage** :
-  - Variables : `camelCase` (ex: `numberOfStudents`, `currentIndex`)
+  - Variables : `snake_case` (ex: `number_of_students`, `current_index`)
   - Fonctions : `camelCase` (ex: `addStudent`, `calculateAge`)
   - Constantes : `UPPER_CASE` (ex: `MAX_STUDENTS`, `INITIAL_CAPACITY`)
-  - Structures : `PascalCase` (ex: `Student`, `StudentManagement`)
-  - Types : `PascalCase` avec suffixe (ex: `StudentManagement`)
+  - Structures : `PascalCase` (ex: `Student`, `Student_Management`)
+  - Types : `PascalCase` avec suffixe (ex: `Student_Management`)
 
 ### Exemple de Code
 
 ```c
 // Bon exemple
-int calculateAge(const char *birthDate) {
+int calculateAge(const char *birth_date) {
     int day, month, year;
+    sscanf(birth_date, "%d/%d/%d", &day, &month, &year);
     // Code ici
     return age;
 }
