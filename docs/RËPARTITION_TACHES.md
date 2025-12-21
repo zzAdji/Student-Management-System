@@ -29,6 +29,10 @@
 
 #### Phase 6 : Interface Menu
 
+> ⚠️ **Dépendances** :
+> - **Visuel** : AUCUNE dépendance. Peut être codé dès le début.
+> - **Logique** : L'appel aux vraies fonctions nécessitera la `Structure Student` (Phase 2).
+
 - [ ] Créer `include/menu.h` et `src/menu.c`
 - [ ] Implémenter `displayMenu()`
 - [ ] Implémenter `getUserChoice()`
@@ -37,6 +41,9 @@
 - [ ] Gestion des sous-menus
 
 #### Phase 7 : Main & Persistance
+
+> ⚠️ **Dépendances** : Nécessite `Phase 6` (Menu) et `Phase 2` (Structure).
+> La persistance nécessite que la structure Student soit stable.
 
 - [ ] Créer `src/main.c`
   - [ ] Initialisation (`initManagement`)
@@ -70,6 +77,9 @@
 
 #### Phase 3 : CRUD Operations
 
+> ⚠️ **Dépendances** : Nécessite `Phase 2` (Structure Student) impérativement.
+> Peut nécessiter `Phase 5` (Utils/Validation) pour `addStudent` (génération ID, validation saisie).
+
 - [ ] Créer `include/operations.h` et `src/operations.c`
 - [ ] **Create** : `addStudent()`, `registerStudent()`
 - [ ] **Read** : `getStudentById()`, `selectStudent()`, `getStudentInfo()`
@@ -88,6 +98,9 @@
 ### Tâches Détaillées
 
 #### Phase 4 : Search & Sort
+
+> ⚠️ **Dépendances** : Nécessite `Phase 2` (Structure Student).
+> La recherche dichotomique nécessite que le tri (Sort) soit implémenté.
 
 - [ ] **Recherche** (`src/search.c`)
   - [ ] `linearSearch()` : Recherche séquentielle
@@ -111,6 +124,9 @@
 ### Tâches Détaillées
 
 #### Phase 5 : Validation & Utils
+
+> ⚠️ **Dépendances** : Nécessite `Phase 2` (Structure Date) pour les validations de date.
+> C'est une dépendance bloquante pour la saisie utilisateur robuste dans le Menu (Phase 6).
 
 - [ ] **Utilitaires** (`src/utils.c`)
   - [ ] `calculateAge()` : Calcul depuis date naissance
@@ -137,6 +153,9 @@
 ### Tâches Détaillées
 
 #### Phase 9 : Tests & Debug
+
+> ⚠️ **Dépendances** : Dépend de la livraison des modules par les autres membres.
+> Les tests unitaires peuvent commencer dès qu'une fonction est écrite.
 
 - [ ] **Planification des tests**
   - [ ] Identifier les cas limites (tableaux vides/pleins, entrées invalides)
@@ -169,6 +188,8 @@
   - [ ] Définir les paramètres (INITIAL_CAPACITY, RESIZE_FACTOR)
 
 #### Phase 8 : Build System
+
+> ⚠️ **Dépendances** : Nécessite que l'arborescence des fichiers (src/include) soit créée (Phase 1).
 
 - [ ] Créer `Makefile` robuste
   - [ ] Variables (CC, CFLAGS, SRC, OBJ)
