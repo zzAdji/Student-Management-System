@@ -1,55 +1,178 @@
-# Prerequisites
-*.d
+# Système de Gestion des Étudiants - .gitignore
 
-# Object files
+# ============================================
+# Fichiers Compilés
+# ============================================
+
+# Fichiers objets
 *.o
-*.ko
 *.obj
+*.ko
 *.elf
 
-# Linker output
-*.ilk
-*.map
-*.exp
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
+# Bibliothèques précompilées
 *.lib
 *.a
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
+# Exécutables
 *.exe
 *.out
 *.app
-*.i*86
-*.x86_64
-*.hex
+sms
+sms.exe
 
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
+# Répertoire de build
+build/
+bin/
+obj/
 
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+# ============================================
+# Données et Fichiers Temporaires
+# ============================================
 
-# debug information files
-*.dwo
+# Fichiers de données (à commenter si vous voulez les versionner)
+data/*.dat
+data/*.bin
+data/etudiants.dat
+
+# Logs
+*.log
+data/*.log
+logs/
+
+# Fichiers de backup
+*~
+*.bak
+*.swp
+*.swo
+*.tmp
+
+# ============================================
+# IDE et Éditeurs
+# ============================================
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+
+# Visual Studio
+.vs/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# CLion / IntelliJ
+.idea/
+cmake-build-*/
+*.iml
+
+# Eclipse
+.project
+.cproject
+.settings/
+
+# Code::Blocks
+*.cbp
+*.depend
+*.layout
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+
+# ============================================
+# Système d'Exploitation
+# ============================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.stackdump
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+
+# ============================================
+# Compilation et Build
+# ============================================
+
+# Archives
+*.tar.gz
+*.tgz
+*.zip
+*.rar
+*.7z
+
+# Core dumps
+core
+core.*
+
+# Dépendances
+*.d
+
+# ============================================
+# Projet Spécifique
+# ============================================
+
+# Fichiers de test temporaires
+test_data/
+temp/
+
+# Documentation générée
+docs/html/
+docs/latex/
+
+# Fichiers de configuration locale
+config.local
+
+# ============================================
+# Git
+# ============================================
+
+# Merge files
+*.orig
+
+# ============================================
+# Garder les Répertoires Vides
+# ============================================
+
+# Garder le répertoire build/ mais pas son contenu
+!build/.gitkeep
+!bin/.gitkeep
+!data/.gitkeep
+
+# ============================================
+# Exceptions (fichiers à inclure malgré les règles ci-dessus)
+# ============================================
+
+# Inclure les fichiers d'exemple
+!data/exemple.dat
