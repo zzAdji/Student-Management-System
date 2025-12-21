@@ -29,7 +29,7 @@ make
 ```bash
 make run
 # ou
-./bin/gestion_etudiants
+./bin/sms
 ```
 
 ## 👤 Configuration Initiale Git
@@ -163,12 +163,14 @@ git push
 **Fichiers** : `main.c`, `menu.c`, `menu.h`
 
 **Tâches** :
+
 1. Créer la boucle principale
 2. Afficher le menu avec design
 3. Gérer les choix utilisateur
 4. Appeler les fonctions appropriées
 
 **Template main.c** :
+
 ```c
 #include "menu.h"
 #include "etudiant.h"
@@ -176,32 +178,32 @@ git push
 int main(void) {
     int nombre_etudiants;
     int choix;
-    
+
     // Demander nombre d'étudiants
     printf("Nombre d'étudiants : ");
     scanf("%d", &nombre_etudiants);
-    
+
     // Allouer mémoire
-    Gestion_des_Etudians *tableau = 
+    Gestion_des_Etudians *tableau =
         malloc(nombre_etudiants * sizeof(Gestion_des_Etudians));
-    
+
     if (tableau == NULL) {
         fprintf(stderr, "Erreur allocation mémoire\n");
         return 1;
     }
-    
+
     int nombre_actuel = 0;
-    
+
     // Boucle principale
     do {
         afficher_menu();
         choix = obtenir_choix();
         traiter_choix(choix, tableau, &nombre_actuel, nombre_etudiants);
     } while (choix != 0);
-    
+
     // Libérer mémoire
     free(tableau);
-    
+
     return 0;
 }
 ```
@@ -211,6 +213,7 @@ int main(void) {
 **Fichiers** : `etudiant.c`, `etudiant.h`, `operations.c`, `operations.h`
 
 **Tâches** :
+
 1. Définir la structure `Gestion_des_Etudians`
 2. Implémenter `enregistrer_etudiant()`
 3. Implémenter `modifier_etudiant()`
@@ -218,6 +221,7 @@ int main(void) {
 5. Implémenter `afficher_tous_etudiants()`
 
 **Points Clés** :
+
 - Utiliser des pointeurs pour modification
 - Valider les entrées utilisateur
 - Gérer les erreurs d'allocation
@@ -227,23 +231,25 @@ int main(void) {
 **Fichiers** : `recherche.c`, `recherche.h`, `tri.c`, `tri.h`
 
 **Tâches** :
+
 1. Recherche linéaire par matricule
 2. Recherche dichotomique
 3. Tri alphabétique (utiliser `qsort`)
 4. Tri par filière
 
 **Algorithme Recherche Dichotomique** :
+
 ```c
-int recherche_dichotomique(const Gestion_des_Etudians *tableau, 
-                           int nombre, 
+int recherche_dichotomique(const Gestion_des_Etudians *tableau,
+                           int nombre,
                            const char *matricule) {
     int gauche = 0;
     int droite = nombre - 1;
-    
+
     while (gauche <= droite) {
         int milieu = gauche + (droite - gauche) / 2;
         int cmp = strcmp(tableau[milieu].matricule, matricule);
-        
+
         if (cmp == 0) {
             return milieu;  // Trouvé
         } else if (cmp < 0) {
@@ -252,7 +258,7 @@ int recherche_dichotomique(const Gestion_des_Etudians *tableau,
             droite = milieu - 1;
         }
     }
-    
+
     return -1;  // Non trouvé
 }
 ```
@@ -262,32 +268,34 @@ int recherche_dichotomique(const Gestion_des_Etudians *tableau,
 **Fichiers** : `utils.c`, `utils.h`, `validation.c`, `validation.h`
 
 **Tâches** :
+
 1. Calculer âge étudiant
 2. Valider dates
 3. Valider matricule
 4. Fonctions auxiliaires
 
 **Calcul Âge** :
+
 ```c
 int calculer_age(Date date_naissance) {
     // Obtenir date actuelle
     time_t t = time(NULL);
     struct tm *tm_info = localtime(&t);
-    
+
     int annee_actuelle = tm_info->tm_year + 1900;
     int mois_actuel = tm_info->tm_mon + 1;
     int jour_actuel = tm_info->tm_mday;
-    
+
     // Calculer âge
     int age = annee_actuelle - date_naissance.annee;
-    
+
     // Ajuster si anniversaire pas encore passé
     if (mois_actuel < date_naissance.mois ||
-        (mois_actuel == date_naissance.mois && 
+        (mois_actuel == date_naissance.mois &&
          jour_actuel < date_naissance.jour)) {
         age--;
     }
-    
+
     return age;
 }
 ```
@@ -319,7 +327,7 @@ make
 make debug
 
 # Utiliser gdb (si disponible)
-gdb ./bin/gestion_etudiants
+gdb ./bin/sms
 
 # Dans gdb
 run
@@ -353,7 +361,7 @@ git push
 echo "#!/bin/bash
 make clean
 make
-echo '5' | ./bin/gestion_etudiants" > test.sh
+echo '5' | ./bin/sms" > test.sh
 
 chmod +x test.sh
 ./test.sh

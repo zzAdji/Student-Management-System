@@ -15,7 +15,7 @@ BIN_DIR = bin
 DATA_DIR = data
 
 # Nom de l'exécutable
-TARGET = $(BIN_DIR)/gestion_etudiants
+TARGET = $(BIN_DIR)/sms
 
 # Fichiers sources et objets
 SOURCES = $(wildcard $(SRC_DIR)/*.c)
@@ -87,7 +87,7 @@ warnings: all
 # Créer une archive du projet
 archive:
 	@echo "$(YELLOW)Création de l'archive...$(NC)"
-	tar -czf gestion_etudiants_$(shell date +%Y%m%d_%H%M%S).tar.gz \
+	tar -czf sms_$(shell date +%Y%m%d_%H%M%S).tar.gz \
 		$(SRC_DIR) $(INC_DIR) Makefile README.md
 	@echo "$(GREEN)✓ Archive créée$(NC)"
 

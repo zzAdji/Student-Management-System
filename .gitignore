@@ -20,8 +20,8 @@
 *.exe
 *.out
 *.app
-gestion_etudiants
-gestion_etudiants.exe
+sms
+sms.exe
 
 # Répertoire de build
 build/
