@@ -14,7 +14,7 @@
 #define COLOR_CYAN    "\033[0;36m"
 #define COLOR_WHITE   "\033[0;37m"
 
-// Couleurs de texte en gras (Bold)
+// Couleurs de texte en gras
 #define COLOR_BOLD_BLACK   "\033[1;30m"
 #define COLOR_BOLD_RED     "\033[1;31m"
 #define COLOR_BOLD_GREEN   "\033[1;32m"
@@ -24,4 +24,4 @@
 #define COLOR_BOLD_CYAN    "\033[1;36m"
 #define COLOR_BOLD_WHITE   "\033[1;37m"
 
-#endif // COLORS_H
+#endif

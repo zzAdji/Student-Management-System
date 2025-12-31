@@ -17,6 +17,11 @@ void displayModifyStudentMenu();
 void displayOnListMenu();
 
 /**
+ * Affiche le menu des paramètres.
+ */
+void displaySettings();
+
+/**
  * Récupère le choix de l'utilisateur sur l'entrée standard.
  * Gère les entrées invalides en vidant le tampon.
  * @return Le choix de l'utilisateur (entier), ou -1 en cas d'erreur.

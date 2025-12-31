@@ -77,4 +77,10 @@ void displaySimpleFooter();
  */
 void displayChoiceFooter();
 
+/**
+ * Affiche un chemin de navigation.
+ * @param path Le chemin à afficher.
+ */
+void displayPath(char *path);
+
 #endif

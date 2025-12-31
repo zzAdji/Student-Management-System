@@ -7,7 +7,8 @@
 
 void displayMenu() {
     clearScreen();
-    displayHeader("STUDENT MANAGEMENT SYSTEM (SMS)");
+    displayPath("sms > menu");
+    displayHeader("MENU PRINCIPAL");
 
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
@@ -17,11 +18,11 @@ void displayMenu() {
     printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Modifier les informations\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Rechercher (par id)\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Supprimer un étudiant\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Trier par ordre alphabétique\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Trier la liste\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Recherche dichotomique\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Calculer l'âge de l'étudiant\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Trier par option\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "9." COLOR_RESET " Afficher tous les étudiants\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Afficher tous les étudiants\n\n");
+    printSpaces(margin); printf("  " COLOR_CYAN "9." COLOR_RESET " Paramètres\n");
     printSpaces(margin); printf("  " COLOR_RED    "0. \U0001F6AA Quitter" COLOR_RESET "\n");
 
     displayChoiceFooter();
@@ -31,6 +32,7 @@ void displayMenu() {
 // Affiche le menu pour modifier les informations d'un étudiant
 void displayModifyStudentMenu(){
     clearScreen();
+    displayPath("sms > menu > modification");
     displayHeader("MODIFIER INFORMATION ETUDIANT");
 
     int termWidth = getTerminalWidth();
@@ -38,10 +40,8 @@ void displayModifyStudentMenu(){
     if (margin < 0) margin = 0;
 
     // TODO: En attente de la fonction de récupération d'un étudiant par matricule
-    printSpaces(margin); printf("\n");
-    printSpaces(margin); printf("Étudiant actuel : [23ENSPM0443] - [Dupont] [Jean]\n");
+    displayInfo("Étudiant actuel : [23ENSPM0443] - [Dupont] [Jean]");
 
-    printSpaces(margin); printf("\n");
     printSpaces(margin); printf("Quel champ souhaitez-vous modifier ?\n\n");
 
     printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Matricule\n");
@@ -51,8 +51,8 @@ void displayModifyStudentMenu(){
     printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Genre\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Département\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Option\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Région d'origine\n");
-    printSpaces(margin); printf("  " COLOR_GREEN  "9." COLOR_RESET " Enregistrer et retourner\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Région d'origine\n\n");
+    printSpaces(margin); printf("  " COLOR_CYAN  "9." COLOR_RESET " Enregistrer et retourner\n");
     printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
 
     displayChoiceFooter();
@@ -62,13 +62,14 @@ void displayModifyStudentMenu(){
 // Affiche le formulaire pour inscrire un nouvel étudiant
 void displayRegisterStudentForm(){
     clearScreen();
+    displayPath("sms > menu > inscription");
     displayHeader("INSCRIRE UN NOUVEL ÉTUDIANT");
     
     int termWidth = getTerminalWidth();
-    int margin = (termWidth - 60) / 2;
+    int margin = (termWidth - 50) / 2;
     if (margin < 0) margin = 0;
 
-    printSpaces(margin); printf("Entrez les informations de l'étudiant :\n\n");
+    printSpaces(margin + 5); printf("Entrez les informations de l'étudiant :\n\n");
     
     char buffer[100];
 
@@ -121,8 +122,8 @@ void displayOnListMenu(){
 
     printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Sélectionner\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Trier\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Tout supprimer\n");
-    printSpaces(margin); printf("  " COLOR_GREEN  "4." COLOR_RESET " Enregistrer et retourner\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Tout supprimer\n\n");
+    printSpaces(margin); printf("  " COLOR_CYAN  "4." COLOR_RESET " Enregistrer et retourner\n");
     printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
 
     displayChoiceFooter();
@@ -132,6 +133,7 @@ void displayOnListMenu(){
 // Affiche le résultat quand un étudiant est trouvé
 void displayStudentFound() {
     clearScreen();
+    displayPath("sms > menu > recherche > résultat");
     displaySuccess("ETUDIANT TROUVÉ", "Informations de l'étudiant :");
 
     int termWidth = getTerminalWidth();
@@ -157,6 +159,7 @@ void displayStudentFound() {
 // Affiche le menu de recherche d'un étudiant
 void displaySearchStudentMenu(){
     clearScreen();
+    displayPath("sms > menu > recherche");
     displayHeader("RECHERCHE ETUDIANT");
     
     int termWidth = getTerminalWidth();
@@ -178,6 +181,7 @@ void displaySearchStudentMenu(){
 // Affiche le menu de suppression d'un étudiant avec confirmation
 void displayDeleteStudentMenu(){
     clearScreen();
+    displayPath("sms > menu > suppression");
     displayWarning("SUPPRESSION ETUDIANT", "Êtes-vous sûr de vouloir supprimer cet étudiant?");
 
     int termWidth = getTerminalWidth();
@@ -200,7 +204,8 @@ void displayDeleteStudentMenu(){
 
 // Affiche le dialogue de confirmation de sortie
 void displayExitConfirmationMenu(){
-    clearScreen();
+    clearScreen();    
+    displayPath("sms > sortie");
     displayWarning("CONFIRMATION", "Voulez-vous vraiment quitter l'application ?");
     
     int termWidth = getTerminalWidth();
@@ -215,9 +220,17 @@ void displayExitConfirmationMenu(){
     processExitChoice(getUserChoice());
 }
 
+void displaySettings() {
+    clearScreen();    
+    displayPath("sms > paramètres");
+
+    displaySimpleFooter();
+}
+
 // Affiche la liste de tous les étudiants sous forme de tableau
 void displayStudentList() {
     clearScreen();
+    displayPath("sms > menu > liste d'étudiants");
     displayHeader("LISTE DES ÉTUDIANTS (15 étudiants)"); // TODO: Afficher le compteur réel count
     displayInfo("Trié par ordre alphabétique");
 
@@ -243,6 +256,7 @@ void displayStudentList() {
 // Affiche le menu pour calculer l'âge d'un étudiant
 void displayCalculateAgeMenu() {
     clearScreen();
+    displayPath("sms > menu > âge");
     displayHeader("CALCULER L'ÂGE DE L'ÉTUDIANT");
     
     displayInfo("Date actuelle : 22/12/2024");
@@ -254,7 +268,7 @@ void displayCalculateAgeMenu() {
     // TODO: Utiliser la fonction calculateAge() de utils.h
     printSpaces(margin); printf("Étudiant : Jean Dupont\n");
     printSpaces(margin); printf("Matricule : 23ENSPM0443\n");
-    printSpaces(margin); printf("Date de naissance : 15/06/2000\n");
+    printSpaces(margin); printf("Date de naissance : 15/06/2000\n\n");
 
     printSpaces(margin); printf("Âge : 24 ans, 6 mois, 7 jours\n");
 
@@ -397,13 +411,12 @@ void processChoice(int choice) {
             displayCalculateAgeMenu();
             displayMenu();
             break;
-        case 8:            
-            // TODO: Appeler sortByOption() puis displayStudentList()
+        case 8:
             displayStudentList();
             displayMenu();
             break;
         case 9:
-            displayStudentList();
+            displaySettings();
             displayMenu();
             break;
         case 0:

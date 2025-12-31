@@ -217,3 +217,11 @@ void displayChoiceFooter() {
     printSpaces(msgMargin);
     printf("%s", msg);
 }
+
+void displayPath(char *path) {
+    int pathMargin = 10;
+    
+    printf("\n\n");
+    printSpaces(pathMargin);
+    printf("%s\n\n", path);
+}
