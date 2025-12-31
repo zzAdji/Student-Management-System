@@ -12,6 +12,16 @@ void displayMenu();
 void displayModifyStudentMenu();
 
 /**
+ * Affiche le menu de sélection des actions sur la liste des étudiants.
+ */
+void displayOnListMenu();
+
+/**
+ * Affiche le menu des paramètres.
+ */
+void displaySettings();
+
+/**
  * Récupère le choix de l'utilisateur sur l'entrée standard.
  * Gère les entrées invalides en vidant le tampon.
  * @return Le choix de l'utilisateur (entier), ou -1 en cas d'erreur.
@@ -31,6 +41,12 @@ void processChoice(int choice);
 void processModifyStudentChoice(int choice);
 
 /**
+ * Traite le choix de l'utilisateur depuis le menu de sélection des actions sur la liste des étudiants.
+ * @param choice Le choix effectué par l'utilisateur.
+ */
+void processOnListChoice(int choice);
+
+/**
  * Traite le choix de l'utilisateur depuis le menu de suppression.
  * @param choice Le choix effectué par l'utilisateur.
  */
@@ -41,52 +57,6 @@ void processDeleteChoice(int choice);
  * @param choice Le choix effectué par l'utilisateur.
  */
 void processExitChoice(int choice);
-
-/**
- * Affiche un en-tête stylisé avec un titre.
- * Ajuste automatiquement l'alignement selon la longueur du titre et les emojis.
- * @param title Le titre à afficher dans l'en-tête.
- */
-void displayHeader(char *title);
-
-/**
- * Affiche un message de succès avec un en-tête formaté.
- * @param subtitle Le sous-titre de l'en-tête (ex: nom de l'opération).
- * @param message Le message de succès détaillé.
- */
-void displaySuccess(char *subtitle, char *message);
-
-/**
- * Affiche un message d'erreur avec un en-tête formaté.
- * @param subtitle Le sous-titre de l'en-tête (ex: type d'erreur).
- * @param message Le message d'erreur détaillé.
- */
-void displayError(char *subtitle, char *message);
-
-/**
- * Affiche un message d'information avec un en-tête formaté.
- * @param subtitle Le sous-titre de l'en-tête (ex: sujet de l'info).
- * @param message Le message d'information détaillé.
- */
-void displayInfo(char *subtitle, char *message);
-
-/**
- * Affiche un message d'avertissement avec un en-tête formaté.
- * @param subtitle Le sous-titre de l'en-tête (ex: sujet de l'alerte).
- * @param message Le message d'avertissement détaillé.
- */
-void displayWarning(char *subtitle, char *message);
-
-
-/**
- * Affiche le pied de page demandant le choix de l'utilisateur.
- */
-void displayChoiceFooter();
-
-/**
- * Affiche un pied de page simple demandant d'appuyer sur Entrée.
- */
-void displaySimpleFooter();
 
 /**
  * Affiche le menu de recherche d'un étudiant par ID/Matricule.

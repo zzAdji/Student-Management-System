@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/menu.h"
+#include "../include/utils.h"
 
 int main() {
     // Définit la page de code de la console sur UTF-8 
