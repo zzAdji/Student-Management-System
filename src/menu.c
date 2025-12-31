@@ -4,9 +4,6 @@
 #include "../include/menu.h"
 
 void displayMenu() {
-    // Définit la page de code de la console sur UTF-8 pour un affichage correct des emojis et caractères de bordure
-    system("chcp 65001 > nul");
-
     displayHeader("STUDENT MANAGEMENT SYSTEM (SMS)");
 
     printf("  1. Inscrire un étudiant\n");
@@ -41,7 +38,7 @@ void displayModifyStudentMenu(){
     printf("  6. Département\n");
     printf("  7. Option\n");
     printf("  8. Région d'origine\n");
-    printf("  9. ✅ Enregistrer et retourner\n");
+    printf("  9. Enregistrer et retourner\n");
     printf("  0. ❌ Annuler\n");
 
     displayChoiceFooter();
