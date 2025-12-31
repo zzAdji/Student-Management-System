@@ -2,20 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/menu.h"
+#include "../include/colors.h"
+#include "../include/utils.h"
 
 void displayMenu() {
+    clearScreen();
     displayHeader("STUDENT MANAGEMENT SYSTEM (SMS)");
 
-    printf("  1. Inscrire un étudiant\n");
-    printf("  2. Modifier les informations\n");
-    printf("  3. Rechercher (par id)\n");
-    printf("  4. Supprimer un étudiant\n");
-    printf("  5. Trier par ordre alphabétique\n");
-    printf("  6. Recherche dichotomique\n");
-    printf("  7. Calculer l'âge de l'étudiant\n");
-    printf("  8. Trier par option\n");
-    printf("  9. Afficher tous les étudiants\n");
-    printf("  0. \U0001F6AA Quitter\n");
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Inscrire un étudiant\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Modifier les informations\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Rechercher (par id)\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Supprimer un étudiant\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Trier par ordre alphabétique\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Recherche dichotomique\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Calculer l'âge de l'étudiant\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Trier par option\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "9." COLOR_RESET " Afficher tous les étudiants\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. \U0001F6AA Quitter" COLOR_RESET "\n");
 
     displayChoiceFooter();
     processChoice(getUserChoice());
@@ -23,23 +30,30 @@ void displayMenu() {
 
 // Affiche le menu pour modifier les informations d'un étudiant
 void displayModifyStudentMenu(){
+    clearScreen();
     displayHeader("MODIFIER INFORMATION ETUDIANT");
 
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
     // TODO: En attente de la fonction de récupération d'un étudiant par matricule
-    printf("\nÉtudiant actuel : [23ENSPM0443] - [Dupont] [Jean]\n");
+    printSpaces(margin); printf("\n");
+    printSpaces(margin); printf("Étudiant actuel : [23ENSPM0443] - [Dupont] [Jean]\n");
 
-    printf("\nQuel champ souhaitez-vous modifier ?\n\n");
+    printSpaces(margin); printf("\n");
+    printSpaces(margin); printf("Quel champ souhaitez-vous modifier ?\n\n");
 
-    printf("  1. Matricule\n");
-    printf("  2. Nom\n");
-    printf("  3. Prénom\n");
-    printf("  4. Date de naissance\n");
-    printf("  5. Genre\n");
-    printf("  6. Département\n");
-    printf("  7. Option\n");
-    printf("  8. Région d'origine\n");
-    printf("  9. Enregistrer et retourner\n");
-    printf("  0. ❌ Annuler\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Matricule\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Nom\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Prénom\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Date de naissance\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Genre\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Département\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Option\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Région d'origine\n");
+    printSpaces(margin); printf("  " COLOR_GREEN  "9." COLOR_RESET " Enregistrer et retourner\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
 
     displayChoiceFooter();
     processModifyStudentChoice(getUserChoice());
@@ -47,40 +61,46 @@ void displayModifyStudentMenu(){
 
 // Affiche le formulaire pour inscrire un nouvel étudiant
 void displayRegisterStudentForm(){
+    clearScreen();
     displayHeader("INSCRIRE UN NOUVEL ÉTUDIANT");
-    printf("Entrez les informations de l'étudiant :\n\n");
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 60) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("Entrez les informations de l'étudiant :\n\n");
     
     char buffer[100];
 
-    printf("Matricule (ex: 23ENSPM0443)    : ");
+    printSpaces(margin); printf("Matricule (ex: 23ENSPM0443)    : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Nom                            : ");
+    printSpaces(margin); printf("Nom                            : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Prénom                         : ");
+    printSpaces(margin); printf("Prénom                         : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Date de naissance (JJ/MM/AAAA) : ");
+    printSpaces(margin); printf("Date de naissance (JJ/MM/AAAA) : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Genre (M/F)                    : ");
+    printSpaces(margin); printf("Genre (M/F)                    : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Département                    : ");
+    printSpaces(margin); printf("Département                    : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Option                         : ");
+    printSpaces(margin); printf("Option                         : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
-    printf("Région d'origine               : ");
+    printSpaces(margin); printf("Région d'origine               : ");
     scanf("%99s", buffer);
     while (getchar() != '\n');
 
@@ -90,31 +110,62 @@ void displayRegisterStudentForm(){
     displaySimpleFooter();
 }
 
+void displayOnListMenu(){
+    displayHeader("ACTION SUR LA LISTE");
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("Quel action souhaitez-vous effectuer ?\n\n");
+
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Sélectionner\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Trier\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Tout supprimer\n");
+    printSpaces(margin); printf("  " COLOR_GREEN  "4." COLOR_RESET " Enregistrer et retourner\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
+
+    displayChoiceFooter();
+    processOnListChoice(getUserChoice());
+}
+
 // Affiche le résultat quand un étudiant est trouvé
 void displayStudentFound() {
-    char title[256];
-    snprintf(title, sizeof(title), "\u2705 ETUDIANT TROUVÉ");
-    displayHeader(title);
+    clearScreen();
+    displaySuccess("ETUDIANT TROUVÉ", "Informations de l'étudiant :");
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printf("\n");
 
     // TODO: Remplacer ces données par les champs réels de la structure Student
-    printf("  Matricule          : 23ENSPM0443\n");
-    printf("  Nom                : Dupont\n");
-    printf("  Prénom             : Jean\n");
-    printf("  Date de naissance  : 15/06/2000\n");
-    printf("  Age                : 24 ans\n");
-    printf("  Genre              : M\n");
-    printf("  Département        : Génie Informatique\n");
-    printf("  Option             : Génie Logiciel\n");
-    printf("  Région d'origine   : Centre\n");
+    printSpaces(margin); printf("  Matricule          : 23ENSPM0443\n");
+    printSpaces(margin); printf("  Nom                : Dupont\n");
+    printSpaces(margin); printf("  Prénom             : Jean\n");
+    printSpaces(margin); printf("  Date de naissance  : 15/06/2000\n");
+    printSpaces(margin); printf("  Age                : 24 ans\n");
+    printSpaces(margin); printf("  Genre              : M\n");
+    printSpaces(margin); printf("  Département        : Génie Informatique\n");
+    printSpaces(margin); printf("  Option             : Génie Logiciel\n");
+    printSpaces(margin); printf("  Région d'origine   : Centre\n");
 
     displaySimpleFooter();
 }
 
 // Affiche le menu de recherche d'un étudiant
 void displaySearchStudentMenu(){
+    clearScreen();
     displayHeader("RECHERCHE ETUDIANT");
-    printf("Entrer le matricule de l'étudiant :\n");
-    printf("___________\r");
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("Entrer le matricule de l'étudiant :\n");
+    printSpaces(margin); printf("___________\r");
+    printSpaces(margin); 
     
     char id[50];
     scanf("%49s", id);
@@ -126,16 +177,22 @@ void displaySearchStudentMenu(){
 
 // Affiche le menu de suppression d'un étudiant avec confirmation
 void displayDeleteStudentMenu(){
+    clearScreen();
     displayWarning("SUPPRESSION ETUDIANT", "Êtes-vous sûr de vouloir supprimer cet étudiant?");
 
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
     // TODO: Données à récupérer dynamiquement
-    printf("\n  Matricule : [23ENSPM0443]");
-    printf("\n  Nom       : [Dupont]");
-    printf("\n  Prénom    : [Jean]");
+    printSpaces(margin); printf("\n");
+    printSpaces(margin); printf("  Matricule : [23ENSPM0443]\n");
+    printSpaces(margin); printf("  Nom       : [Dupont]\n");
+    printSpaces(margin); printf("  Prénom    : [Jean]\n");
     
-    printf("\n\n");
-    printf("  1. Oui, supprimer\n");
-    printf("  0. ❌ Non, annuler\n");
+    printSpaces(margin); printf("\n\n");
+    printSpaces(margin); printf("  " COLOR_RED   "1. Oui, supprimer" COLOR_RESET "\n");
+    printSpaces(margin); printf("  " COLOR_GREEN "0. ❌ Non, annuler" COLOR_RESET "\n");
 
     displayChoiceFooter();
     processDeleteChoice(getUserChoice());
@@ -143,10 +200,16 @@ void displayDeleteStudentMenu(){
 
 // Affiche le dialogue de confirmation de sortie
 void displayExitConfirmationMenu(){
-    displayInfo("CONFIRMATION QUITTER", "Voulez-vous vraiment quitter l'application ?");
+    clearScreen();
+    displayWarning("CONFIRMATION", "Voulez-vous vraiment quitter l'application ?");
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
     printf("\n");
-    printf("  1. Oui, quitter\n");
-    printf("  0. ❌ Non, retourner au menu\n");
+    printSpaces(margin); printf("  " COLOR_RED   "1. Oui, quitter" COLOR_RESET "\n");
+    printSpaces(margin); printf("  " COLOR_GREEN "0. ❌ Non, retourner au menu" COLOR_RESET "\n");
 
     displayChoiceFooter();
     processExitChoice(getUserChoice());
@@ -154,37 +217,46 @@ void displayExitConfirmationMenu(){
 
 // Affiche la liste de tous les étudiants sous forme de tableau
 void displayStudentList() {
-    displayHeader("LISTE DES ÉTUDIANTS (15 étudiants)");
+    clearScreen();
+    displayHeader("LISTE DES ÉTUDIANTS (15 étudiants)"); // TODO: Afficher le compteur réel count
+    displayInfo("Trié par ordre alphabétique");
+
+    int termWidth = getTerminalWidth();
+    int tableWidth = 86; // Largeur approximative du tableau
+    int margin = (termWidth - tableWidth) / 2;
+    if (margin < 0) margin = 0;
 
     // TODO: Parcourir le tableau dynamique d'étudiants (ViewAllStudents)
-    printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
-    printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
-    printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
-    printf("│ 1   │ STU2024001      │ Dupont       │ Jean         │ 15/06/2000 │ Génie Logiciel  │\n");
-    printf("│ 2   │ STU2024002      │ Martin       │ Marie        │ 23/09/1999 │ Data Science    │\n");
-    printf("│ 3   │ STU2024003      │ Bernard      │ Paul         │ 10/03/2001 │ Réseaux         │\n");
-    printf("│ ... │ ...             │ ...          │ ...          │ ...        │ ...             │\n");
-    printf("└─────┴─────────────────┴──────────────┴──────────────┴────────────┴─────────────────┘\n");
+    printSpaces(margin); printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
+    printSpaces(margin); printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
+    printSpaces(margin); printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
+    printSpaces(margin); printf("│ 1   │ STU2024001      │ Dupont       │ Jean         │ 15/06/2000 │ Génie Logiciel  │\n");
+    printSpaces(margin); printf("│ 2   │ STU2024002      │ Martin       │ Marie        │ 23/09/1999 │ Data Science    │\n");
+    printSpaces(margin); printf("│ 3   │ STU2024003      │ Bernard      │ Paul         │ 10/03/2001 │ Réseaux         │\n");
+    printSpaces(margin); printf("│ ... │ ...             │ ...          │ ...          │ ...        │ ...             │\n");
+    printSpaces(margin); printf("└─────┴─────────────────┴──────────────┴──────────────┴────────────┴─────────────────┘\n");
+    printf("\n");
 
-    printf("\nTotal: 15 étudiant(s)\n"); // TODO: Afficher le compteur réel count
-
-    displaySimpleFooter();
+    displayOnListMenu();
 }
 
 // Affiche le menu pour calculer l'âge d'un étudiant
 void displayCalculateAgeMenu() {
+    clearScreen();
     displayHeader("CALCULER L'ÂGE DE L'ÉTUDIANT");
+    
+    displayInfo("Date actuelle : 22/12/2024");
 
-    printf("Matricule de l'étudiant : 23ENSPM0443\n");
-
-    printf("\n────────────────────────────────────────────────────\n\n");
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
 
     // TODO: Utiliser la fonction calculateAge() de utils.h
-    printf("Étudiant : Jean Dupont\n");
-    printf("Date de naissance : 15/06/2000\n");
-    printf("Date actuelle : 22/12/2024\n\n");
+    printSpaces(margin); printf("Étudiant : Jean Dupont\n");
+    printSpaces(margin); printf("Matricule : 23ENSPM0443\n");
+    printSpaces(margin); printf("Date de naissance : 15/06/2000\n");
 
-    printf("Âge : 24 ans, 6 mois, 7 jours\n");
+    printSpaces(margin); printf("Âge : 24 ans, 6 mois, 7 jours\n");
 
     displaySimpleFooter();
 }
@@ -202,7 +274,7 @@ int getUserChoice() {
     return choice;
 }
 
-void processModifyStudentChoice(int choice){
+void processModifyStudentChoice(int choice) {
     switch (choice) {
         case 1:
             break;
@@ -231,6 +303,27 @@ void processModifyStudentChoice(int choice){
             displayError("Choix invalide", "Veuillez entrer un choix valide.");
             displayChoiceFooter();
             processModifyStudentChoice(getUserChoice());
+            break;
+    }
+}
+
+void processOnListChoice(int choice) {
+    switch (choice) {
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        case 0:
+            displayMenu();
+            break;
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processOnListChoice(getUserChoice());
             break;
     }
 }
@@ -322,100 +415,4 @@ void processChoice(int choice) {
             processChoice(getUserChoice());
             break;
     }
-}
-
-// Affiche un en-tête centré avec un cadre
-void displayHeader(char *title) {
-    int titleLen = (int)strlen(title);
-    
-    // Calcul du padding supplémentaire nécessaire pour les caractères UTF-8
-    int extraPadding = 0;
-    for (int i = 0; i < titleLen; i++) {
-        unsigned char c = (unsigned char)title[i];
-        
-        if (i + 2 < titleLen && c == 0xEF && (unsigned char)title[i+1] == 0xB8 && (unsigned char)title[i+2] == 0x8F) {
-            extraPadding += 4; 
-            i += 2;
-            continue;
-        }
-
-        if (c >= 0xF0) {
-            extraPadding += 2; 
-            i += 3;
-        } else if (c >= 0xE0) {
-             extraPadding += 1;
-             i += 2;
-        } else if (c >= 0xC0) {
-            extraPadding += 1;
-            i += 1;
-        }
-    }
-
-    int innerWidth = (titleLen > 53) ? (titleLen - extraPadding + 4) : 53;
-    // On s'assure que innerWidth reste cohérent avec le calcul original si pas d'emojis longs
-    if (innerWidth < 53) innerWidth = 53;
-
-    int totalPadding = innerWidth - (titleLen - extraPadding);
-    int leftPadding = totalPadding / 2;
-    int rightPadding = totalPadding - leftPadding;
-
-    printf("\n╔");
-    for (int i = 0; i < innerWidth; i++) printf("═");
-    printf("╗\n");
-
-    printf("║%*s%s%*s║\n", leftPadding, "", title, rightPadding, "");
-
-    printf("╚");
-    for (int i = 0; i < innerWidth; i++) printf("═");
-    printf("╝\n\n");
-}
-
-// Affiche un message de succès
-void displaySuccess(char *subtitle, char *message) {
-    char title[256];
-    snprintf(title, sizeof(title), "\u2705 SUCCESS : %s", subtitle);
-    displayHeader(title);
-    printf("%s\n", message);
-}
-
-// Affiche un message d'erreur
-void displayError(char *subtitle, char *message) {
-    char title[256];
-    snprintf(title, sizeof(title), "\u274C ERROR : %s", subtitle);
-    displayHeader(title);
-    printf("%s\n", message);
-}
-
-// Affiche un message d'information
-void displayInfo(char *subtitle, char *message) {
-    char title[256];
-    snprintf(title, sizeof(title), "\u2139\uFE0F  INFO : %s", subtitle);
-    displayHeader(title);
-    printf("%s\n", message);
-}
-
-// Affiche un message d'avertissement
-void displayWarning(char *subtitle, char *message) {
-    char title[256];
-    snprintf(title, sizeof(title), "\u26A0\uFE0F  WARNING : %s", subtitle);
-    displayHeader(title);
-    printf("%s\n", message);
-}
-
-// Affiche un pied de page demandant d'appuyer sur Entrée
-void displaySimpleFooter(){
-    printf("\n");
-    printf("────────────────────────────────────────────────────\n");
-    printf("\n");
-    printf("Appuyez sur Entrée pour continuer...");
-    getchar();
-    printf("\n");
-}
-
-// Affiche l'invite pour le choix de l'utilisateur
-void displayChoiceFooter() {
-    printf("\n");
-    printf("────────────────────────────────────────────────────\n");
-    printf("\n");
-    printf("Votre choix: ");
 }
