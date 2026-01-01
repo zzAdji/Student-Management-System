@@ -13,27 +13,30 @@
 int addStudent(Student_Management *management, Student student);
 
 /**
- * Obtenir un étudiant par matricule
+ * Obtenir un étudiant par son index
+ * @param management Pointeur vers la structure de gestion
+ * @param index Index de l'étudiant dans la liste
+ * @return Pointeur vers l'étudiant ou NULL si invalide
+ */
+Student* getStudentByIndex(Student_Management *management, int index);
+
+/**
+ * Rechercher un étudiant par matricule
  * @param management Pointeur vers la structure de gestion
  * @param id Matricule recherché
- * @return Étudiant trouvé ou étudiant vide si non trouvé
+ * @return Index de l'étudiant trouvé ou -1 si non trouvé
  */
-Student getStudent(Student_Management *management, const char *id);
+int findStudentById(Student_Management *management, const char *id);
 
 /**
- * Sélectionner un étudiant interactivement
- * Demande le matricule à l'utilisateur
- * @param management Pointeur vers la structure de gestion
- * @return Index de l'étudiant ou -1 si non trouvé
+ * Modifie un champ spécifique d'un étudiant à un index donné
+ * @param management Pointeur vers la structure de gestion des étudiants
+ * @param index Index de l'étudiant à modifier dans management->list
+ * @param field Champ à modifier (1=id, 2=nom, 3=prénom, 4=date, 5=genre, 6=département, 7=option, 8=région)
+ * @param value Nouvelle valeur du champ (pour date: format "JJ MM AAAA")
+ * @return 1 si modification réussie, 0 sinon
  */
-int selectStudent(Student_Management *management);
-
-/**
- * @brief Modifie un champ spécifique d'un étudiant à un index donné
- * @param mng Pointeur vers la structure de gestion des étudiants
- * @param index Index de l'étudiant à modifier dans mng->list
- */
-void modifyStudent(Student_Management *mng, int index);
+int modifyStudent(Student_Management *management, int index, int field, const char *value);
 
 /**
  * Supprimer un étudiant
@@ -45,19 +48,10 @@ void modifyStudent(Student_Management *mng, int index);
 int deleteStudent(Student_Management *management, int index);
 
 /**
- * @brief Supprime tous les étudiants de la base
+ * Supprime tous les étudiants de la base
  * @param management Pointeur vers la structure de gestion
  * @return Nombre d'étudiants supprimés
  */
 int deleteAllStudents(Student_Management *management);
-
-/**
- * Obtenir les informations d'un étudiant
- * Affiche toutes les informations détaillées
- * @param management Pointeur vers la structure de gestion
- * @param index Index de l'étudiant
- * @return 1 si trouvé, 0 sinon
- */
-int getStudentInfo(Student_Management *management, int index);
 
 #endif
