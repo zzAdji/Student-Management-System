@@ -4,8 +4,20 @@
 #include "../include/menu.h"
 #include "../include/colors.h"
 #include "../include/utils.h"
+#include "../include/student.h"
+#include "../include/operations.h"
 
-void displayMenu() {
+int getUserChoice() {
+    int choice;    
+    int result = scanf("%d", &choice);
+    while (getchar() != '\n'); 
+    if (result != 1) {
+        return -1; 
+    }
+    return choice;
+}
+
+void displayMenu(Student_Management *management) {
     clearScreen();
     displayPath("sms > menu");
     displayHeader("MENU PRINCIPAL");
@@ -13,6 +25,11 @@ void displayMenu() {
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
     if (margin < 0) margin = 0;
+
+    char info[100];
+    sprintf(info, "Étudiants enregistrés : %d", management->number);
+    displayInfo(info);
+    printf("\n");
 
     printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Inscrire un étudiant\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Modifier les informations\n");
@@ -22,45 +39,14 @@ void displayMenu() {
     printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Recherche dichotomique\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Calculer l'âge de l'étudiant\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Afficher tous les étudiants\n\n");
-    printSpaces(margin); printf("  " COLOR_CYAN "9." COLOR_RESET " Paramètres\n");
+    printSpaces(margin); printf("  " COLOR_CYAN   "9." COLOR_RESET " Paramètres\n");
     printSpaces(margin); printf("  " COLOR_RED    "0. \U0001F6AA Quitter" COLOR_RESET "\n");
 
     displayChoiceFooter();
-    processChoice(getUserChoice());
+    processChoice(getUserChoice(), management);
 }
 
-// Affiche le menu pour modifier les informations d'un étudiant
-void displayModifyStudentMenu(){
-    clearScreen();
-    displayPath("sms > menu > modification");
-    displayHeader("MODIFIER INFORMATION ETUDIANT");
-
-    int termWidth = getTerminalWidth();
-    int margin = (termWidth - 40) / 2;
-    if (margin < 0) margin = 0;
-
-    // TODO: En attente de la fonction de récupération d'un étudiant par matricule
-    displayInfo("Étudiant actuel : [23ENSPM0443] - [Dupont] [Jean]");
-
-    printSpaces(margin); printf("Quel champ souhaitez-vous modifier ?\n\n");
-
-    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Matricule\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Nom\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Prénom\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Date de naissance\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Genre\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Département\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Option\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Région d'origine\n\n");
-    printSpaces(margin); printf("  " COLOR_CYAN  "9." COLOR_RESET " Enregistrer et retourner\n");
-    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
-
-    displayChoiceFooter();
-    processModifyStudentChoice(getUserChoice());
-}
-
-// Affiche le formulaire pour inscrire un nouvel étudiant
-void displayRegisterStudentForm(){
+int displayRegisterStudentForm(Student_Management *management) {
     clearScreen();
     displayPath("sms > menu > inscription");
     displayHeader("INSCRIRE UN NOUVEL ÉTUDIANT");
@@ -71,67 +57,109 @@ void displayRegisterStudentForm(){
 
     printSpaces(margin + 5); printf("Entrez les informations de l'étudiant :\n\n");
     
-    char buffer[100];
-
+    Student newStudent;
+    
+    // Matricule
     printSpaces(margin); printf("Matricule (ex: 23ENSPM0443)    : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.id, sizeof(newStudent.id), stdin);
+    newStudent.id[strcspn(newStudent.id, "\n")] = '\0';
 
+    // Nom
     printSpaces(margin); printf("Nom                            : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.name, sizeof(newStudent.name), stdin);
+    newStudent.name[strcspn(newStudent.name, "\n")] = '\0';
 
+    // Prénom
     printSpaces(margin); printf("Prénom                         : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.surname, sizeof(newStudent.surname), stdin);
+    newStudent.surname[strcspn(newStudent.surname, "\n")] = '\0';
 
-    printSpaces(margin); printf("Date de naissance (JJ/MM/AAAA) : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    // Date de naissance
+    // TODO: Implémenter la validation de la date de naissance
+    char buffer[100];
+    printSpaces(margin); printf("Date de naissance (JJ MM AAAA) : ");
+    fgets(buffer, sizeof(buffer), stdin);
+    sscanf(buffer, "%d %d %d", &newStudent.birth_date.day, &newStudent.birth_date.month, &newStudent.birth_date.year);
 
+    // Genre
+    // TODO: Implémenter la validation du genre (M/F)
     printSpaces(margin); printf("Genre (M/F)                    : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(buffer, sizeof(buffer), stdin);
+    newStudent.gender = buffer[0];
 
+    // Département
     printSpaces(margin); printf("Département                    : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.department, sizeof(newStudent.department), stdin);
+    newStudent.department[strcspn(newStudent.department, "\n")] = '\0';
 
+    // Option/Filière
     printSpaces(margin); printf("Option                         : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.option, sizeof(newStudent.option), stdin);
+    newStudent.option[strcspn(newStudent.option, "\n")] = '\0';
 
+    // Région d'origine
     printSpaces(margin); printf("Région d'origine               : ");
-    scanf("%99s", buffer);
-    while (getchar() != '\n');
+    fgets(newStudent.native_region, sizeof(newStudent.native_region), stdin);
+    newStudent.native_region[strcspn(newStudent.native_region, "\n")] = '\0';
 
-    // TODO: Appel à la fonction métier registerStudent() ici
-    // en attente de l'implémentation du stockage dynamique
+    int result = addStudent(management, newStudent);
+    
+    printf("\n");
+    if (result) {
+        displaySuccess("INSCRIPTION RÉUSSIE", "L'étudiant a été ajouté avec succès !");
+        char stats[100];
+        sprintf(stats, "Total étudiants : %d/%d", management->number, management->capacity);
+        displayInfo(stats);
+    } else {
+        displayError("ERREUR", "Impossible d'ajouter l'étudiant.");
+    }
     
     displaySimpleFooter();
+    return result;
 }
 
-void displayOnListMenu(){
-    displayHeader("ACTION SUR LA LISTE");
-
+int displaySearchStudentMenu(Student_Management *management) {
+    clearScreen();
+    displayPath("sms > menu > recherche");
+    displayHeader("RECHERCHE ETUDIANT");
+    
+    if (management->number == 0) {
+        displayWarning("LISTE VIDE", "Aucun étudiant enregistré dans la base.");
+        displaySimpleFooter();
+        return -1;
+    }
+    
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
     if (margin < 0) margin = 0;
 
-    printSpaces(margin); printf("Quel action souhaitez-vous effectuer ?\n\n");
-
-    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Sélectionner\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Trier\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Tout supprimer\n\n");
-    printSpaces(margin); printf("  " COLOR_CYAN  "4." COLOR_RESET " Enregistrer et retourner\n");
-    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Annuler" COLOR_RESET "\n");
-
-    displayChoiceFooter();
-    processOnListChoice(getUserChoice());
+    printSpaces(margin); printf("Entrer le matricule de l'étudiant :\n");
+    printSpaces(margin); printf("___________________\r");
+    printSpaces(margin); 
+    
+    char id[20];
+    fgets(id, sizeof(id), stdin);
+    id[strcspn(id, "\n")] = '\0';
+    
+    // Recherche de l'étudiant par matricule
+    int index = findStudentById(management, id);
+    
+    if (index >= 0) {
+        return index;
+    }
+    
+    printf("\n");
+    displayError("NON TROUVÉ", "Aucun étudiant avec ce matricule.");
+    displaySimpleFooter();
+    return -1;
 }
 
-// Affiche le résultat quand un étudiant est trouvé
-void displayStudentFound() {
+void displayStudentFound(Student_Management *management, int index) {
+    if (index < 0 || index >= management->number) {
+        displayError("ERREUR", "Index d'étudiant invalide.");
+        return;
+    }
+    
     clearScreen();
     displayPath("sms > menu > recherche > résultat");
     displaySuccess("ETUDIANT TROUVÉ", "Informations de l'étudiant :");
@@ -140,46 +168,225 @@ void displayStudentFound() {
     int margin = (termWidth - 40) / 2;
     if (margin < 0) margin = 0;
 
-    printf("\n");
+    Student *s = getStudentByIndex(management, index);
+    if (s == NULL) {
+        displayError("ERREUR", "Impossible d'afficher les informations de l'étudiant.");
+        return;
+    }
 
-    // TODO: Remplacer ces données par les champs réels de la structure Student
-    printSpaces(margin); printf("  Matricule          : 23ENSPM0443\n");
-    printSpaces(margin); printf("  Nom                : Dupont\n");
-    printSpaces(margin); printf("  Prénom             : Jean\n");
-    printSpaces(margin); printf("  Date de naissance  : 15/06/2000\n");
-    printSpaces(margin); printf("  Age                : 24 ans\n");
-    printSpaces(margin); printf("  Genre              : M\n");
-    printSpaces(margin); printf("  Département        : Génie Informatique\n");
-    printSpaces(margin); printf("  Option             : Génie Logiciel\n");
-    printSpaces(margin); printf("  Région d'origine   : Centre\n");
+    printf("\n");
+    printSpaces(margin); printf("  Matricule          : %s\n", s->id);
+    printSpaces(margin); printf("  Nom                : %s\n", s->name);
+    printSpaces(margin); printf("  Prénom             : %s\n", s->surname);
+    printSpaces(margin); printf("  Date de naissance  : %02d/%02d/%04d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
+    // TODO: Implémenter calculateAge() et afficher l'âge réel
+    printSpaces(margin); printf("  Âge                : 24 ans, 6 mois, 7 jours\n"); // Mock data
+    printSpaces(margin); printf("  Genre              : %c\n", s->gender);
+    printSpaces(margin); printf("  Département        : %s\n", s->department);
+    printSpaces(margin); printf("  Option             : %s\n", s->option);
+    printSpaces(margin); printf("  Région d'origine   : %s\n", s->native_region);
 
     displaySimpleFooter();
 }
 
-// Affiche le menu de recherche d'un étudiant
-void displaySearchStudentMenu(){
-    clearScreen();
-    displayPath("sms > menu > recherche");
-    displayHeader("RECHERCHE ETUDIANT");
+void displayModifyStudentMenu(Student_Management *management, int index) {
+    if (index < 0 || index >= management->number) {
+        displayError("ERREUR", "Index d'étudiant invalide.");
+        displaySimpleFooter();
+        return;
+    }
     
+    clearScreen();
+    displayPath("sms > menu > modification");
+    displayHeader("MODIFIER INFORMATION ETUDIANT");
+
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
     if (margin < 0) margin = 0;
 
-    printSpaces(margin); printf("Entrer le matricule de l'étudiant :\n");
-    printSpaces(margin); printf("___________\r");
-    printSpaces(margin); 
+    Student *s = getStudentByIndex(management, index);
+    if (s == NULL) {
+        displayError("ERREUR", "Impossible de récupérer l'étudiant.");
+        displaySimpleFooter();
+        return;
+    }
     
-    char id[50];
-    scanf("%49s", id);
-    while (getchar() != '\n');
-    
-    // TODO: Intégrer la fonction linearSearch() ici
-    printf("\nRecherche de l'étudiant %s en cours...\n", id);
+    char info[150];
+    sprintf(info, "Étudiant actuel : [%s] - [%s] [%s]", s->id, s->name, s->surname);
+    displayInfo(info);
+
+    printf("\n");
+    printSpaces(margin); printf("Quel champ souhaitez-vous modifier ?\n\n");
+
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Matricule\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Nom\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Prénom\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Date de naissance\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Genre\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Département\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "7." COLOR_RESET " Option\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "8." COLOR_RESET " Région d'origine\n\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Retour" COLOR_RESET "\n");
+
+    displayChoiceFooter();
+    processModifyStudentChoice(getUserChoice(), management, index);
 }
 
-// Affiche le menu de suppression d'un étudiant avec confirmation
-void displayDeleteStudentMenu(){
+void processModifyStudentChoice(int choice, Student_Management *management, int index) {
+    if (index < 0 || index >= management->number) {
+        displayMenu(management);
+        return;
+    }
+    
+    Student *s = getStudentByIndex(management, index);
+    if (s == NULL) {
+        displayMenu(management);
+        return;
+    }
+    char buffer[100];
+    int result = 0;
+    
+    switch (choice) {
+        case 1: // Matricule
+            printf("\nMatricule actuel: %s\n", s->id);
+            printf("Nouveau matricule: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 1, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Matricule mis à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier le matricule.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 2: // Nom
+            printf("\nNom actuel: %s\n", s->name);
+            printf("Nouveau nom: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 2, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Nom mis à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier le nom.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 3: // Prénom
+            printf("\nPrénom actuel: %s\n", s->surname);
+            printf("Nouveau prénom: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 3, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Prénom mis à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier le prénom.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 4: // Date de naissance
+            printf("\nDate actuelle: %02d/%02d/%d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
+            printf("Nouvelle date (JJ MM AAAA): ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 4, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Date de naissance mise à jour !");
+            } else {
+                displayError("ERREUR", "Format de date invalide. Utilisez: JJ MM AAAA");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 5: // Genre
+            printf("\nGenre actuel: %c\n", s->gender);
+            printf("Nouveau genre (M/F): ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 5, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Genre mis à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Genre invalide. Entrez M ou F.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 6: // Département
+            printf("\nDépartement actuel: %s\n", s->department);
+            printf("Nouveau département: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 6, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Département mis à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier le département.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 7: // Option
+            printf("\nOption actuelle: %s\n", s->option);
+            printf("Nouvelle option: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 7, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Option mise à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier l'option.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 8: // Région d'origine
+            printf("\nRégion actuelle: %s\n", s->native_region);
+            printf("Nouvelle région: ");
+            fgets(buffer, sizeof(buffer), stdin);
+            buffer[strcspn(buffer, "\n")] = '\0';
+            result = modifyStudent(management, index, 8, buffer);
+            if (result) {
+                displaySuccess("MODIFIÉ", "Région mise à jour avec succès !");
+            } else {
+                displayError("ERREUR", "Impossible de modifier la région.");
+            }
+            displaySimpleFooter();
+            displayModifyStudentMenu(management, index);
+            break;
+            
+        case 0: // Retour
+            displayMenu(management);
+            break;
+            
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processModifyStudentChoice(getUserChoice(), management, index);
+            break;
+    }
+}
+
+void displayDeleteStudentMenu(Student_Management *management, int index) {
+    if (index < 0 || index >= management->number) {
+        displayError("ERREUR", "Index d'étudiant invalide.");
+        displaySimpleFooter();
+        displayMenu(management);
+        return;
+    }
+    
     clearScreen();
     displayPath("sms > menu > suppression");
     displayWarning("SUPPRESSION ETUDIANT", "Êtes-vous sûr de vouloir supprimer cet étudiant?");
@@ -188,22 +395,286 @@ void displayDeleteStudentMenu(){
     int margin = (termWidth - 40) / 2;
     if (margin < 0) margin = 0;
 
-    // TODO: Données à récupérer dynamiquement
-    printSpaces(margin); printf("\n");
-    printSpaces(margin); printf("  Matricule : [23ENSPM0443]\n");
-    printSpaces(margin); printf("  Nom       : [Dupont]\n");
-    printSpaces(margin); printf("  Prénom    : [Jean]\n");
+    Student *s = getStudentByIndex(management, index);
+    if (s == NULL) {
+        displayError("ERREUR", "Impossible de récupérer l'étudiant.");
+        displaySimpleFooter();
+        displayMenu(management);
+        return;
+    }
     
-    printSpaces(margin); printf("\n\n");
+    printf("\n");
+    printSpaces(margin); printf("  Matricule : [%s]\n", s->id);
+    printSpaces(margin); printf("  Nom       : [%s]\n", s->name);
+    printSpaces(margin); printf("  Prénom    : [%s]\n", s->surname);
+    
+    printf("\n\n");
     printSpaces(margin); printf("  " COLOR_RED   "1. Oui, supprimer" COLOR_RESET "\n");
     printSpaces(margin); printf("  " COLOR_GREEN "0. ❌ Non, annuler" COLOR_RESET "\n");
 
     displayChoiceFooter();
-    processDeleteChoice(getUserChoice());
+    processDeleteChoice(getUserChoice(), management, index);
 }
 
-// Affiche le dialogue de confirmation de sortie
-void displayExitConfirmationMenu(){
+void processDeleteChoice(int choice, Student_Management *management, int index) {
+    switch (choice) {
+        case 1:
+            if (deleteStudent(management, index)) {
+                displaySuccess("SUPPRIMÉ", "L'étudiant a été supprimé avec succès.");
+            } else {
+                displayError("ERREUR", "Impossible de supprimer l'étudiant.");
+            }
+            displaySimpleFooter();
+            displayMenu(management);
+            break;
+        case 0:
+            displayMenu(management);
+            break;
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processDeleteChoice(getUserChoice(), management, index);
+            break;
+    }
+}
+
+void displaySortMenu(Student_Management *management) {
+    clearScreen();
+    displayPath("sms > menu > tri");
+    displayHeader("TRIER LA LISTE DES ÉTUDIANTS");
+
+    if (management->number == 0) {
+        displayWarning("LISTE VIDE", "Aucun étudiant à trier.");
+        displaySimpleFooter();
+        displayMenu(management);
+        return;
+    }
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    char info[100];
+    sprintf(info, "%d étudiant(s) dans la liste", management->number);
+    displayInfo(info);
+    
+    printf("\n");
+    printSpaces(margin); printf("Choisissez le critère de tri :\n\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Trier par nom (A-Z)\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Trier par option/filière\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Trier par matricule\n\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Retour" COLOR_RESET "\n");
+
+    displayChoiceFooter();
+    processSortChoice(getUserChoice(), management);
+}
+
+void processSortChoice(int choice, Student_Management *management) {
+    switch (choice) {
+        case 1:
+            // TODO: Implémenter le tri par nom avec qsort() et compareStudentsByName()
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par nom (A-Z). [Mock]");
+            displaySimpleFooter();
+            displayStudentList(management);
+            break;
+        case 2:
+            // TODO: Implémenter le tri par option avec qsort() et compareStudentsByOption()
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par option/filière. [Mock]");
+            displaySimpleFooter();
+            displayStudentList(management);
+            break;
+        case 3:
+            // TODO: Implémenter le tri par matricule avec qsort() et compareStudentsById()
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par matricule. [Mock]");
+            displaySimpleFooter();
+            displayStudentList(management);
+            break;
+        case 0:
+            displayMenu(management);
+            break;
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processSortChoice(getUserChoice(), management);
+            break;
+    }
+}
+
+int displayBinarySearchMenu(Student_Management *management) {
+    clearScreen();
+    displayPath("sms > menu > recherche dichotomique");
+    displayHeader("RECHERCHE DICHOTOMIQUE");
+    
+    if (management->number == 0) {
+        displayWarning("LISTE VIDE", "Aucun étudiant enregistré.");
+        displaySimpleFooter();
+        return -1;
+    }
+    
+    // TODO: Implémenter le tri par matricule avant la recherche dichotomique
+    displayInfo("Tri de la liste par matricule... [Mock]");
+    displaySuccess("TRIÉ", "Liste triée par matricule. [Mock]");
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printf("\n");
+    printSpaces(margin); printf("Entrer le matricule à rechercher :\n");
+    printSpaces(margin); printf("___________________\r");
+    printSpaces(margin);
+    
+    char id[20];
+    fgets(id, sizeof(id), stdin);
+    id[strcspn(id, "\n")] = '\0';
+    
+    // TODO: Implémenter la recherche dichotomique avec binarySearch()
+    // Mock: Retourne l'index 0 si la liste n'est pas vide
+    if (management->number > 0) {
+        return 0; // Mock data
+    }
+    
+    printf("\n");
+    displayError("NON TROUVÉ", "Aucun étudiant avec ce matricule (recherche dichotomique).");
+    displaySimpleFooter();
+    return -1;
+}
+
+void displayStudentList(Student_Management *management) {
+    clearScreen();
+    displayPath("sms > menu > liste d'étudiants");
+    
+    char header[100];
+    sprintf(header, "LISTE DES ÉTUDIANTS (%d étudiants)", management->number);
+    displayHeader(header);
+
+    if (management->number == 0) {
+        displayWarning("LISTE VIDE", "Aucun étudiant enregistré dans la base.");
+        displaySimpleFooter();
+        displayMenu(management);
+        return;
+    }
+
+    int termWidth = getTerminalWidth();
+    int tableWidth = 86;
+    int margin = (termWidth - tableWidth) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
+    printSpaces(margin); printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
+    printSpaces(margin); printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
+    
+    viewAllStudents(management);
+    
+    printSpaces(margin); printf("└─────┴─────────────────┴──────────────┴──────────────┴────────────┴─────────────────┘\n");
+    printf("\n");
+
+    displayOnListMenu(management);
+}
+
+void displayOnListMenu(Student_Management *management) {
+    displayHeader("ACTION SUR LA LISTE");
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("Quelle action souhaitez-vous effectuer ?\n\n");
+
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Sélectionner un étudiant\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Trier la liste\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Tout supprimer\n\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Retour au menu" COLOR_RESET "\n");
+
+    displayChoiceFooter();
+    processOnListChoice(getUserChoice(), management);
+}
+
+void processOnListChoice(int choice, Student_Management *management) {
+    int index;
+    switch (choice) {
+        case 1:
+            index = displaySearchStudentMenu(management);
+            if (index >= 0) {
+                displayStudentFound(management, index);
+            }
+            displayMenu(management);
+            break;
+        case 2:
+            displaySortMenu(management);
+            break;
+        case 3:
+            deleteAllStudents(management);
+            displaySimpleFooter();
+            displayMenu(management);
+            break;
+        case 0:
+            displayMenu(management);
+            break;
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processOnListChoice(getUserChoice(), management);
+            break;
+    }
+}
+
+void displayCalculateAgeMenu(Student_Management *management, int index) {
+    if (index < 0 || index >= management->number) {
+        displayError("ERREUR", "Index d'étudiant invalide.");
+        displaySimpleFooter();
+        return;
+    }
+    
+    clearScreen();
+    displayPath("sms > menu > âge");
+    displayHeader("CALCULER L'ÂGE DE L'ÉTUDIANT");
+    
+    // TODO: Implémenter la récupération de la date actuelle
+    displayInfo("Date actuelle : 01/01/2026"); // Mock data
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    Student *s = getStudentByIndex(management, index);
+    if (s == NULL) {
+        displayError("ERREUR", "Impossible de récupérer l'étudiant.");
+        displaySimpleFooter();
+        return;
+    }
+
+    printf("\n");
+    printSpaces(margin); printf("Étudiant : %s %s\n", s->surname, s->name);
+    printSpaces(margin); printf("Matricule : %s\n", s->id);
+    printSpaces(margin); printf("Date de naissance : %02d/%02d/%04d\n\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
+
+    // TODO: Implémenter calculateAge() pour calculer l'âge réel
+    printSpaces(margin); printf(COLOR_GREEN "Âge : 24 ans, 6 mois, 7 jours" COLOR_RESET "\n"); // Mock data
+
+    displaySimpleFooter();
+}
+
+void displaySettings(Student_Management *management) {
+    clearScreen();    
+    displayPath("sms > paramètres");
+    displayHeader("PARAMÈTRES");
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 40) / 2;
+    if (margin < 0) margin = 0;
+
+    char info[100];
+    sprintf(info, "Capacité actuelle : %d étudiants max", management->capacity);
+    displayInfo(info);
+    
+    sprintf(info, "Étudiants enregistrés : %d", management->number);
+    displayInfo(info);
+
+    displaySimpleFooter();
+}
+
+void displayExitConfirmationMenu(Student_Management *management) {
     clearScreen();    
     displayPath("sms > sortie");
     displayWarning("CONFIRMATION", "Voulez-vous vraiment quitter l'application ?");
@@ -217,215 +688,99 @@ void displayExitConfirmationMenu(){
     printSpaces(margin); printf("  " COLOR_GREEN "0. ❌ Non, retourner au menu" COLOR_RESET "\n");
 
     displayChoiceFooter();
-    processExitChoice(getUserChoice());
+    processExitChoice(getUserChoice(), management);
 }
 
-void displaySettings() {
-    clearScreen();    
-    displayPath("sms > paramètres");
-
-    displaySimpleFooter();
-}
-
-// Affiche la liste de tous les étudiants sous forme de tableau
-void displayStudentList() {
-    clearScreen();
-    displayPath("sms > menu > liste d'étudiants");
-    displayHeader("LISTE DES ÉTUDIANTS (15 étudiants)"); // TODO: Afficher le compteur réel count
-    displayInfo("Trié par ordre alphabétique");
-
-    int termWidth = getTerminalWidth();
-    int tableWidth = 86; // Largeur approximative du tableau
-    int margin = (termWidth - tableWidth) / 2;
-    if (margin < 0) margin = 0;
-
-    // TODO: Parcourir le tableau dynamique d'étudiants (ViewAllStudents)
-    printSpaces(margin); printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
-    printSpaces(margin); printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
-    printSpaces(margin); printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
-    printSpaces(margin); printf("│ 1   │ STU2024001      │ Dupont       │ Jean         │ 15/06/2000 │ Génie Logiciel  │\n");
-    printSpaces(margin); printf("│ 2   │ STU2024002      │ Martin       │ Marie        │ 23/09/1999 │ Data Science    │\n");
-    printSpaces(margin); printf("│ 3   │ STU2024003      │ Bernard      │ Paul         │ 10/03/2001 │ Réseaux         │\n");
-    printSpaces(margin); printf("│ ... │ ...             │ ...          │ ...          │ ...        │ ...             │\n");
-    printSpaces(margin); printf("└─────┴─────────────────┴──────────────┴──────────────┴────────────┴─────────────────┘\n");
-    printf("\n");
-
-    displayOnListMenu();
-}
-
-// Affiche le menu pour calculer l'âge d'un étudiant
-void displayCalculateAgeMenu() {
-    clearScreen();
-    displayPath("sms > menu > âge");
-    displayHeader("CALCULER L'ÂGE DE L'ÉTUDIANT");
-    
-    displayInfo("Date actuelle : 22/12/2024");
-
-    int termWidth = getTerminalWidth();
-    int margin = (termWidth - 40) / 2;
-    if (margin < 0) margin = 0;
-
-    // TODO: Utiliser la fonction calculateAge() de utils.h
-    printSpaces(margin); printf("Étudiant : Jean Dupont\n");
-    printSpaces(margin); printf("Matricule : 23ENSPM0443\n");
-    printSpaces(margin); printf("Date de naissance : 15/06/2000\n\n");
-
-    printSpaces(margin); printf("Âge : 24 ans, 6 mois, 7 jours\n");
-
-    displaySimpleFooter();
-}
-
-// Lit un choix entier de l'utilisateur, vide le tampon en cas d'entrée invalide
-int getUserChoice() {
-    int choice;    
-    int result = scanf("%d", &choice);
-
-    while (getchar() != '\n'); 
-    
-    if (result != 1) {
-        return -1; 
-    }
-    return choice;
-}
-
-void processModifyStudentChoice(int choice) {
+void processExitChoice(int choice, Student_Management *management) {
     switch (choice) {
         case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            break;
-        case 8:
-            break;
-        case 9:
-            // TODO: Appeler modifyStudent() pour appliquer les changements
-            displayMenu();
-            break;
-        case 0:
-            displayMenu();
-            break;
-        default:
-            displayError("Choix invalide", "Veuillez entrer un choix valide.");
-            displayChoiceFooter();
-            processModifyStudentChoice(getUserChoice());
-            break;
-    }
-}
-
-void processOnListChoice(int choice) {
-    switch (choice) {
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 0:
-            displayMenu();
-            break;
-        default:
-            displayError("Choix invalide", "Veuillez entrer un choix valide.");
-            displayChoiceFooter();
-            processOnListChoice(getUserChoice());
-            break;
-    }
-}
-
-void processDeleteChoice(int choice){
-    switch (choice) {
-        case 1:
-            // TODO: Appeler deleteStudent() pour supprimer l'étudiant
-            break;
-        case 0:
-            displayMenu();
-            break;
-        default:
-            displayError("Choix invalide", "Veuillez entrer un choix valide.");
-            displayChoiceFooter();
-            processDeleteChoice(getUserChoice());
-            break;
-    }
-}
-
-void processExitChoice(int choice){
-    switch (choice) {
-        case 1:
-            // TODO: Libérer la mémoire et quitter proprement l'application
+            freeManagement(management);
+            printf("\n✅ Mémoire libérée. Au revoir !\n");
             exit(0); 
             break;
         case 0:
-            displayMenu();
+            displayMenu(management);
             break;
         default:
             displayError("Choix invalide", "Veuillez entrer un choix valide.");
             displayChoiceFooter();
-            processExitChoice(getUserChoice());
+            processExitChoice(getUserChoice(), management);
             break;
     }
 }
 
-// Sélecteur principal pour traiter les choix de l'utilisateur depuis le menu principal
-void processChoice(int choice) {
+void processChoice(int choice, Student_Management *management) {
+    int index;
+    
     switch (choice) {
         case 1:
-            displayRegisterStudentForm();
-            displayMenu();
+            displayRegisterStudentForm(management);
+            displayMenu(management);
             break;
+            
         case 2:
-            displaySearchStudentMenu();
-            displayModifyStudentMenu();
+            index = displaySearchStudentMenu(management);
+            if (index >= 0) {
+                displayModifyStudentMenu(management, index);
+            } else {
+                displayMenu(management);
+            }
             break;
+            
         case 3:
-            displaySearchStudentMenu();
-            displayStudentFound();
-            displayMenu();
+            index = displaySearchStudentMenu(management);
+            if (index >= 0) {
+                displayStudentFound(management, index);
+            }
+            displayMenu(management);
             break;
+            
         case 4:
-            displaySearchStudentMenu();
-            displayDeleteStudentMenu();
+            index = displaySearchStudentMenu(management);
+            if (index >= 0) {
+                displayDeleteStudentMenu(management, index);
+            } else {
+                displayMenu(management);
+            }
             break;
+            
         case 5:
-            // TODO: Appeler sortAlphabetically() puis displayStudentList()
-            displayStudentList();
-            displayMenu();
+            displaySortMenu(management);
             break;
+            
         case 6:
-            // TODO: Appeler binarySearch() après tri
-            displaySearchStudentMenu();
-            displayStudentFound();
-            displayMenu();
+            index = displayBinarySearchMenu(management);
+            if (index >= 0) {
+                displayStudentFound(management, index);
+            }
+            displayMenu(management);
             break;
+            
         case 7:
-            displaySearchStudentMenu();
-            displayCalculateAgeMenu();
-            displayMenu();
+            index = displaySearchStudentMenu(management);
+            if (index >= 0) {
+                displayCalculateAgeMenu(management, index);
+            }
+            displayMenu(management);
             break;
+            
         case 8:
-            displayStudentList();
-            displayMenu();
+            displayStudentList(management);
             break;
+            
         case 9:
-            displaySettings();
-            displayMenu();
+            displaySettings(management);
+            displayMenu(management);
             break;
+            
         case 0:
-            displayExitConfirmationMenu();
+            displayExitConfirmationMenu(management);
             break;
+            
         default:
             displayError("Choix invalide", "Veuillez entrer un choix valide.");
             displayChoiceFooter();
-            processChoice(getUserChoice());
+            processChoice(getUserChoice(), management);
             break;
     }
 }
