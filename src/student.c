@@ -1,30 +1,32 @@
 #include "../include/student.h"
+#include <string.h>
+#include "../include/utils.h"
 
 /* ===== Initialisation ===== */
-void initManagement(Student_Management *mng, int capacity) {
-    mng->list = (Student *)malloc(sizeof(Student) * capacity);
+void initManagement(Student_Management *management, int capacity) {
+    management->list = (Student *)malloc(sizeof(Student) * capacity);
     
-    if (mng->list == NULL) {
+    if (management->list == NULL) {
         fprintf(stderr, "Error: Memory allocation failed\n");
         exit(EXIT_FAILURE);
     }
     
-    mng->number = 0;
-    mng->capacity = capacity;
+    management->number = 0;
+    management->capacity = capacity;
 }
 
 /* ===== Libération mémoire ===== */
-void freeManagement(Student_Management *mng) {
-    free(mng->list);
-    mng->list = NULL;
-    mng->number = 0;
-    mng->capacity = 0;
+void freeManagement(Student_Management *management) {
+    free(management->list);
+    management->list = NULL;
+    management->number = 0;
+    management->capacity = 0;
 }
 
 /* ===== Redimensionnement ===== */
-int resizeManagement(Student_Management *mng) {
-    int newCapacity = mng->capacity * 2;
-    Student *newList = (Student *)realloc(mng->list,
+int resizeManagement(Student_Management *management) {
+    int newCapacity = management->capacity * 2;
+    Student *newList = (Student *)realloc(management->list,
                                           sizeof(Student) * newCapacity);
     
     if (newList == NULL) {
@@ -32,29 +34,37 @@ int resizeManagement(Student_Management *mng) {
         return 0; // FAILURE
     }
     
-    mng->list = newList;
-    mng->capacity = newCapacity;
+    management->list = newList;
+    management->capacity = newCapacity;
     printf("Info: Capacity increased to %d\n", newCapacity);
     return 1; // SUCCESS
 }
 
 /* ===== Affichage d’un étudiant ===== */
 void viewStudent(Student student, int index) {
-    printf("Étudiant #%d\n", index);
-    printf("ID: %d\n", student.id);
-    printf("Nom: %s %s\n", student.name, student.surname);
-    printf("Date de naissance: %02d/%02d/%04d\n",
-           student.birth_date.day,
-           student.birth_date.month,
-           student.birth_date.year);
+    printf("│ %-3d │ %-15.15s │ %-12.12s │ %-12.12s │ %02d/%02d/%04d │ %-15.15s │\n",
+               index + 1,
+               student.id,
+               student.name,
+               student.surname,
+               student.birth_date.day,
+               student.birth_date.month,
+               student.birth_date.year,
+               student.option);
 }
 
 /* ===== Affichage de tous les étudiants ===== */
 
-void viewAllStudents(Student_Management *mng) {
-    for (int i = 0; i < mng->number; i++) {
-        viewStudent(mng->list[i], i);
-        printf("----------------------\n");
+void viewAllStudents(Student_Management *management) {
+    int termWidth = getTerminalWidth();
+    int tableWidth = 86;
+    int margin = (termWidth - tableWidth) / 2;
+    if (margin < 0) margin = 0;
+
+    for (int i = 0; i < management->number; i++) {
+        Student s = management->list[i];
+        printSpaces(margin); 
+        viewStudent(s, i);
     }
 }
 

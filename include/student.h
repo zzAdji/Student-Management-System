@@ -45,7 +45,7 @@ typedef struct {
  * Alloue une capacité initiale (par défaut 10)
  * @param management Pointeur vers la structure de gestion
  */
-void initManagement(Student_Management *mng, int capacity);
+void initManagement(Student_Management *management, int capacity);
 
 /**
  * Libère toute la mémoire allouée
