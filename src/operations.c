@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include "../include/operations.h"
 
 /* ===== CREATE ===== */
@@ -229,7 +231,7 @@ void modifyStudent(Student_Management *mng, int index) {
     char choice_str[10];
     fgets(choice_str, sizeof(choice_str), stdin);
     choice_str[strcspn(choice_str, "\n")] = '\0';
-    int choice = atoi(choice_str);
+    choice = atoi(choice_str);
     getchar(); // Consommer le '\n' restant
     
     // TRAITEMENT DU CHOIX
