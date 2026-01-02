@@ -30,6 +30,7 @@
 #### Phase 6 : Interface Menu
 
 > ⚠️ **Dépendances** :
+>
 > - **Visuel** : AUCUNE dépendance. Peut être codé dès le début.
 > - **Logique** : L'appel aux vraies fonctions nécessitera la `Structure Student` (Phase 2).
 
@@ -82,7 +83,7 @@
 
 - [ ] Créer `include/operations.h` et `src/operations.c`
 - [ ] **Create** : `addStudent()`, `registerStudent()`
-- [ ] **Read** : `getStudentById()`, `selectStudent()`, `getStudentInfo()`
+- [ ] **Read** : `getStudentById()`, `selectStudent()`, `verifyStudent()`
 - [ ] **Update** : `modifyStudent()`, `modifyStudentField()`
 - [ ] **Delete** : `deleteStudent()`, `deleteStudentById()`, `deleteAllStudents()`
 
