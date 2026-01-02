@@ -4,7 +4,7 @@
 #include"search.h"
 
 
-int binarySearch(Gestion_des_Etudiants* tableau, char matricule, int nombre){
+int binarySearch(Gestion_des_Etudiants* tableau,  char* matricule, int nombre){
 
       
    
@@ -38,7 +38,7 @@ int milieu = 0;// milieu intervalle initialiser
 }
 
 int linearSearch(Gestion_des_Etudiants* 
-tableau, char* matricule, int 
+tableau, char *matricule, int 
 nombre){
 
      
