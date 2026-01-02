@@ -61,6 +61,14 @@ void printSpaces(int count) {
     for (int i = 0; i < count; i++) printf(" ");
 }
 
+void printCenterText(char *text) {
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - getVisibleLength(text)) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("%s\n", text);
+}
+
 // Affiche un en-tête centré avec un cadre
 void displayHeaderStyled(char *title, const char *borderColor, const char *titleColor) {
     int titleVisLen = getVisibleLength(title);

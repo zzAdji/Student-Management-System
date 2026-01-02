@@ -783,21 +783,21 @@ Date fin   : 22/12/2025
 - [x] ✅ Créer `src/main.c`
 - [x] ✅ Includes nécessaires
 - [x] ✅ Message bienvenue
-- [ ] ☐ Initialisation
-  - [ ] ☐ Déclarer Student_Management
-  - [ ] ☐ Appel initManagement()
+- [x] ✅ Initialisation
+  - [x] ✅ Déclarer Student_Management
+  - [x] ✅ Appel initManagement()
 - [ ] ☐ Chargement données
   - [ ] ☐ Appel loadData()
   - [ ] ☐ Message si succès/échec
-- [ ] ☐ Boucle principale
-  - [ ] ☐ While choice != 0
-  - [ ] ☐ displayMenu()
-  - [ ] ☐ getUserChoice()
-  - [ ] ☐ processChoice()
+- [x] ✅ Boucle principale
+  - [x] ✅ While choice != 0
+  - [x] ✅ displayMenu()
+  - [x] ✅ getUserChoice()
+  - [x] ✅ processChoice()
 - [ ] ☐ Sortie propre
   - [ ] ☐ Sauvegarde saveData()
-  - [ ] ☐ Libération freeManagement()
-  - [ ] ☐ Message au revoir
+  - [x] ✅ Libération freeManagement()
+  - [x] ✅ Message au revoir
 - [ ] ☐ Compilation test
 - [ ] ☐ Exécution test
 - [ ] ☐ Commit et push

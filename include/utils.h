@@ -27,6 +27,12 @@ int getTerminalWidth();
 void printSpaces(int count);
 
 /**
+ * Affiche un texte centré.
+ * @param text Le texte à centrer.
+ */
+void printCenterText(char *text);
+
+/**
  * Affiche un en-tête stylisé avec un titre centré et des couleurs paramétrables.
  * @param title Le titre à afficher.
  * @param borderColor Code couleur ANSI pour la bordure.
