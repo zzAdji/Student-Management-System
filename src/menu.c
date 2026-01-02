@@ -659,10 +659,6 @@ void displaySettings(Student_Management *management) {
     clearScreen();    
     displayPath("sms > paramètres");
     displayHeader("PARAMÈTRES");
-    
-    int termWidth = getTerminalWidth();
-    int margin = (termWidth - 40) / 2;
-    if (margin < 0) margin = 0;
 
     char info[100];
     sprintf(info, "Capacité actuelle : %d étudiants max", management->capacity);
@@ -672,6 +668,17 @@ void displaySettings(Student_Management *management) {
     displayInfo(info);
 
     displaySimpleFooter();
+}
+
+void displayStats(Student_Management *management) {
+    printf("" COLOR_CYAN);
+    printCenterText("STATISTIQUES");
+    printf(COLOR_RESET "\n");
+
+    char stat[100];
+    sprintf(stat, "%d étudiants inscrits", management->number);
+    printCenterText(stat);
+    printf("\n");
 }
 
 void displayExitConfirmationMenu(Student_Management *management) {
@@ -694,10 +701,7 @@ void displayExitConfirmationMenu(Student_Management *management) {
 void processExitChoice(int choice, Student_Management *management) {
     switch (choice) {
         case 1:
-            freeManagement(management);
-            printf("\n✅ Mémoire libérée. Au revoir !\n");
-            exit(0); 
-            break;
+            return;
         case 0:
             displayMenu(management);
             break;

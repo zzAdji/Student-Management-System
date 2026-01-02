@@ -3,31 +3,30 @@
 #include <string.h>
 #include "../include/menu.h"
 #include "../include/utils.h"
+#include "../include/colors.h"
+#include "../include/data.h"
 
 int main() {
-    // Définit la page de code de la console sur UTF-8
+    clearScreen();
     system("chcp 65001 > nul");
 
-    // Initialisation de la gestion des étudiants
     Student_Management management;
     initManagement(&management, 10);
 
+    if (loadData(&management) == 0) {
+        printCenterText("Aucune données existante. Initialisation...");
+        saveData(&management);
+    }
+
     displayHeader("STUDENT MANAGEMENT SYSTEM (SMS)");
-
-    // Message de bienvenue
-    displayInfo("Bienvenue dans le système de gestion des étudiants !");
-
-    // Stats de notre bd
-    //printf("Capacité actuelle : %d/%d étudiants", management.number, management.capacity);
-
-    // Appel à l'action
+    displayInfo("Bienvenue dans votre système de gestion des étudiants !");
+    displayStats(&management);
     displaySimpleFooter();
     displayMenu(&management);
 
-    // Libération de la gestion des étudiants
+    saveData(&management);
     freeManagement(&management);
 
-    // Réinitialise la page de code de la console sur la page par défaut
     system("chcp 437 > nul");
 
     return 0;
