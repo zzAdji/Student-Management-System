@@ -43,7 +43,7 @@ int resizeManagement(Student_Management *mng) {
 /* ===== Affichage d’un étudiant ===== */
 void viewStudent(Student student, int index) {
     printf("Étudiant #%d\n", index);
-    printf("ID: %d\n", student.id);
+    printf("ID: %s\n", student.id);
     printf("Nom: %s %s\n", student.name, student.surname);
     printf("Date de naissance: %02d/%02d/%04d\n",
            student.birth_date.day,

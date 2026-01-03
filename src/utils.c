@@ -1,26 +1,74 @@
+#include "../include/utils.h"
 #include <stdio.h>
-#include <time.h>
-#include "utils.h"
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
 
-void clearBuffer() {
+int calculateAge(Date birth_date) {
+    time_t t = time(NULL);
+    struct tm *today = localtime(&t);
+
+    int age = (today->tm_year + 1900) - birth_date.year;
+
+    if ((today->tm_mon + 1) < birth_date.month ||
+        ((today->tm_mon + 1) == birth_date.month && today->tm_mday < birth_date.day)) {
+        age--;
+    }
+
+    return age;
+}
+
+void getCurrentDate(char *buffer) {
+    time_t t = time(NULL);
+    struct tm *today = localtime(&t);
+
+    sprintf(buffer, "%02d/%02d/%04d",
+            today->tm_mday,
+            today->tm_mon + 1,
+            today->tm_year + 1900);
+}
+
+void clearBuffer(void) {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void pauseConsole() {
-    printf("\nAppuyez sur Entrée pour continuer...");
+void systemPause(void) {
+#ifdef _WIN32
+    system("pause");
+#else
+    printf("Appuyez sur Entrée pour continuer...");
     getchar();
+#endif
 }
 
-int calculateAge(int day, int month, int year) {
+void clearScreen(void) {
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+void stringToUpper(char *str) {
+    for (; *str; str++)
+        *str = (char)toupper(*str);
+}
+
+void stringToLower(char *str) {
+    for (; *str; str++)
+        *str = (char)tolower(*str);
+}
+
+void generateId(char *id, int number) {
     time_t t = time(NULL);
-    struct tm *now = localtime(&t);
+    struct tm *today = localtime(&t);
 
-    int age = (now->tm_year + 1900) - year;
+    sprintf(id, "STU%d%03d", today->tm_year + 1900, number);
+}
 
-    if (month > (now->tm_mon + 1) ||
-       (month == (now->tm_mon + 1) && day > now->tm_mday)) {
-        age--;
-    }
-    return age;
+void safeCopy(char *dest, const char *src, int size) {
+    if (size <= 0) return;
+    strncpy(dest, src, size - 1);
+    dest[size - 1] = '\0';
 }
