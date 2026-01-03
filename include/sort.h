@@ -17,7 +17,7 @@ nombre);
 /// @param  management Pointeur vers la structure de gestion
 /// @param nombre number of student
 void sortById(Student_Management *management , int 
-nombre);
+nombre);thr
 
 
 #endif
