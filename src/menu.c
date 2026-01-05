@@ -5,7 +5,7 @@
 #include "../include/utils.h"
 #include "../include/validation.h"
 #include "../include/menu.h"
-#include "../include/colors.h"
+#include "../include/config.h"
 #include "../include/utils.h"
 #include "../include/student.h"
 #include "../include/operations.h"

@@ -1,6 +1,6 @@
 #include "../include/data.h"
 #include "../include/utils.h"
-#include "../include/colors.h"
+#include "../include/config.h"
 #include "stdio.h"
 
 int loadData(Student_Management *management) {

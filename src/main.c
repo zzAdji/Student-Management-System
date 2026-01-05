@@ -3,7 +3,6 @@
 #include <string.h>
 #include "../include/menu.h"
 #include "../include/utils.h"
-#include "../include/colors.h"
 #include "../include/data.h"
 
 int main() {

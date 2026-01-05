@@ -4,7 +4,7 @@
 #include <ctype.h>
 #include <time.h>
 #include "../include/utils.h"
-#include "../include/colors.h"
+#include "../include/config.h"
 #include "../include/student.h"
 
 #ifdef _WIN32

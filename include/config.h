@@ -1,5 +1,5 @@
-#ifndef COLORS_H
-#define COLORS_H
+#ifndef CONFIG_H
+#define CONFIG_H
 
 // Codes de réinitialisation
 #define COLOR_RESET   "\033[0m"
