@@ -1,5 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
+#include "../include/student.h"
 
 /**
  * Efface l'écran du terminal.

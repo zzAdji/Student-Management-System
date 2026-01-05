@@ -1,11 +1,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../include/operations.h"
-#include <string.h>
+#include "../include/utils.h"
 
 /* ===== CREATE ===== */
 /**
- * Ajouter un nouvel étudiant
+ * Ajouter un nouvel étudiantà
  * Redimensionne automatiquement si nécessaire
  * @param management Pointeur vers la structure de gestion
  * @param student Étudiant à ajouter
@@ -97,18 +97,15 @@ int modifyStudent(Student_Management *management, int index, int field, const ch
     
     switch (field) {
         case 1: // Matricule
-            strncpy(s->id, value, sizeof(s->id) - 1);
-            s->id[sizeof(s->id) - 1] = '\0';
+            safeCopy(s->id, value, sizeof(s->id) -1);
             break;
             
         case 2: // Nom
-            strncpy(s->name, value, sizeof(s->name) - 1);
-            s->name[sizeof(s->name) - 1] = '\0';
+            safeCopy(s->name, value, sizeof(s->name) - 1);
             break;
             
         case 3: // Prénom
-            strncpy(s->surname, value, sizeof(s->surname) - 1);
-            s->surname[sizeof(s->surname) - 1] = '\0';
+            safeCopy(s->surname, value, sizeof(s->surname) - 1);
             break;
             
         case 4: // Date de naissance (format "JJ MM AAAA")
@@ -128,18 +125,15 @@ int modifyStudent(Student_Management *management, int index, int field, const ch
             break;
             
         case 6: // Département
-            strncpy(s->department, value, sizeof(s->department) - 1);
-            s->department[sizeof(s->department) - 1] = '\0';
+            safeCopy(s->department, value, sizeof(s->department) - 1);
             break;
             
         case 7: // Option/Filière
-            strncpy(s->option, value, sizeof(s->option) - 1);
-            s->option[sizeof(s->option) - 1] = '\0';
+            safeCopy(s->option, value, sizeof(s->option) - 1);
             break;
             
         case 8: // Région d'origine
-            strncpy(s->native_region, value, sizeof(s->native_region) - 1);
-            s->native_region[sizeof(s->native_region) - 1] = '\0';
+            safeCopy(s->native_region, value, sizeof(s->native_region) - 1);
             break;
             
         default:
