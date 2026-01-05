@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../include/utils.h"
+#include "../include/validation.h"
 #include "../include/menu.h"
 #include "../include/colors.h"
 #include "../include/utils.h"

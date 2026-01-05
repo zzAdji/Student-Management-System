@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include "../include/operations.h"
 #include <string.h>
 

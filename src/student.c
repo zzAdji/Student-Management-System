@@ -1,3 +1,5 @@
+#include <string.h>
+#include <stdlib.h>
 #include "../include/student.h"
 #include <string.h>
 #include "../include/utils.h"
