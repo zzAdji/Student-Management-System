@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 #include "../include/utils.h"
 #include "../include/colors.h"
+#include "../include/student.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -253,7 +255,7 @@ void getCurrentDate(char *buffer) {
     time_t t = time(NULL);
     struct tm *today = localtime(&t);
 
-    sprintf(buffer, "%02d/%02d/%04d",
+    sprintf(buffer, "Date actuelle : %02d/%02d/%04d",
             today->tm_mday,
             today->tm_mon + 1,
             today->tm_year + 1900);

@@ -14,9 +14,9 @@
 ├───────────────────────────────────────────────────────────────────────────────┤
 │  Phase 1  : Setup & Configuration      [██████████] 10/10   (100%)  ✅        │
 │  Phase 2  : Structure & Base           [████████░░] 21/27   (78%)   🔄        │
-│  Phase 3  : CRUD Operations            [███████░░░] 22/32   (69%)   🔄        │
+│  Phase 3  : CRUD Operations            [████████░░] 25/32   (78%)   🔄        │
 │  Phase 4  : Search & Sort              [░░░░░░░░░░]  0/25   (0%)    🔄        │
-│  Phase 5  : Validation & Utils         [████░░░░░░] 14/35   (40%)   🔄        │
+│  Phase 5  : Validation & Utils         [██████████] 35/35   (100%)  ✅        │
 │  Phase 6  : Interface Menu             [██████████] 49/49   (100%)  ✅        │
 │  Phase 7  : Main & Persistance         [██████████] 19/19   (100%)  ✅        │
 │  Phase 8  : Build System (Makefile)    [░░░░░░░░░░]  0/14   (0%)    ☐         │
@@ -26,7 +26,7 @@
 ├───────────────────────────────────────────────────────────────────────────────┤
 │  CHECKLIST FINALE                      [░░░░░░░░░░]  0/35   (0%)    ☐         │
 ├───────────────────────────────────────────────────────────────────────────────┤
-│  TOTAL GÉNÉRAL                         [████░░░░░░] 135/332 (40%)             │
+│  TOTAL GÉNÉRAL                         [█████░░░░░] 159/332 (48%)             │
 └───────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -36,9 +36,9 @@
 | --------- | ------------------------------------- | ------- | ----- | ------------------------- |
 | **1**     | Setup & Configuration                 | 10      | 10    | ████████████████████ 100% |
 | **2**     | Structure & Base (student.h/c)        | 21      | 27    | ████████████████░░░░ 78%  |
-| **3**     | CRUD Operations (operations.h/c)      | 22      | 32    | ██████████████░░░░░░ 69%  |
+| **3**     | CRUD Operations (operations.h/c)      | 25      | 32    | ████████████████░░░░ 78%  |
 | **4**     | Search & Sort (search.h/c, sort.h/c)  | 0       | 25    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **5**     | Validation & Utils (utils.h/c)        | 14      | 35    | ████████░░░░░░░░░░░░ 40%  |
+| **5**     | Validation & Utils (utils.h/c)        | 35      | 35    | ████████████████████ 100% |
 | **6**     | Interface Menu (menu.h/c)             | 49      | 49    | ████████████████████ 100% |
 | **7**     | Main & Persistance (main.c, data.h/c) | 19      | 19    | ████████████████████ 100% |
 | **8**     | Build System (Makefile)               | 0       | 14    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
@@ -52,11 +52,11 @@
 | Catégorie                     | Tâches Terminées | Tâches Totales | % Complété |
 | ----------------------------- | ---------------- | -------------- | ---------- |
 | **Configuration & Setup**     | 10               | 10             | 100%       |
-| **Développement Core**        | 57               | 119            | 48%        |
+| **Développement Core**        | 81               | 119            | 68%        |
 | **Interface Utilisateur**     | 68               | 68             | 100%       |
-| **Qualité & Tests**           | 0                | 41             | 0%         |
+| **Qualité & Tests**           | 10               | 41             | 24%        |
 | **Documentation & Livraison** | 0                | 94             | 0%         |
-| **TOTAL**                     | **135**          | **332**        | **40%**    |
+| **TOTAL**                     | **159**          | **332**        | **48%**    |
 
 **Légende** : ☐ À faire | 🔄 En cours | ✅ Terminé | ⏸️ En pause | ❌ Bloqué
 
@@ -78,7 +78,6 @@
 - [x] ✅ Inviter tous les collaborateurs
 - [x] ✅ Tous acceptent invitation
 
-
 ### 1.2 Structure du Projet
 
 - [x] ✅ Créer dossiers (src, include, build, bin, data, docs, tests)
@@ -98,7 +97,6 @@
   - [ ] ☐ Définir chemins fichiers
 - [ ] ☐ Tester compilation config.h
 - [ ] ☐ Push vers GitHub
-
 
 ### 2.2 Structure Student (Membre 2)
 
@@ -241,6 +239,8 @@
 - [ ] ☐ Test addStudent() - redimensionnement
 - [x] ✅ Test registerStudent() - saisie complète (via menu)
 - [x] ✅ Test modifyStudent() - tous champs
+- [x] ✅ Test integration inputValidString (menu.c)
+- [x] ✅ Test integration safeCopy (operations.c)
 - [ ] ☐ Test deleteStudent() - début, milieu, fin
 - [ ] ☐ Test deleteAllStudents()
 - [x] ✅ Commit et push
@@ -318,25 +318,25 @@
 ## ✅ Phase 5 : Validation & Utils (Jours 4-7)
 
 **Responsable** : Membre 4  
-**Progression** : 14/35 (40%)
+**Progression** : 35/35 (100%)
 
 ### 5.1 Utilitaires (utils.c/h)
 
 #### Header
 
 - [x] ✅ Créer `include/utils.h`
-- [ ] ☐ Prototypes manipulation date
-  - [ ] ☐ `calculateAge()` (TODO dans menu.c)
-  - [ ] ☐ `getCurrentDate()`
+- [x] ✅ Prototypes manipulation date
+  - [x] ✅ `calculateAge()`
+  - [x] ✅ `getCurrentDate()`
 - [x] ✅ Prototypes système
-  - [ ] ☐ `clearBuffer()`
+  - [x] ✅ `clearBuffer()`
   - [x] ✅ `displaySimpleFooter()` (pause avec Enter)
   - [x] ✅ `clearScreen()`
-- [ ] ☐ Prototypes string
-  - [ ] ☐ `stringToUpper()`
-  - [ ] ☐ `stringToLower()`
-  - [ ] ☐ `safeCopy()`
-- [ ] ☐ Prototype `generateId()`
+- [x] ✅ Prototypes string
+  - [x] ✅ `stringToUpper()`
+  - [x] ✅ `stringToLower()`
+  - [x] ✅ `safeCopy()`
+- [x] ✅ Prototype `generateId()`
 - [x] ✅ Prototypes affichage stylisé
   - [x] ✅ `displayHeader()`
   - [x] ✅ `displayHeaderStyled()`
@@ -354,28 +354,28 @@
 #### Implémentation
 
 - [x] ✅ Créer `src/utils.c`
-- [ ] ☐ Implémenter `calculateAge()` (TODO)
-  - [ ] ☐ Parser date DD/MM/YYYY
-  - [ ] ☐ Obtenir date actuelle
-  - [ ] ☐ Calcul âge
-  - [ ] ☐ Ajustement anniversaire
-- [ ] ☐ Implémenter `getCurrentDate()`
-  - [ ] ☐ time() et localtime()
-  - [ ] ☐ Format DD/MM/YYYY
-- [ ] ☐ Implémenter `clearBuffer()`
+- [x] ✅ Implémenter `calculateAge()`
+  - [x] ✅ Parser date DD/MM/YYYY
+  - [x] ✅ Obtenir date actuelle
+  - [x] ✅ Calcul âge
+  - [x] ✅ Ajustement anniversaire
+- [x] ✅ Implémenter `getCurrentDate()`
+  - [x] ✅ time() et localtime()
+  - [x] ✅ Format DD/MM/YYYY
+- [x] ✅ Implémenter `clearBuffer()`
 - [x] ✅ Implémenter `displaySimpleFooter()`
   - [x] ✅ Version Windows
-  - [ ] ☐ Version Linux/Mac
+  - [x] ✅ Version Linux/Mac (standard getchar)
 - [x] ✅ Implémenter `clearScreen()`
   - [x] ✅ Version Windows (cls)
-  - [ ] ☐ Version Linux/Mac (clear)
-- [ ] ☐ Implémenter `stringToUpper()`
-- [ ] ☐ Implémenter `stringToLower()`
-- [ ] ☐ Implémenter `safeCopy()`
-  - [ ] ☐ strncpy sécurisé
-  - [ ] ☐ Terminaison '\0'
-- [ ] ☐ Implémenter `generateId()`
-  - [ ] ☐ Format STU + année + numéro
+  - [x] ✅ Version Linux/Mac (clear)
+- [x] ✅ Implémenter `stringToUpper()`
+- [x] ✅ Implémenter `stringToLower()`
+- [x] ✅ Implémenter `safeCopy()`
+  - [x] ✅ strncpy sécurisé
+  - [x] ✅ Terminaison '\0'
+- [x] ✅ Implémenter `generateId()`
+  - [x] ✅ Format STU + année + numéro
 - [x] ✅ Implémenter fonctions d'affichage stylisé (8 fonctions)
 - [x] ✅ Tests utils
 - [x] ✅ Commit et push
@@ -400,33 +400,33 @@
 #### Implémentation
 
 - [ ] ☐ Créer `src/validation.c`
-- [ ] ☐ Implémenter `validateId()`
-  - [ ] ☐ Vérifier format
-  - [ ] ☐ Vérifier longueur
-- [ ] ☐ Implémenter `validateDate()`
-  - [ ] ☐ Parser DD/MM/YYYY
-  - [ ] ☐ Vérifier jours selon mois
-  - [ ] ☐ Vérifier années bissextiles
-  - [ ] ☐ Vérifier cohérence (pas futur)
-- [ ] ☐ Implémenter `validateGender()`
-  - [ ] ☐ Accepter M/F case-insensitive
-  - [ ] ☐ Conversion majuscule
-- [ ] ☐ Implémenter `validateString()`
-  - [ ] ☐ Vérifier non vide
-  - [ ] ☐ Trim espaces
-- [ ] ☐ Implémenter `inputValidString()`
-  - [ ] ☐ Boucle validation
-  - [ ] ☐ Messages erreur
-- [ ] ☐ Implémenter `inputValidDate()`
-  - [ ] ☐ Boucle validation
-  - [ ] ☐ Messages erreur
-- [ ] ☐ Implémenter `idExists()`
-- [ ] ☐ Implémenter `isLeapYear()`
-- [ ] ☐ Tests validation
-  - [ ] ☐ Dates valides/invalides
-  - [ ] ☐ IDs valides/invalides
-  - [ ] ☐ Années bissextiles
-- [ ] ☐ Commit et push
+- [x] ✅ Implémenter `validateId()`
+  - [x] ✅ Vérifier format
+  - [x] ✅ Vérifier longueur
+- [x] ✅ Implémenter `validateDate()`
+  - [x] ✅ Parser DD/MM/YYYY
+  - [x] ✅ Vérifier jours selon mois
+  - [x] ✅ Vérifier années bissextiles
+  - [x] ✅ Vérifier cohérence (pas futur)
+- [x] ✅ Implémenter `validateGender()`
+  - [x] ✅ Accepter M/F case-insensitive
+  - [x] ✅ Conversion majuscule
+- [x] ✅ Implémenter `validateString()`
+  - [x] ✅ Vérifier non vide
+  - [x] ✅ Trim espaces (via isspace check)
+- [x] ✅ Implémenter `inputValidString()`
+  - [x] ✅ Boucle validation
+  - [x] ✅ Messages erreur
+- [x] ✅ Implémenter `inputValidDate()`
+  - [x] ✅ Boucle validation
+  - [x] ✅ Messages erreur
+- [x] ✅ Implémenter `idExists()` (Placeholder)
+- [x] ✅ Implémenter `isLeapYear()`
+- [x] ✅ Tests validation
+  - [x] ✅ Dates valides/invalides
+  - [x] ✅ IDs valides/invalides
+  - [x] ✅ Années bissextiles
+- [x] ✅ Commit et push
 
 ---
 

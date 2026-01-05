@@ -2,8 +2,8 @@
 #define OPERATIONS_H
 
 #include "student.h"
-#include "../include/utils.h"
-#include "../include/validation.h"
+#include "utils.h"
+#include "validation.h"
 
 /**
  * Ajouter un nouvel étudiant
