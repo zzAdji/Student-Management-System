@@ -13,12 +13,12 @@
 │                           PROGRESSION GLOBALE                                 │
 ├───────────────────────────────────────────────────────────────────────────────┤
 │  Phase 1  : Setup & Configuration      [██████████] 10/10   (100%)  ✅        │
-│  Phase 2  : Structure & Base           [░░░░░░░░░░]  0/27   (0%)    ☐         │
-│  Phase 3  : CRUD Operations            [░░░░░░░░░░]  0/32   (0%)    ☐         │
-│  Phase 4  : Search & Sort              [░░░░░░░░░░]  0/25   (0%)    ☐         │
-│  Phase 5  : Validation & Utils         [░░░░░░░░░░]  0/35   (0%)    ☐         │
+│  Phase 2  : Structure & Base           [████████░░] 21/27   (78%)   🔄        │
+│  Phase 3  : CRUD Operations            [███████░░░] 22/32   (69%)   🔄        │
+│  Phase 4  : Search & Sort              [░░░░░░░░░░]  0/25   (0%)    🔄        │
+│  Phase 5  : Validation & Utils         [████░░░░░░] 14/35   (40%)   🔄        │
 │  Phase 6  : Interface Menu             [██████████] 49/49   (100%)  ✅        │
-│  Phase 7  : Main & Persistance         [█░░░░░░░░░]  4/19   (21%)   🔄        │
+│  Phase 7  : Main & Persistance         [██████████] 19/19   (100%)  ✅        │
 │  Phase 8  : Build System (Makefile)    [░░░░░░░░░░]  0/14   (0%)    ☐         │
 │  Phase 9  : Tests & Débogage           [░░░░░░░░░░]  0/41   (0%)    ☐         │
 │  Phase 10 : Documentation              [░░░░░░░░░░]  0/22   (0%)    ☐         │
@@ -26,37 +26,37 @@
 ├───────────────────────────────────────────────────────────────────────────────┤
 │  CHECKLIST FINALE                      [░░░░░░░░░░]  0/35   (0%)    ☐         │
 ├───────────────────────────────────────────────────────────────────────────────┤
-│  TOTAL GÉNÉRAL                         [██░░░░░░░░] 63/332  (19%)             │
+│  TOTAL GÉNÉRAL                         [████░░░░░░] 135/332 (40%)             │
 └───────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 📋 Détail des Tâches par Phase
 
-| Phase     | Description                                    | Terminé | Total | Progression               |
-| --------- | ---------------------------------------------- | ------- | ----- | ------------------------- |
-| **1**     | Setup & Configuration                          | 10      | 10    | ████████████████████ 100% |
-| **2**     | Structure & Base (config.h, student.h/c)       | 0       | 27    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **3**     | CRUD Operations (operations.h/c)               | 0       | 32    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **4**     | Search & Sort (search.h/c, sort.h/c)           | 0       | 25    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **5**     | Validation & Utils (validation.h/c, utils.h/c) | 0       | 35    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **6**     | Interface Menu (menu.h/c)                      | 49      | 49    | ████████████████████ 100% |
-| **7**     | Main & Persistance (main.c, data.h/c)          | 4       | 19    | ████░░░░░░░░░░░░░░░░ 21%  |
-| **8**     | Build System (Makefile)                        | 0       | 14    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **9**     | Tests & Débogage                               | 0       | 41    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **10**    | Documentation                                  | 0       | 22    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **11**    | Intégration Finale                             | 0       | 23    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
-| **Final** | Checklist de Présentation                      | 0       | 35    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| Phase     | Description                           | Terminé | Total | Progression               |
+| --------- | ------------------------------------- | ------- | ----- | ------------------------- |
+| **1**     | Setup & Configuration                 | 10      | 10    | ████████████████████ 100% |
+| **2**     | Structure & Base (student.h/c)        | 21      | 27    | ████████████████░░░░ 78%  |
+| **3**     | CRUD Operations (operations.h/c)      | 22      | 32    | ██████████████░░░░░░ 69%  |
+| **4**     | Search & Sort (search.h/c, sort.h/c)  | 0       | 25    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| **5**     | Validation & Utils (utils.h/c)        | 14      | 35    | ████████░░░░░░░░░░░░ 40%  |
+| **6**     | Interface Menu (menu.h/c)             | 49      | 49    | ████████████████████ 100% |
+| **7**     | Main & Persistance (main.c, data.h/c) | 19      | 19    | ████████████████████ 100% |
+| **8**     | Build System (Makefile)               | 0       | 14    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| **9**     | Tests & Débogage                      | 0       | 41    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| **10**    | Documentation                         | 0       | 22    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| **11**    | Intégration Finale                    | 0       | 23    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
+| **Final** | Checklist de Présentation             | 0       | 35    | ░░░░░░░░░░░░░░░░░░░░ 0%   |
 
 ### 🎯 Résumé Exécutif
 
 | Catégorie                     | Tâches Terminées | Tâches Totales | % Complété |
 | ----------------------------- | ---------------- | -------------- | ---------- |
 | **Configuration & Setup**     | 10               | 10             | 100%       |
-| **Développement Core**        | 0                | 119            | 0%         |
-| **Interface Utilisateur**     | 53               | 68             | 78%        |
+| **Développement Core**        | 57               | 119            | 48%        |
+| **Interface Utilisateur**     | 68               | 68             | 100%       |
 | **Qualité & Tests**           | 0                | 41             | 0%         |
 | **Documentation & Livraison** | 0                | 94             | 0%         |
-| **TOTAL**                     | **63**           | **332**        | **19%**    |
+| **TOTAL**                     | **135**          | **332**        | **40%**    |
 
 **Légende** : ☐ À faire | 🔄 En cours | ✅ Terminé | ⏸️ En pause | ❌ Bloqué
 
@@ -78,23 +78,11 @@
 - [x] ✅ Inviter tous les collaborateurs
 - [x] ✅ Tous acceptent invitation
 
-**Notes** :
-
-```
-Date début : 20/12/2025
-Date fin   : 31/12/2025
-```
 
 ### 1.2 Structure du Projet
 
 - [x] ✅ Créer dossiers (src, include, build, bin, data, docs, tests)
 - [x] ✅ Créer fichiers .gitkeep
-
-**Notes** :
-
-```
-Date création : 20/12/2025
-```
 
 ---
 
@@ -111,176 +99,151 @@ Date création : 20/12/2025
 - [ ] ☐ Tester compilation config.h
 - [ ] ☐ Push vers GitHub
 
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Commit ID  :
-```
 
 ### 2.2 Structure Student (Membre 2)
-**Progression** : 0/24 (0%)
+
+**Progression** : 21/24 (88%)
 
 #### 2.2.1 Header student.h
 
-- [ ] ☐ Créer `include/student.h`
-- [ ] ☐ Définir structure `Date`
-- [ ] ☐ Définir structure `Student`
-  - [ ] ☐ Tous les champs avec bons types
-  - [ ] ☐ Commentaires documentation
-- [ ] ☐ Définir structure `Student_Management`
-  - [ ] ☐ Pointeur list
-  - [ ] ☐ Champs number et capacity
-- [ ] ☐ Prototypes gestion mémoire
-  - [ ] ☐ `initManagement()`
-  - [ ] ☐ `freeManagement()`
-  - [ ] ☐ `resizeManagement()`
-- [ ] ☐ Prototypes affichage
-  - [ ] ☐ `viewStudent()`
-  - [ ] ☐ `viewAllStudents()`
+- [x] ✅ Créer `include/student.h`
+- [x] ✅ Définir structure `Date`
+- [x] ✅ Définir structure `Student`
+  - [x] ✅ Tous les champs avec bons types
+  - [x] ✅ Commentaires documentation
+- [x] ✅ Définir structure `Student_Management`
+  - [x] ✅ Pointeur list
+  - [x] ✅ Champs number et capacity
+- [x] ✅ Prototypes gestion mémoire
+  - [x] ✅ `initManagement()`
+  - [x] ✅ `freeManagement()`
+  - [x] ✅ `resizeManagement()`
+- [x] ✅ Prototypes affichage
+  - [x] ✅ `viewStudent()`
+  - [x] ✅ `viewAllStudents()`
   - [ ] ☐ `displayTableHeader()`
-- [ ] ☐ Prototypes comparaison
-  - [ ] ☐ `compareStudentsByName()`
-  - [ ] ☐ `compareStudentsById()`
-  - [ ] ☐ `compareStudentsByOption()`
+- [x] ✅ Prototypes comparaison
+  - [x] ✅ `compareStudentsByName()`
+  - [x] ✅ `compareStudentsById()`
+  - [x] ✅ `compareStudentsByOption()`
 - [ ] ☐ Prototypes utilitaires
   - [ ] ☐ `copyStudent()`
   - [ ] ☐ `initStudent()`
 
 #### 2.2.2 Implémentation student.c
 
-- [ ] ☐ Créer `src/student.c`
-- [ ] ☐ Implémenter `initManagement()`
-  - [ ] ☐ Allocation mémoire initiale
-  - [ ] ☐ Initialisation champs
-  - [ ] ☐ Gestion erreurs
-- [ ] ☐ Implémenter `freeManagement()`
-  - [ ] ☐ Libération mémoire
-  - [ ] ☐ Réinitialisation pointeurs
-- [ ] ☐ Implémenter `resizeManagement()`
-  - [ ] ☐ Calcul nouvelle capacité
-  - [ ] ☐ Realloc
-  - [ ] ☐ Gestion erreurs
-- [ ] ☐ Implémenter `viewStudent()`
-  - [ ] ☐ Affichage formaté avec bordures
-- [ ] ☐ Implémenter `viewAllStudents()`
-  - [ ] ☐ Gestion liste vide
-  - [ ] ☐ Affichage tableau
+- [x] ✅ Créer `src/student.c`
+- [x] ✅ Implémenter `initManagement()`
+  - [x] ✅ Allocation mémoire initiale
+  - [x] ✅ Initialisation champs
+  - [x] ✅ Gestion erreurs
+- [x] ✅ Implémenter `freeManagement()`
+  - [x] ✅ Libération mémoire
+  - [x] ✅ Réinitialisation pointeurs
+- [x] ✅ Implémenter `resizeManagement()`
+  - [x] ✅ Calcul nouvelle capacité
+  - [x] ✅ Realloc
+  - [x] ✅ Gestion erreurs
+- [x] ✅ Implémenter `viewStudent()`
+  - [x] ✅ Affichage formaté avec bordures
+- [x] ✅ Implémenter `viewAllStudents()`
+  - [x] ✅ Gestion liste vide
+  - [x] ✅ Affichage tableau
 - [ ] ☐ Implémenter `displayTableHeader()`
-- [ ] ☐ Implémenter fonctions comparaison (3)
+- [x] ✅ Implémenter fonctions comparaison (3)
 - [ ] ☐ Implémenter `copyStudent()`
 - [ ] ☐ Implémenter `initStudent()`
-- [ ] ☐ Tester compilation
+- [x] ✅ Tester compilation
 - [ ] ☐ Tester chaque fonction
-- [ ] ☐ Commit et push
-
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Tests      : ☐ initManagement ☐ resizeManagement ☐ viewStudent
-Bugs       :
-```
+- [x] ✅ Commit et push
 
 ---
 
 ## 💾 Phase 3 : CRUD Operations (Jours 3-6)
 
 **Responsable** : Membre 2  
-**Progression** : 0/32 (0%)
+**Progression** : 22/32 (69%)
 
 ### 3.1 Header operations.h
 
-- [ ] ☐ Créer `include/operations.h`
-- [ ] ☐ Prototypes CREATE
-  - [ ] ☐ `addStudent()`
-  - [ ] ☐ `registerStudent()`
-- [ ] ☐ Prototypes READ
-  - [ ] ☐ `getStudentById()`
-  - [ ] ☐ `selectStudent()`
-  - [ ] ☐ `getStudentInfo()`
-- [ ] ☐ Prototypes UPDATE
-  - [ ] ☐ `modifyStudent()`
-  - [ ] ☐ `modifyStudentField()`
-- [ ] ☐ Prototypes DELETE
-  - [ ] ☐ `deleteStudent()`
-  - [ ] ☐ `deleteAllStudents()`
-  - [ ] ☐ `deleteStudentById()`
+- [x] ✅ Créer `include/operations.h`
+- [x] ✅ Prototypes CREATE
+  - [x] ✅ `addStudent()`
+  - [ ] ☐ `registerStudent()` (géré dans menu.c)
+- [x] ✅ Prototypes READ
+  - [x] ✅ `getStudentByIndex()` (remplacé getStudentById)
+  - [x] ✅ `findStudentById()` (recherche par matricule)
+  - [ ] ☐ `selectStudent()` (supprimé, géré dans menu.c)
+- [x] ✅ Prototypes UPDATE
+  - [x] ✅ `modifyStudent(field, value)` (nouvelle signature)
+  - [ ] ☐ `modifyStudentField()` (intégré dans modifyStudent)
+- [x] ✅ Prototypes DELETE
+  - [x] ✅ `deleteStudent()`
+  - [x] ✅ `deleteAllStudents()`
+  - [ ] ☐ `deleteStudentById()` (utiliser findStudentById + deleteStudent)
 
 ### 3.2 Implémentation operations.c
 
-- [ ] ☐ Créer `src/operations.c`
+- [x] ✅ Créer `src/operations.c`
 
 #### CREATE
 
-- [ ] ☐ Implémenter `addStudent()`
-  - [ ] ☐ Vérifier capacité
-  - [ ] ☐ Redimensionner si nécessaire
-  - [ ] ☐ Ajouter étudiant
-  - [ ] ☐ Incrémenter number
-- [ ] ☐ Implémenter `registerStudent()`
+- [x] ✅ Implémenter `addStudent()`
+  - [x] ✅ Vérifier capacité
+  - [x] ✅ Redimensionner si nécessaire
+  - [x] ✅ Ajouter étudiant
+  - [x] ✅ Incrémenter number
+- [ ] ☐ Implémenter `registerStudent()` (géré dans menu.c)
   - [ ] ☐ Saisie interactive toutes infos
   - [ ] ☐ Validation données
-  - [ ] ☐ Appel addStudent()
-  - [ ] ☐ Messages succès/erreur
+  - [x] ✅ Appel addStudent()
+  - [x] ✅ Messages succès/erreur (dans menu.c)
 
 #### READ
 
-- [ ] ☐ Implémenter `getStudentById()`
-  - [ ] ☐ Recherche linéaire
-  - [ ] ☐ Retour index ou -1
-- [ ] ☐ Implémenter `selectStudent()`
-  - [ ] ☐ Demander ID utilisateur
-  - [ ] ☐ Appel getStudentById()
-  - [ ] ☐ Affichage résultat
-- [ ] ☐ Implémenter `getStudentInfo()`
-  - [ ] ☐ Vérification index
-  - [ ] ☐ Affichage détaillé
+- [x] ✅ Implémenter `getStudentByIndex()`
+  - [x] ✅ Vérification index
+  - [x] ✅ Retour pointeur ou NULL
+- [x] ✅ Implémenter `findStudentById()`
+  - [x] ✅ Recherche linéaire
+  - [x] ✅ Retour index ou -1
+- [ ] ☐ Implémenter `selectStudent()` (supprimé, affichage dans menu.c)
+  - [ ] ☐ Demander ID utilisateur (dans menu.c)
+  - [x] ✅ Appel findStudentById()
+  - [x] ✅ Affichage résultat (dans menu.c)
 
 #### UPDATE
 
-- [ ] ☐ Implémenter `modifyStudent()`
-  - [ ] ☐ Menu modification
-  - [ ] ☐ Modification champ par champ
-  - [ ] ☐ Validation nouvelle valeur
-  - [ ] ☐ Confirmation
-- [ ] ☐ Implémenter `modifyStudentField()`
-  - [ ] ☐ Switch selon champ
-  - [ ] ☐ Saisie nouvelle valeur
-  - [ ] ☐ Validation
+- [x] ✅ Implémenter `modifyStudent(management, index, field, value)`
+  - [x] ✅ Switch selon champ (1-8)
+  - [x] ✅ Modification directe du champ
+  - [x] ✅ Validation genre (M/F)
+  - [x] ✅ Parsing date (format "JJ MM AAAA")
+- [ ] ☐ Implémenter `modifyStudentField()` (intégré dans modifyStudent)
 
 #### DELETE
 
-- [ ] ☐ Implémenter `deleteStudent()`
-  - [ ] ☐ Vérification index
-  - [ ] ☐ Décalage éléments
-  - [ ] ☐ Décrément number
-- [ ] ☐ Implémenter `deleteAllStudents()`
-  - [ ] ☐ Confirmation utilisateur
-  - [ ] ☐ Réinitialisation liste
+- [x] ✅ Implémenter `deleteStudent()`
+  - [x] ✅ Vérification index
+  - [x] ✅ Décalage éléments
+  - [x] ✅ Décrément number
+  - [x] ✅ Optimisation mémoire (realloc si <50%)
+- [x] ✅ Implémenter `deleteAllStudents()`
+  - [x] ✅ Libération mémoire
+  - [x] ✅ Réinitialisation liste
 - [ ] ☐ Implémenter `deleteStudentById()`
   - [ ] ☐ Recherche ID
   - [ ] ☐ Appel deleteStudent()
 
 ### 3.3 Tests
 
-- [ ] ☐ Test addStudent() - capacité normale
+- [x] ✅ Test addStudent() - capacité normale
 - [ ] ☐ Test addStudent() - redimensionnement
-- [ ] ☐ Test registerStudent() - saisie complète
-- [ ] ☐ Test modifyStudent() - tous champs
+- [x] ✅ Test registerStudent() - saisie complète (via menu)
+- [x] ✅ Test modifyStudent() - tous champs
 - [ ] ☐ Test deleteStudent() - début, milieu, fin
 - [ ] ☐ Test deleteAllStudents()
-- [ ] ☐ Commit et push
-
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Bugs       :
-```
+- [x] ✅ Commit et push
 
 ---
 
@@ -350,43 +313,48 @@ Bugs       :
   - [ ] ☐ Vérifier ordre après tri
 - [ ] ☐ Commit et push
 
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Performance : Linéaire ___ms | Binaire ___ms (pour 1000 étudiants)
-```
-
 ---
 
 ## ✅ Phase 5 : Validation & Utils (Jours 4-7)
 
 **Responsable** : Membre 4  
-**Progression** : 0/35 (0%)
+**Progression** : 14/35 (40%)
 
 ### 5.1 Utilitaires (utils.c/h)
 
 #### Header
 
-- [ ] ☐ Créer `include/utils.h`
+- [x] ✅ Créer `include/utils.h`
 - [ ] ☐ Prototypes manipulation date
-  - [ ] ☐ `calculateAge()`
+  - [ ] ☐ `calculateAge()` (TODO dans menu.c)
   - [ ] ☐ `getCurrentDate()`
-- [ ] ☐ Prototypes système
+- [x] ✅ Prototypes système
   - [ ] ☐ `clearBuffer()`
-  - [ ] ☐ `systemPause()`
-  - [ ] ☐ `clearScreen()`
+  - [x] ✅ `displaySimpleFooter()` (pause avec Enter)
+  - [x] ✅ `clearScreen()`
 - [ ] ☐ Prototypes string
   - [ ] ☐ `stringToUpper()`
   - [ ] ☐ `stringToLower()`
   - [ ] ☐ `safeCopy()`
 - [ ] ☐ Prototype `generateId()`
+- [x] ✅ Prototypes affichage stylisé
+  - [x] ✅ `displayHeader()`
+  - [x] ✅ `displayHeaderStyled()`
+  - [x] ✅ `displaySuccess()`
+  - [x] ✅ `displayError()`
+  - [x] ✅ `displayWarning()`
+  - [x] ✅ `displayInfo()`
+  - [x] ✅ `displayPath()`
+  - [x] ✅ `displayChoiceFooter()`
+- [x] ✅ Prototypes terminal
+  - [x] ✅ `getTerminalWidth()`
+  - [x] ✅ `getVisibleLength()`
+  - [x] ✅ `printSpaces()`
 
 #### Implémentation
 
-- [ ] ☐ Créer `src/utils.c`
-- [ ] ☐ Implémenter `calculateAge()`
+- [x] ✅ Créer `src/utils.c`
+- [ ] ☐ Implémenter `calculateAge()` (TODO)
   - [ ] ☐ Parser date DD/MM/YYYY
   - [ ] ☐ Obtenir date actuelle
   - [ ] ☐ Calcul âge
@@ -395,12 +363,12 @@ Performance : Linéaire ___ms | Binaire ___ms (pour 1000 étudiants)
   - [ ] ☐ time() et localtime()
   - [ ] ☐ Format DD/MM/YYYY
 - [ ] ☐ Implémenter `clearBuffer()`
-- [ ] ☐ Implémenter `systemPause()`
-  - [ ] ☐ Version Windows
+- [x] ✅ Implémenter `displaySimpleFooter()`
+  - [x] ✅ Version Windows
   - [ ] ☐ Version Linux/Mac
-- [ ] ☐ Implémenter `clearScreen()`
-  - [ ] ☐ Version Windows
-  - [ ] ☐ Version Linux/Mac
+- [x] ✅ Implémenter `clearScreen()`
+  - [x] ✅ Version Windows (cls)
+  - [ ] ☐ Version Linux/Mac (clear)
 - [ ] ☐ Implémenter `stringToUpper()`
 - [ ] ☐ Implémenter `stringToLower()`
 - [ ] ☐ Implémenter `safeCopy()`
@@ -408,8 +376,9 @@ Performance : Linéaire ___ms | Binaire ___ms (pour 1000 étudiants)
   - [ ] ☐ Terminaison '\0'
 - [ ] ☐ Implémenter `generateId()`
   - [ ] ☐ Format STU + année + numéro
-- [ ] ☐ Tests utils
-- [ ] ☐ Commit et push
+- [x] ✅ Implémenter fonctions d'affichage stylisé (8 fonctions)
+- [x] ✅ Tests utils
+- [x] ✅ Commit et push
 
 ### 5.2 Validation (validation.c/h)
 
@@ -458,14 +427,6 @@ Performance : Linéaire ___ms | Binaire ___ms (pour 1000 étudiants)
   - [ ] ☐ IDs valides/invalides
   - [ ] ☐ Années bissextiles
 - [ ] ☐ Commit et push
-
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Tests validation : ☐ Date ☐ ID ☐ Genre
-```
 
 ---
 
@@ -749,76 +710,61 @@ List sorted alphabetically.
 
 - [x] ✅ Implémenter ces messages
 
-**Notes** :
-
-```
-Date début : 21/12/2025
-Date fin   : 22/12/2025
-```
-
 ---
 
 ## 🚀 Phase 7 : Main & Persistance (Jours 6-8)
 
 **Responsable** : Membre 1  
-**Progression** : 4/19 (14%)
+**Progression** : 19/19 (100%)
 
 ### 7.1 Fichier main.c
 
 - [x] ✅ Créer `src/main.c`
 - [x] ✅ Includes nécessaires
 - [x] ✅ Message bienvenue
-- [ ] ☐ Initialisation
-  - [ ] ☐ Déclarer Student_Management
-  - [ ] ☐ Appel initManagement()
-- [ ] ☐ Chargement données
-  - [ ] ☐ Appel loadData()
-  - [ ] ☐ Message si succès/échec
-- [ ] ☐ Boucle principale
-  - [ ] ☐ While choice != 0
-  - [ ] ☐ displayMenu()
-  - [ ] ☐ getUserChoice()
-  - [ ] ☐ processChoice()
-- [ ] ☐ Sortie propre
-  - [ ] ☐ Sauvegarde saveData()
-  - [ ] ☐ Libération freeManagement()
-  - [ ] ☐ Message au revoir
-- [ ] ☐ Compilation test
-- [ ] ☐ Exécution test
-- [ ] ☐ Commit et push
+- [x] ✅ Initialisation
+  - [x] ✅ Déclarer Student_Management
+  - [x] ✅ Appel initManagement()
+- [x] ✅ Chargement données
+  - [x] ✅ Appel loadData()
+  - [x] ✅ Message si succès/échec
+- [x] ✅ Boucle principale
+  - [x] ✅ While choice != 0
+  - [x] ✅ displayMenu()
+  - [x] ✅ getUserChoice()
+  - [x] ✅ processChoice()
+- [x] ✅ Sortie propre
+  - [x] ✅ Sauvegarde saveData()
+  - [x] ✅ Libération freeManagement()
+  - [x] ✅ Message au revoir
+- [x] ✅ Compilation test
+- [x] ✅ Exécution test
+- [x] ✅ Commit et push
 
 ### 7.2 Persistance (data.c/h - optionnel)
 
 - [x] ✅ Créer `include/data.h`
-- [ ] ☐ Prototype `saveData()`
-- [ ] ☐ Prototype `loadData()`
+- [x] ✅ Prototype `saveData()`
+- [x] ✅ Prototype `loadData()`
 - [x] ✅ Créer `src/data.c`
-- [ ] ☐ Implémenter `saveData()`
-  - [ ] ☐ Ouvrir fichier binaire
-  - [ ] ☐ Écrire capacity et number
-  - [ ] ☐ Écrire tableau étudiants
-  - [ ] ☐ Fermer fichier
-  - [ ] ☐ Gestion erreurs
-- [ ] ☐ Implémenter `loadData()`
-  - [ ] ☐ Ouvrir fichier
-  - [ ] ☐ Lire capacity et number
-  - [ ] ☐ Allocation mémoire
-  - [ ] ☐ Lire données
-  - [ ] ☐ Fermer fichier
-  - [ ] ☐ Gestion erreurs
-- [ ] ☐ Tests persistance
-  - [ ] ☐ Sauvegarder 5 étudiants
-  - [ ] ☐ Fermer programme
-  - [ ] ☐ Rouvrir, vérifier chargement
-- [ ] ☐ Commit et push
-
-**Notes** :
-
-```
-Date début : 31/12/2025
-Date fin   : __/01/2026
-Fichier data : data/students.dat (___Ko)
-```
+- [x] ✅ Implémenter `saveData()`
+  - [x] ✅ Ouvrir fichier binaire
+  - [x] ✅ Écrire capacity et number
+  - [x] ✅ Écrire tableau étudiants
+  - [x] ✅ Fermer fichier
+  - [x] ✅ Gestion erreurs
+- [x] ✅ Implémenter `loadData()`
+  - [x] ✅ Ouvrir fichier
+  - [x] ✅ Lire capacity et number
+  - [x] ✅ Allocation mémoire
+  - [x] ✅ Lire données
+  - [x] ✅ Fermer fichier
+  - [x] ✅ Gestion erreurs
+- [x] ✅ Tests persistance
+  - [x] ✅ Sauvegarder 5 étudiants
+  - [x] ✅ Fermer programme
+  - [x] ✅ Rouvrir, vérifier chargement
+- [x] ✅ Commit et push
 
 ---
 
@@ -847,14 +793,6 @@ Fichier data : data/students.dat (___Ko)
   - [ ] ☐ `make re` recompile
   - [ ] ☐ `make run` exécute
 - [ ] ☐ Commit et push
-
-**Notes** :
-
-```
-Date création : ___/___
-Compilateur   : gcc version _____
-Flags         : -Wall -Wextra -Werror
-```
 
 ---
 
@@ -948,15 +886,6 @@ Flags         : -Wall -Wextra -Werror
 - [ ] ☐ Lister bugs trouvés
 - [ ] ☐ Créer issues GitHub pour bugs
 
-**Notes** :
-
-```
-Date début tests : ___/___
-Date fin tests   : ___/___
-Bugs trouvés     : ___
-Bugs résolus     : ___
-```
-
 ---
 
 ## 📚 Phase 10 : Documentation (Jours 8-10)
@@ -1002,14 +931,6 @@ Bugs résolus     : ___
 - [ ] ☐ Ajouter screenshots
 - [ ] ☐ Ajouter exemples utilisation
 - [ ] ☐ Badges (si applicable)
-
-**Notes** :
-
-```
-Date début : ___/___
-Date fin   : ___/___
-Pages doc  : ___
-```
 
 ---
 
@@ -1061,14 +982,6 @@ Pages doc  : ___
 - [ ] ☐ Tous fichiers présents
 - [ ] ☐ Compilation testée
 - [ ] ☐ Documentation incluse
-
-**Notes** :
-
-```
-Date merge main : ___/___
-Version finale  : v1.0.0
-Archive         : sms-v1.0.0.tar.gz
-```
 
 ---
 
@@ -1205,4 +1118,4 @@ Issues résolues         : _____
 ---
 
 _Document de suivi créé le : 21/12/2025_  
-_Dernière mise à jour : 31/12/2025_
+_Dernière mise à jour : 04/01/2026_
