@@ -217,7 +217,7 @@ void deleteAllStudents(Student_Management *management);
  * @param index Index de l'étudiant
  * @return 1 si trouvé, 0 sinon
  */
-int getStudentInfo(Student_Management *management, int index);
+int verifyStudent(Student_Management *management, int index);
 ```
 
 **Responsable** : Membre 2

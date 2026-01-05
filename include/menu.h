@@ -29,6 +29,12 @@ void displayOnListMenu(Student_Management *management);
 void displaySettings(Student_Management *management);
 
 /**
+ * Affiche les statistisques de notre bd.
+ * @param management Pointeur vers la structure de gestion des étudiants
+ */
+void displayStats(Student_Management *management);
+
+/**
  * Récupère le choix de l'utilisateur sur l'entrée standard.
  * @return Le choix de l'utilisateur (entier), ou -1 en cas d'erreur.
  */

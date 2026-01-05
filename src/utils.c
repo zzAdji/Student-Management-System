@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <time.h>
 #include "../include/utils.h"
 #include "../include/colors.h"
+#include "../include/student.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -59,6 +62,14 @@ int getTerminalWidth() {
 // Affiche x espaces
 void printSpaces(int count) {
     for (int i = 0; i < count; i++) printf(" ");
+}
+
+void printCenterText(char *text) {
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - getVisibleLength(text)) / 2;
+    if (margin < 0) margin = 0;
+
+    printSpaces(margin); printf("%s\n", text);
 }
 
 // Affiche un en-tête centré avec un cadre
@@ -224,4 +235,65 @@ void displayPath(char *path) {
     printf("\n\n");
     printSpaces(pathMargin);
     printf("%s\n\n", path);
+}
+
+int calculateAge(Date birth_date) {
+    time_t t = time(NULL);
+    struct tm *today = localtime(&t);
+
+    int age = (today->tm_year + 1900) - birth_date.year;
+
+    if ((today->tm_mon + 1) < birth_date.month ||
+        ((today->tm_mon + 1) == birth_date.month && today->tm_mday < birth_date.day)) {
+        age--;
+    }
+
+    return age;
+}
+
+void getCurrentDate(char *buffer) {
+    time_t t = time(NULL);
+    struct tm *today = localtime(&t);
+
+    sprintf(buffer, "Date actuelle : %02d/%02d/%04d",
+            today->tm_mday,
+            today->tm_mon + 1,
+            today->tm_year + 1900);
+}
+
+void clearBuffer(void) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void systemPause(void) {
+#ifdef _WIN32
+    system("pause");
+#else
+    printf("Appuyez sur Entrée pour continuer...");
+    getchar();
+#endif
+}
+
+void stringToUpper(char *str) {
+    for (; *str; str++)
+        *str = (char)toupper(*str);
+}
+
+void stringToLower(char *str) {
+    for (; *str; str++)
+        *str = (char)tolower(*str);
+}
+
+void generateId(char *id, int number) {
+    time_t t = time(NULL);
+    struct tm *today = localtime(&t);
+
+    sprintf(id, "STU%d%03d", today->tm_year + 1900, number);
+}
+
+void safeCopy(char *dest, const char *src, int size) {
+    if (size <= 0) return;
+    strncpy(dest, src, size - 1);
+    dest[size - 1] = '\0';
 }

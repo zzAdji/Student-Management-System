@@ -1,16 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include "../include/utils.h"
+#include "../include/validation.h"
 #include "../include/menu.h"
 #include "../include/colors.h"
 #include "../include/utils.h"
 #include "../include/student.h"
 #include "../include/operations.h"
+#include "../include/validation.h"
 
 int getUserChoice() {
     int choice;    
     int result = scanf("%d", &choice);
-    while (getchar() != '\n'); 
+    clearBuffer();
+
     if (result != 1) {
         return -1; 
     }
@@ -60,47 +65,75 @@ int displayRegisterStudentForm(Student_Management *management) {
     Student newStudent;
     
     // Matricule
-    printSpaces(margin); printf("Matricule (ex: 23ENSPM0443)    : ");
-    fgets(newStudent.id, sizeof(newStudent.id), stdin);
-    newStudent.id[strcspn(newStudent.id, "\n")] = '\0';
-
+    inputValidString(
+        newStudent.id,
+        sizeof(newStudent.id),
+        "Matricule (ex: 23ENSPM0443)    : ", 
+        validateId, 
+        "Le format de ce matricule est mauvais! Veillez réessayer!"
+    );
+    
     // Nom
-    printSpaces(margin); printf("Nom                            : ");
-    fgets(newStudent.name, sizeof(newStudent.name), stdin);
-    newStudent.name[strcspn(newStudent.name, "\n")] = '\0';
+    inputValidString(
+        newStudent.name, 
+        sizeof(newStudent.name),
+        "Nom                            : ", 
+        validateString, 
+        "Le nom est invalide! Veillez réessayer!"
+    );
 
     // Prénom
-    printSpaces(margin); printf("Prénom                         : ");
-    fgets(newStudent.surname, sizeof(newStudent.surname), stdin);
-    newStudent.surname[strcspn(newStudent.surname, "\n")] = '\0';
+    inputValidString(
+        newStudent.surname, 
+        sizeof(newStudent.surname),
+        "Prénom                         : ", 
+        validateString, 
+        "Le prénom est invalide! Veillez réessayer!"
+    );
 
     // Date de naissance
-    // TODO: Implémenter la validation de la date de naissance
     char buffer[100];
-    printSpaces(margin); printf("Date de naissance (JJ MM AAAA) : ");
-    fgets(buffer, sizeof(buffer), stdin);
+    inputValidDate(
+        buffer, 
+        "Date de naissance (JJ MM AAAA) : "
+    );
     sscanf(buffer, "%d %d %d", &newStudent.birth_date.day, &newStudent.birth_date.month, &newStudent.birth_date.year);
-
     // Genre
-    // TODO: Implémenter la validation du genre (M/F)
-    printSpaces(margin); printf("Genre (M/F)                    : ");
-    fgets(buffer, sizeof(buffer), stdin);
-    newStudent.gender = buffer[0];
+    inputValidString(
+        buffer,
+        sizeof(buffer),
+        "Genre (M/F)                    : ", 
+        validateGender, 
+        "Le genre doit etre M ou F! Veillez réessayer!"
+    );
+    newStudent.gender = toupper(buffer[0]);
 
     // Département
-    printSpaces(margin); printf("Département                    : ");
-    fgets(newStudent.department, sizeof(newStudent.department), stdin);
-    newStudent.department[strcspn(newStudent.department, "\n")] = '\0';
+    inputValidString(
+        newStudent.department,
+        sizeof(newStudent.department),
+        "Département                    : ", 
+        validateString, 
+        "Le département est invalide! Veillez réessayer!"
+    );
 
     // Option/Filière
-    printSpaces(margin); printf("Option                         : ");
-    fgets(newStudent.option, sizeof(newStudent.option), stdin);
-    newStudent.option[strcspn(newStudent.option, "\n")] = '\0';
+    inputValidString(
+        newStudent.option, 
+        sizeof(newStudent.option),
+        "Option                         : ", 
+        validateString, 
+        "L'option est invalide! Veillez réessayer!"
+    );
 
     // Région d'origine
-    printSpaces(margin); printf("Région d'origine               : ");
-    fgets(newStudent.native_region, sizeof(newStudent.native_region), stdin);
-    newStudent.native_region[strcspn(newStudent.native_region, "\n")] = '\0';
+    inputValidString(
+        newStudent.native_region,
+        sizeof(newStudent.native_region),
+        "Région d'origine               : ", 
+        validateString, 
+        "La région d'origine est invalide! Veillez réessayer!"
+    );
 
     int result = addStudent(management, newStudent);
     
@@ -179,8 +212,7 @@ void displayStudentFound(Student_Management *management, int index) {
     printSpaces(margin); printf("  Nom                : %s\n", s->name);
     printSpaces(margin); printf("  Prénom             : %s\n", s->surname);
     printSpaces(margin); printf("  Date de naissance  : %02d/%02d/%04d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
-    // TODO: Implémenter calculateAge() et afficher l'âge réel
-    printSpaces(margin); printf("  Âge                : 24 ans, 6 mois, 7 jours\n"); // Mock data
+    printSpaces(margin); printf("  Âge                : %d\n", calculateAge(s->birth_date));
     printSpaces(margin); printf("  Genre              : %c\n", s->gender);
     printSpaces(margin); printf("  Département        : %s\n", s->department);
     printSpaces(margin); printf("  Option             : %s\n", s->option);
@@ -248,11 +280,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
     
     switch (choice) {
         case 1: // Matricule
-            printf("\nMatricule actuel: %s\n", s->id);
-            printf("Nouveau matricule: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 1, buffer);
+            printf("Actuel matricule : %s\n", s->id);
+            inputValidString(
+                s->id,
+                sizeof(s->id),
+                "Nouveau matricule (ex: 23ENSPM0443): ", 
+                validateId, 
+                "Le format de ce matricule est mauvais! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 1, s->id);
             if (result) {
                 displaySuccess("MODIFIÉ", "Matricule mis à jour avec succès !");
             } else {
@@ -263,11 +299,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 2: // Nom
-            printf("\nNom actuel: %s\n", s->name);
-            printf("Nouveau nom: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 2, buffer);
+            printf("Actuel nom : %s\n", s->name);
+            inputValidString(
+                s->name,
+                sizeof(s->name),
+                "Nouveau nom: ", 
+                validateString, 
+                "Le nom doit contenir au moins 2 caractères! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 2, s->name);
             if (result) {
                 displaySuccess("MODIFIÉ", "Nom mis à jour avec succès !");
             } else {
@@ -278,11 +318,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 3: // Prénom
-            printf("\nPrénom actuel: %s\n", s->surname);
-            printf("Nouveau prénom: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 3, buffer);
+            printf("Actuel prénom : %s\n", s->surname);
+            inputValidString(
+                s->surname,
+                sizeof(s->surname),
+                "Nouveau prénom: ", 
+                validateString, 
+                "Le prénom doit contenir au moins 2 caractères! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 3, s->surname);
             if (result) {
                 displaySuccess("MODIFIÉ", "Prénom mis à jour avec succès !");
             } else {
@@ -293,10 +337,11 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 4: // Date de naissance
-            printf("\nDate actuelle: %02d/%02d/%d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
-            printf("Nouvelle date (JJ MM AAAA): ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
+            printf("Actuelle date de naissance : %02d/%02d/%04d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
+            inputValidDate(
+                buffer,
+                "Nouvelle date (JJ MM AAAA): "
+            );
             result = modifyStudent(management, index, 4, buffer);
             if (result) {
                 displaySuccess("MODIFIÉ", "Date de naissance mise à jour !");
@@ -308,10 +353,14 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 5: // Genre
-            printf("\nGenre actuel: %c\n", s->gender);
-            printf("Nouveau genre (M/F): ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
+            printf("Actuel genre : %c\n", s->gender);
+            inputValidString(
+                buffer,
+                sizeof(buffer),
+                "Nouveau genre (M/F): ", 
+                validateGender, 
+                "Le genre doit être M ou F! Veillez réessayer!"
+            );
             result = modifyStudent(management, index, 5, buffer);
             if (result) {
                 displaySuccess("MODIFIÉ", "Genre mis à jour avec succès !");
@@ -323,11 +372,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 6: // Département
-            printf("\nDépartement actuel: %s\n", s->department);
-            printf("Nouveau département: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 6, buffer);
+            printf("Actuel département : %s\n", s->department);
+            inputValidString(
+                s->department,
+                sizeof(s->department),
+                "Nouveau département: ", 
+                validateString, 
+                "Le département doit contenir au moins 2 caractères! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 6, s->department);
             if (result) {
                 displaySuccess("MODIFIÉ", "Département mis à jour avec succès !");
             } else {
@@ -338,11 +391,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 7: // Option
-            printf("\nOption actuelle: %s\n", s->option);
-            printf("Nouvelle option: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 7, buffer);
+            printf("Actuelle option : %s\n", s->option);
+            inputValidString(
+                s->option,
+                sizeof(s->option),
+                "Nouvelle option: ", 
+                validateString, 
+                "L'option doit contenir au moins 2 caractères! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 7, s->option);
             if (result) {
                 displaySuccess("MODIFIÉ", "Option mise à jour avec succès !");
             } else {
@@ -353,11 +410,15 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 8: // Région d'origine
-            printf("\nRégion actuelle: %s\n", s->native_region);
-            printf("Nouvelle région: ");
-            fgets(buffer, sizeof(buffer), stdin);
-            buffer[strcspn(buffer, "\n")] = '\0';
-            result = modifyStudent(management, index, 8, buffer);
+            printf("Actuelle région d'origine : %s\n", s->native_region);
+            inputValidString(
+                s->native_region,
+                sizeof(s->native_region),
+                "Nouvelle région: ",  
+                validateString, 
+                "La région doit contenir au moins 2 caractères! Veillez réessayer!"
+            );
+            result = modifyStudent(management, index, 8, s->native_region);
             if (result) {
                 displaySuccess("MODIFIÉ", "Région mise à jour avec succès !");
             } else {
@@ -560,6 +621,7 @@ void displayStudentList(Student_Management *management) {
     int margin = (termWidth - tableWidth) / 2;
     if (margin < 0) margin = 0;
 
+    // TODO :  Affichage complet de toutes les données
     printSpaces(margin); printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
     printSpaces(margin); printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
     printSpaces(margin); printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
@@ -630,8 +692,10 @@ void displayCalculateAgeMenu(Student_Management *management, int index) {
     displayPath("sms > menu > âge");
     displayHeader("CALCULER L'ÂGE DE L'ÉTUDIANT");
     
-    // TODO: Implémenter la récupération de la date actuelle
-    displayInfo("Date actuelle : 01/01/2026"); // Mock data
+    char date[11];
+    getCurrentDate(date);
+
+    displayInfo(date);
 
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
@@ -648,9 +712,9 @@ void displayCalculateAgeMenu(Student_Management *management, int index) {
     printSpaces(margin); printf("Étudiant : %s %s\n", s->surname, s->name);
     printSpaces(margin); printf("Matricule : %s\n", s->id);
     printSpaces(margin); printf("Date de naissance : %02d/%02d/%04d\n\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
-
-    // TODO: Implémenter calculateAge() pour calculer l'âge réel
-    printSpaces(margin); printf(COLOR_GREEN "Âge : 24 ans, 6 mois, 7 jours" COLOR_RESET "\n"); // Mock data
+    printf(COLOR_GREEN);
+    printSpaces(margin); printf("Âge : %d ans\n", calculateAge(s->birth_date));
+    printf(COLOR_RESET);
 
     displaySimpleFooter();
 }
@@ -659,10 +723,6 @@ void displaySettings(Student_Management *management) {
     clearScreen();    
     displayPath("sms > paramètres");
     displayHeader("PARAMÈTRES");
-    
-    int termWidth = getTerminalWidth();
-    int margin = (termWidth - 40) / 2;
-    if (margin < 0) margin = 0;
 
     char info[100];
     sprintf(info, "Capacité actuelle : %d étudiants max", management->capacity);
@@ -672,6 +732,17 @@ void displaySettings(Student_Management *management) {
     displayInfo(info);
 
     displaySimpleFooter();
+}
+
+void displayStats(Student_Management *management) {
+    printf("" COLOR_CYAN);
+    printCenterText("STATISTIQUES");
+    printf(COLOR_RESET "\n");
+
+    char stat[100];
+    sprintf(stat, "%d étudiants inscrits", management->number);
+    printCenterText(stat);
+    printf("\n");
 }
 
 void displayExitConfirmationMenu(Student_Management *management) {
@@ -694,10 +765,7 @@ void displayExitConfirmationMenu(Student_Management *management) {
 void processExitChoice(int choice, Student_Management *management) {
     switch (choice) {
         case 1:
-            freeManagement(management);
-            printf("\n✅ Mémoire libérée. Au revoir !\n");
-            exit(0); 
-            break;
+            return;
         case 0:
             displayMenu(management);
             break;

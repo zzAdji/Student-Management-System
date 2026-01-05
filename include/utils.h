@@ -1,5 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
+#include "../include/student.h"
 
 /**
  * Efface l'écran du terminal.
@@ -25,6 +26,12 @@ int getTerminalWidth();
  * @param count Nombre d'espaces à afficher.
  */
 void printSpaces(int count);
+
+/**
+ * Affiche un texte centré.
+ * @param text Le texte à centrer.
+ */
+void printCenterText(char *text);
 
 /**
  * Affiche un en-tête stylisé avec un titre centré et des couleurs paramétrables.
@@ -82,5 +89,45 @@ void displayChoiceFooter();
  * @param path Le chemin à afficher.
  */
 void displayPath(char *path);
+
+/**
+ * Calculer l'âge à partir de la date de naissance
+ */
+int calculateAge(Date birth_date);
+
+/**
+ * Obtenir la date actuelle (DD/MM/YYYY)
+ */
+void getCurrentDate(char *buffer);
+
+/**
+ * Nettoyer le buffer d'entrée
+ */
+void clearBuffer(void);
+
+/**
+ * Pause système multiplateforme
+ */
+void systemPause(void);
+
+/**
+ * Convertir une chaîne en majuscules
+ */
+void stringToUpper(char *str);
+
+/**
+ * Convertir une chaîne en minuscules
+ */
+void stringToLower(char *str);
+
+/**
+ * Générer un matricule automatique
+ */
+void generateId(char *id, int number);
+
+/**
+ * Copier une chaîne de manière sécurisée
+ */
+void safeCopy(char *dest, const char *src, int size);
 
 #endif
