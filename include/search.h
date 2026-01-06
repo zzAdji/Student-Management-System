@@ -2,7 +2,7 @@
 #define SEARCH
 
 
-int binarySearch(Student* tableau , char matricule,
+int binarySearch(Student_management* tableau , char matricule,
 int nombre);// prototype de la fonction de tri;
 
 
@@ -13,7 +13,7 @@ int nombre);// prototype de la fonction de tri;
 
 
 int linearSearch
-(Student* tableau, char* matricule, int nombre);
+(Student_management* tableau, char* matricule, int nombre);
 
 
 
@@ -23,7 +23,7 @@ int linearSearch
 
 
 
-int isSorted(Student* tableau, int nombre);
+int isSorted(Student_management* tableau, int nombre);
 
 
 
@@ -34,7 +34,7 @@ int isSorted(Student* tableau, int nombre);
 
 
 
-int smartSearch(Student* tableau,char* matricule, int nombre);
+int smartSearch(Student_management* tableau,char* matricule, int nombre);
 
 
 
