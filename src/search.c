@@ -4,7 +4,7 @@
 #include"search.h"
 
 
-int binarySearch(Student* tableau,  char* matricule, int nombre){
+int binarySearch(Student_management* tableau,  char* matricule, int nombre){
 
       
    
@@ -37,7 +37,7 @@ int milieu = 0;// milieu intervalle initialiser
    return -1;
 }
 
-int linearSearch(Student* 
+int linearSearch(Student_management* 
 tableau, char *matricule, int 
 nombre){
 
@@ -74,7 +74,7 @@ nombre){
 
 
 
-int isSorted(Student* tableau, int nombre){
+int isSorted(Student_management* tableau, int nombre){
 
 
 
@@ -105,7 +105,7 @@ int isSorted(Student* tableau, int nombre){
 
 
 }
-int smartSearch(Student* tableau,char* matricule, int nombre){
+int smartSearch(Student_management* tableau,char* matricule, int nombre){
 int index = 0;
 
       if(isSorted(tableau,  nombre)) {
