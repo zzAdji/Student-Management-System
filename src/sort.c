@@ -3,9 +3,9 @@
 #include<string.h>
 #include"sort.h"
 // creation de la fonction de tri 
-void  sort(Gestion_des_Etudiants* 
+void  sort(Student* 
 tableau ,int nombre ){
-
+               
   
      for (int i = 1; i < nomre; i++)
      {
