@@ -2,6 +2,7 @@
 #include "../include/utils.h"
 #include "../include/colors.h"
 #include "stdio.h"
+#include "stdlib.h"
 
 int loadData(Student_Management *management) {
     FILE *file = fopen("data/students.dat", "rb");
