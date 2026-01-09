@@ -1,29 +1,21 @@
 #ifndef SEARCH
 #define SEARCH
-
-
-int binarySearch(Gestion_des_Etudiants* tableau , char matricule,
-int nombre);// prototype de la fonction de tri;
-
-
-
-
-
-
-
-
-int linearSearch
-(Gestion_des_Etudiants* tableau, char* matricule, int nombre);
+#include"student.h"
+/// @brief 
+/// @param  management Pointeur vers la structure de gestion
+/// @param nombre number of student
+int binarySearch(Student_Management* management , char* id);// prototype de la fonction de tri;
 
 
 
 
 
 
+/// @brief 
+/// @param  management Pointeur vers la structure de gestion
+/// @param nombre number of student
 
-
-
-int isSorted(Gestion_des_Etudiants* tableau, int nombre);
+int linearSearch(Student_Management* management, char* id);
 
 
 
@@ -32,9 +24,23 @@ int isSorted(Gestion_des_Etudiants* tableau, int nombre);
 
 
 
+/// @brief 
+/// @param  management Pointeur vers la structure de gestion
+/// @param nombre number of student
+int isSorted(Student_Management* management);
 
 
-int smartSearch(Gestion_des_Etudiants* tableau,char* matricule, int nombre);
+
+
+
+
+
+
+
+/// @brief 
+/// @param  management Pointeur vers la structure de gestion
+/// @param nombre number of student
+int smartSearch(Student_Management* management,char* id);
 
 
 

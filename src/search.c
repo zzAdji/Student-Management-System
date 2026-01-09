@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include"search.h"
+#include"../include/search.h"
 
 
-int binarySearch(Gestion_des_Etudiants* tableau, char matricule, int nombre){
+int binarySearch(Student_Management *management,  char* id){
+      
 
       
-   
+int nombre = management->number;   
 int borne1 = 0;//borne inferieur
 int borne2 = nombre-1;//borne superieure
 int indexmatriculechercher = 0;// indice du matricule chercher
@@ -15,13 +16,12 @@ int milieu = 0;// milieu intervalle initialiser
    while(borne1 <= borne2){
     milieu = (borne1+borne2)/2;
 
-    if (strcmp(tableau[milieu].matricule ,matricule) == 0 ){
+    if (strcmp(management->list[milieu].id ,id) == 0 ){
         indexmatriculechercher = milieu;
         return  indexmatriculechercher ;// retour de l'indice
 
-        break;// fin
     }
-    else if (strcmp(tableau[milieu].matricule ,matricule) < 0 ){
+    else if (strcmp(management->list[milieu].id ,id) < 0 ){
 
         borne1 = milieu + 1 ;//changement de borne inferieur
 
@@ -37,19 +37,19 @@ int milieu = 0;// milieu intervalle initialiser
    return -1;
 }
 
-int linearSearch(Gestion_des_Etudiants* 
-tableau, char* matricule, int 
-nombre){
+int linearSearch(Student_Management *management, char *id){
+      
 
      
-
+  int nombre = 0;
+  nombre = management->number;    
   for (int i = 0; i < nombre; i++)
   {
-      if(strcmp(tableau[i].matricule,matricule) == 0){
+      if(strcmp(management->list[i].id,id) == 0){
 
 
           return i;
-          break;
+          
       }
 
   }
@@ -74,30 +74,26 @@ nombre){
 
 
 
-int isSorted(Gestion_des_Etudiants* tableau, int nombre){
+int isSorted(Student_Management* management){
 
-
+      int nombre = 0;
+      nombre = management->number;
 
     int numb = 0;
       for (int i = 0 ;i < nombre-1; i++)
       {
             
-                 if(strcmp(tableau[i].matricule,tableau[i+1].matricule)>0){
-                       numb = numb +1;
+                 if(strcmp(management->list[i].id,management->list[i+1].id)>0){
+                       
+                    return 0;
                           
 
                  }
-                 else if (strcmp(tableau[i].matricule,tableau[i+1].matricule)  = < =0){
-                    numb = numb -1;
- }
+                
 
-      if ((numb == nombre+1)|| (numb*(-1) == nombre) )
-      {
-        return 1 ; /* code */
-      }
-      else{
-        return 0 ;
-      }
+    
+        return 1 ;
+      
       
 
 }
@@ -105,16 +101,17 @@ int isSorted(Gestion_des_Etudiants* tableau, int nombre){
 
 
 }
-int smartSearch(Gestion_des_Etudiants* tableau,char* matricule, int nombre){
+int smartSearch(Student_Management* management,char* id){
 int index = 0;
+      int nombre = 0;
+      nombre = management->number;
 
-      if(isSorted(tableau,  nombre)) {
+      if(isSorted(management)) {
 
-       index =     binarySearch(tableau,matricule , nombre);
+       index = binarySearch(management,id);
       }
     else{
-        index = linearSearch(tableau,matricule , nombre);
-    }
+        index = linearSearch(management,id)   ;}
     return index;
 
 
