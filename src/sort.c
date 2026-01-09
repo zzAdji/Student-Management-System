@@ -1,27 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-<<<<<<< HEAD
-#include"sort.h"
-// creation de la fonction de tri 
-void  sort(Gestion_des_Etudiants* 
-tableau ,int nombre ){
-
-  
-     for (int i = 1; i < nomre; i++)
-     {
-       
-        Gestion_des_Etudiants stud  = tableau[i];
-         
-         
-        int j = i-1;// intialistion du compteur des cases suivantes;
-
-        while((j>=0)&&(strcmp(stud.nom,tableau[j].nom)< 0)){
-=======
-#include"../include/sort.h"
-// creation des fonctions de tri 
->>>>>>> main
-
 
     
 
