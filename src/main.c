@@ -9,11 +9,12 @@ int main() {
     clearScreen();
     system("chcp 65001 > nul");
 
+    // TODO : Initialisation après le load ???
     Student_Management management;
     initManagement(&management, 10);
 
     if (loadData(&management) == 0) {
-        printCenterText("Aucune données existante. Initialisation...");
+        displayStart(&management);
         saveData(&management);
     }
 

@@ -22,6 +22,15 @@ int getUserChoice() {
     return choice;
 }
 
+void displayStart(Student_Management *managment) {
+    printCenterText("Aucune données existante. Initialisation...");
+    displayHeader("INITIALISATION DU SYSTEME");
+
+    printCenterText("Combien d'étudiants avez vous pour l'instant ?");
+    displayChoiceFooter();
+    managment->capacity = getUserChoice();
+}
+
 void displayMenu(Student_Management *management) {
     clearScreen();
     displayPath("sms > menu");

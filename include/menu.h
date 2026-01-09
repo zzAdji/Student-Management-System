@@ -3,6 +3,8 @@
 
 #include "student.h"
 
+void displayStart(Student_Management *managment);
+
 /**
  * Affiche le menu principal de l'application.
  * @param management Pointeur vers la structure de gestion des étudiants
