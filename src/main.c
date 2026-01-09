@@ -3,7 +3,9 @@
 #include <string.h>
 #include "../include/menu.h"
 #include "../include/utils.h"
+#include"../include/search.h"
 #include "../include/data.h"
+#include"../include/sort.h"
 
 int main() {
     clearScreen();
