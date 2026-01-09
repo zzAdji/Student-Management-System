@@ -49,7 +49,7 @@ int linearSearch(Student_Management *management, char *id){
 
 
           return i;
-          break;
+          
       }
 
   }
