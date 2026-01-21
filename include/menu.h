@@ -2,6 +2,7 @@
 #define MENU_H
 
 #include "student.h"
+#include "search.h"
 
 void displayStart(Student_Management *managment);
 
@@ -158,5 +159,13 @@ void processSettingsChoice(int choice, Student_Management *management);
  * @param management Pointeur vers la structure de gestion des étudiants
  */
 void displayDetailedStats(Student_Management *management);
+
+/**
+ * Affiche la liste des résultats de recherche et permet la sélection.
+ * @param management Pointeur vers la structure de gestion des étudiants
+ * @param results Pointeur vers les résultats de recherche
+ * @return Index de l'étudiant sélectionné ou -1 si annulé
+ */
+int displaySearchResultsList(Student_Management *management, SearchResults *results);
 
 #endif

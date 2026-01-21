@@ -51,7 +51,7 @@ void displayMenu(Student_Management *management) {
 
     printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Inscrire un étudiant\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Modifier les informations\n");
-    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Rechercher (par id)\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " Rechercher (par matricule)\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Supprimer un étudiant\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Trier la liste\n");
     printSpaces(margin); printf("  " COLOR_YELLOW "6." COLOR_RESET " Recherche dichotomique\n");
@@ -318,10 +318,14 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
     }
     char buffer[100];
     int result = 0;
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 50) / 2;
+    if (margin < 0) margin = 0;
     
     switch (choice) {
         case 1: // Matricule
-            printf("Actuel matricule : %s\n", s->id);
+            printSpaces(margin); printf("Actuel matricule : %s\n", s->id);
             inputValidString(
                 s->id,
                 sizeof(s->id),
@@ -340,7 +344,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 2: // Nom
-            printf("Actuel nom : %s\n", s->name);
+            printSpaces(margin); printf("Actuel nom : %s\n", s->name);
             inputValidString(
                 s->name,
                 sizeof(s->name),
@@ -359,7 +363,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 3: // Prénom
-            printf("Actuel prénom : %s\n", s->surname);
+            printSpaces(margin); printf("Actuel prénom : %s\n", s->surname);
             inputValidString(
                 s->surname,
                 sizeof(s->surname),
@@ -378,7 +382,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 4: // Date de naissance
-            printf("Actuelle date de naissance : %02d/%02d/%04d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
+            printSpaces(margin); printf("Actuelle date de naissance : %02d/%02d/%04d\n", s->birth_date.day, s->birth_date.month, s->birth_date.year);
             inputValidDate(
                 buffer,
                 "Nouvelle date (JJ MM AAAA): "
@@ -394,7 +398,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 5: // Genre
-            printf("Actuel genre : %c\n", s->gender);
+            printSpaces(margin); printf("Actuel genre : %c\n", s->gender);
             inputValidString(
                 buffer,
                 sizeof(buffer),
@@ -413,7 +417,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 6: // Département
-            printf("Actuel département : %s\n", s->department);
+            printSpaces(margin); printf("Actuel département : %s\n", s->department);
             inputValidString(
                 s->department,
                 sizeof(s->department),
@@ -432,7 +436,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 7: // Option
-            printf("Actuelle option : %s\n", s->option);
+            printSpaces(margin); printf("Actuelle option : %s\n", s->option);
             inputValidString(
                 s->option,
                 sizeof(s->option),
@@ -451,7 +455,7 @@ void processModifyStudentChoice(int choice, Student_Management *management, int 
             break;
             
         case 8: // Région d'origine
-            printf("Actuelle région d'origine : %s\n", s->native_region);
+            printSpaces(margin); printf("Actuelle région d'origine : %s\n", s->native_region);
             inputValidString(
                 s->native_region,
                 sizeof(s->native_region),
@@ -605,7 +609,7 @@ void processSortChoice(int choice, Student_Management *management) {
 int displayBinarySearchMenu(Student_Management *management) {
     clearScreen();
     displayPath("sms > menu > recherche dichotomique");
-    displayHeader("RECHERCHE DICHOTOMIQUE");
+    displayHeader("RECHERCHE PAR NOM / PRÉNOM");
     
     if (management->number == 0) {
         displayWarning("LISTE VIDE", "Aucun étudiant enregistré.");
@@ -613,33 +617,99 @@ int displayBinarySearchMenu(Student_Management *management) {
         return -1;
     }
     
-    displayInfo("Tri de la liste par matricule...");
-    if (!isSorted(management)) sortById(management);
-    displaySuccess("TRIÉ", "Liste triée par matricule.");
-    
     int termWidth = getTerminalWidth();
-    int margin = (termWidth - 40) / 2;
+    int margin = (termWidth - 60) / 2;
     if (margin < 0) margin = 0;
 
+    displayInfo("La liste sera triée par nom pour optimiser la recherche.");
+    
     printf("\n");
-    printSpaces(margin); printf("Entrer le matricule à rechercher :\n");
-    printSpaces(margin); printf("___________________\r");
+    printSpaces(margin); printf("Entrer votre recherche (nom, prénom ou les deux) :\n");
+    printSpaces(margin); printf("________________________________________\r");
     printSpaces(margin);
     
-    char id[20];
-    fgets(id, sizeof(id), stdin);
-    id[strcspn(id, "\n")] = '\0';
-
-    int index = binarySearch(management, id);
-
-    if (index > 0) {
+    char query[100];
+    fgets(query, sizeof(query), stdin);
+    query[strcspn(query, "\n")] = '\0';
+    
+    // Vérifier que la query n'est pas vide
+    if (query[0] == '\0') {
+        printf("\n");
+        displayError("ERREUR", "Veuillez entrer au moins une lettre pour rechercher.");
+        displaySimpleFooter();
+        return -1;
+    }
+    
+    SearchResults *results = searchByName(management, query);
+    
+    if (results == NULL) {
+        displayError("ERREUR", "Erreur lors de la recherche.");
+        displaySimpleFooter();
+        return -1;
+    }
+    
+    if (results->count == 0) {
+        printf("\n");
+        displayError("NON TROUVÉ", "Aucun étudiant correspondant à votre recherche.");
+        freeSearchResults(results);
+        displaySimpleFooter();
+        return -1;
+    }
+    
+    if (results->count == 1) {
+        int index = results->indices[0];
+        displaySuccess("TROUVÉ", "1 résultat correspondant.");
+        freeSearchResults(results);
         return index;
     }
     
+    int selectedIndex = displaySearchResultsList(management, results);
+    freeSearchResults(results);
+    return selectedIndex;
+}
+
+int displaySearchResultsList(Student_Management *management, SearchResults *results) {
+    clearScreen();
+    displayPath("sms > menu > recherche > résultats");
+    
+    char header[100];
+    sprintf(header, "RÉSULTATS DE RECHERCHE (%d trouvé(s))", results->count);
+    displayHeader(header);
+    
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 60) / 2;
+    if (margin < 0) margin = 0;
+    
+    displayInfo("Les résultats sont triés par pertinence (meilleurs en premier).");
     printf("\n");
-    displayError("NON TROUVÉ", "Aucun étudiant avec ce matricule (recherche dichotomique).");
-    displaySimpleFooter();
-    return -1;
+    
+    for (int i = 0; i < results->count; i++) {
+        int idx = results->indices[i];
+        Student *s = &management->list[idx];
+        
+        printSpaces(margin);
+        printf(COLOR_YELLOW "%2d." COLOR_RESET " ", i + 1);
+        printf(COLOR_CYAN "%s %s" COLOR_RESET, s->name, s->surname);
+        printf(" - Matricule: %s - %s\n", s->id, s->option);
+    }
+    
+    printf("\n");
+    printSpaces(margin); printf(COLOR_RED "  0. ❌ Annuler" COLOR_RESET "\n");
+    
+    displayChoiceFooter();
+    int choice = getUserChoice();
+    
+    if (choice == 0) {
+        return -1;
+    }
+    
+    if (choice < 1 || choice > results->count) {
+        displayError("Choix invalide", "Veuillez sélectionner un numéro valide.");
+        displaySimpleFooter();
+        return displaySearchResultsList(management, results);
+    }
+    
+    return results->indices[choice - 1];
 }
 
 void displayStudentList(Student_Management *management) {
@@ -904,20 +974,20 @@ void displayDetailedStats(Student_Management *management) {
 
     printf("\n");
     printSpaces(margin); printf(COLOR_CYAN "━━━ Distribution par Genre ━━━" COLOR_RESET "\n\n");
-    printSpaces(margin); printf("  👨 Hommes   : %d (%.1f%%)\n", maleCount, (float)maleCount / management->number * 100);
-    printSpaces(margin); printf("  👩 Femmes   : %d (%.1f%%)\n", femaleCount, (float)femaleCount / management->number * 100);
+    printSpaces(margin); printf("  Hommes   : %d (%.1f%%)\n", maleCount, (float)maleCount / management->number * 100);
+    printSpaces(margin); printf("  Femmes   : %d (%.1f%%)\n", femaleCount, (float)femaleCount / management->number * 100);
 
     // Moyenne d'âge
     printf("\n");
     printSpaces(margin); printf(COLOR_CYAN "━━━ Âge Moyen ━━━" COLOR_RESET "\n\n");
-    printSpaces(margin); printf("  🎂 Âge moyen : %.1f ans\n", (float)totalAge / management->number);
+    printSpaces(margin); printf("  Âge moyen : %.1f ans\n", (float)totalAge / management->number);
 
     // Taux d'occupation
     printf("\n");
     printSpaces(margin); printf(COLOR_CYAN "━━━ Capacité ━━━" COLOR_RESET "\n\n");
     float occupancy = (float)management->number / management->capacity * 100;
-    printSpaces(margin); printf("  📊 Taux d'occupation : %.1f%%\n", occupancy);
-    printSpaces(margin); printf("  📦 Places restantes  : %d\n", management->capacity - management->number);
+    printSpaces(margin); printf("  Taux d'occupation : %.1f%%\n", occupancy);
+    printSpaces(margin); printf("  Places restantes  : %d\n", management->capacity - management->number);
 
     displaySimpleFooter();
 }
