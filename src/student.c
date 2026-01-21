@@ -15,6 +15,7 @@ void initManagement(Student_Management *management, int capacity) {
     
     management->number = 0;
     management->capacity = capacity;
+    management->autoSave = 1;  // Auto-sauvegarde activée par défaut
 }
 
 /* ===== Libération mémoire ===== */

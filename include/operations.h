@@ -55,11 +55,5 @@ int deleteStudent(Student_Management *management, int index);
  * @return Nombre d'étudiants supprimés
  */
 int deleteAllStudents(Student_Management *management);
-/**
- * vérifi si un matricule existe dèja ou pas
- * @param management Pointeur vers la structure de gestion
- */
-
-int matriculeExists(Student_Management *management, const char *matricule);
 
 #endif

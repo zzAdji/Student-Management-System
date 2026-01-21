@@ -146,4 +146,17 @@ int displayBinarySearchMenu(Student_Management *management);
  */
 void displayExitConfirmationMenu(Student_Management *management);
 
+/**
+ * Traite le choix de l'utilisateur depuis le menu des paramètres.
+ * @param choice Le choix effectué par l'utilisateur.
+ * @param management Pointeur vers la structure de gestion des étudiants
+ */
+void processSettingsChoice(int choice, Student_Management *management);
+
+/**
+ * Affiche les statistiques détaillées (distribution genre, département, âge moyen).
+ * @param management Pointeur vers la structure de gestion des étudiants
+ */
+void displayDetailedStats(Student_Management *management);
+
 #endif

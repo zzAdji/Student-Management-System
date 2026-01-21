@@ -12,6 +12,7 @@
 #include "../include/validation.h"
 #include "../include/sort.h"
 #include "../include/search.h"
+#include "../include/data.h"
 
 
 int getUserChoice() {
@@ -87,6 +88,7 @@ int displayRegisterStudentForm(Student_Management *management) {
         );
         if (findStudentById(management, newStudent.id) != -1) {
             displayError("MATRICULE EXISTANT", "Ce matricule existe déjà. Veuillez en saisir un autre !");
+            printf("\n");
         } else {
             break;
         }
@@ -136,6 +138,7 @@ int displayRegisterStudentForm(Student_Management *management) {
          if(n != 3 ){
             printf("Format invalide\n");
          }
+
     // Genre
     inputValidString(
         buffer,
@@ -761,12 +764,160 @@ void displaySettings(Student_Management *management) {
     displayPath("sms > paramètres");
     displayHeader("PARAMÈTRES");
 
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 50) / 2;
+    if (margin < 0) margin = 0;
+
     char info[100];
     sprintf(info, "Capacité actuelle : %d étudiants max", management->capacity);
     displayInfo(info);
     
     sprintf(info, "Étudiants enregistrés : %d", management->number);
     displayInfo(info);
+
+    sprintf(info, "Auto-sauvegarde : %s", management->autoSave ? "✅ Activée" : "❌ Désactivée");
+    displayInfo(info);
+
+    printf("\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "1." COLOR_RESET " Restaurer les données\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "2." COLOR_RESET " Sauvegarder maintenant\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "3." COLOR_RESET " %s l'auto-sauvegarde\n", management->autoSave ? "Désactiver" : "Activer");
+    printSpaces(margin); printf("  " COLOR_YELLOW "4." COLOR_RESET " Modifier la capacité\n");
+    printSpaces(margin); printf("  " COLOR_YELLOW "5." COLOR_RESET " Statistiques détaillées\n\n");
+    printSpaces(margin); printf("  " COLOR_RED    "0. ❌ Retour au menu" COLOR_RESET "\n");
+
+    displayChoiceFooter();
+    processSettingsChoice(getUserChoice(), management);
+}
+
+void processSettingsChoice(int choice, Student_Management *management) {
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 50) / 2;
+    if (margin < 0) margin = 0;
+    
+    switch (choice) {
+        case 1: // Restaurer les données
+            printf("\n");
+            if (restoreData(management)) {
+                displaySuccess("RESTAURÉ", "Les données ont été restaurées depuis le fichier.");
+            } else {
+                displayError("ERREUR", "Impossible de restaurer les données.");
+            }
+            displaySimpleFooter();
+            displaySettings(management);
+            break;
+            
+        case 2: // Sauvegarder maintenant
+            saveData(management);
+            displaySuccess("SAUVEGARDÉ", "Les données ont été enregistrées.");
+            displaySimpleFooter();
+            displaySettings(management);
+            break;
+            
+        case 3: // Toggle auto-save
+            management->autoSave = !management->autoSave;
+            if (management->autoSave) {
+                displaySuccess("ACTIVÉ", "L'auto-sauvegarde est maintenant activée.");
+            } else {
+                displayWarning("DÉSACTIVÉ", "L'auto-sauvegarde est maintenant désactivée.");
+            }
+            autoSaveIfEnabled(management);
+            displaySimpleFooter();
+            displaySettings(management);
+            break;
+            
+        case 4: { // Modifier la capacité
+            printf("\n");
+            printSpaces(margin); printf("Capacité actuelle : %d\n", management->capacity);
+            printSpaces(margin); printf("Nouvelle capacité (min %d) : ", management->number > 10 ? management->number : 10);
+            
+            int newCapacity = getUserChoice();
+            if (newCapacity < management->number) {
+                displayError("ERREUR", "La capacité ne peut pas être inférieure au nombre d'étudiants actuels.");
+            } else if (newCapacity < 10) {
+                displayError("ERREUR", "La capacité minimale est 10.");
+            } else {
+                Student *newList = (Student *)realloc(management->list, newCapacity * sizeof(Student));
+                if (newList != NULL) {
+                    management->list = newList;
+                    management->capacity = newCapacity;
+                    displaySuccess("MODIFIÉ", "La capacité a été mise à jour.");
+                    autoSaveIfEnabled(management);
+                } else {
+                    displayError("ERREUR", "Impossible de redimensionner la liste.");
+                }
+            }
+            displaySimpleFooter();
+            displaySettings(management);
+            break;
+        }
+            
+        case 5: // Statistiques détaillées
+            displayDetailedStats(management);
+            displaySettings(management);
+            break;
+            
+        case 0: // Retour
+            displayMenu(management);
+            break;
+            
+        default:
+            displayError("Choix invalide", "Veuillez entrer un choix valide.");
+            displayChoiceFooter();
+            processSettingsChoice(getUserChoice(), management);
+            break;
+    }
+}
+
+void displayDetailedStats(Student_Management *management) {
+    clearScreen();
+    displayPath("sms > paramètres > statistiques");
+    displayHeader("STATISTIQUES DÉTAILLÉES");
+
+    int termWidth = getTerminalWidth();
+    int margin = (termWidth - 50) / 2;
+    if (margin < 0) margin = 0;
+
+    if (management->number == 0) {
+        displayWarning("AUCUNE DONNÉE", "Aucun étudiant enregistré pour afficher les statistiques.");
+        displaySimpleFooter();
+        return;
+    }
+
+    // Statistiques de base
+    char info[100];
+    sprintf(info, "Total étudiants : %d / %d", management->number, management->capacity);
+    displayInfo(info);
+
+    // Distribution par genre
+    int maleCount = 0, femaleCount = 0;
+    int totalAge = 0;
+    
+    for (int i = 0; i < management->number; i++) {
+        if (management->list[i].gender == 'M') {
+            maleCount++;
+        } else if (management->list[i].gender == 'F') {
+            femaleCount++;
+        }
+        totalAge += calculateAge(management->list[i].birth_date);
+    }
+
+    printf("\n");
+    printSpaces(margin); printf(COLOR_CYAN "━━━ Distribution par Genre ━━━" COLOR_RESET "\n\n");
+    printSpaces(margin); printf("  👨 Hommes   : %d (%.1f%%)\n", maleCount, (float)maleCount / management->number * 100);
+    printSpaces(margin); printf("  👩 Femmes   : %d (%.1f%%)\n", femaleCount, (float)femaleCount / management->number * 100);
+
+    // Moyenne d'âge
+    printf("\n");
+    printSpaces(margin); printf(COLOR_CYAN "━━━ Âge Moyen ━━━" COLOR_RESET "\n\n");
+    printSpaces(margin); printf("  🎂 Âge moyen : %.1f ans\n", (float)totalAge / management->number);
+
+    // Taux d'occupation
+    printf("\n");
+    printSpaces(margin); printf(COLOR_CYAN "━━━ Capacité ━━━" COLOR_RESET "\n\n");
+    float occupancy = (float)management->number / management->capacity * 100;
+    printSpaces(margin); printf("  📊 Taux d'occupation : %.1f%%\n", occupancy);
+    printSpaces(margin); printf("  📦 Places restantes  : %d\n", management->capacity - management->number);
 
     displaySimpleFooter();
 }
@@ -875,7 +1026,6 @@ void processChoice(int choice, Student_Management *management) {
             
         case 9:
             displaySettings(management);
-            displayMenu(management);
             break;
             
         case 0:

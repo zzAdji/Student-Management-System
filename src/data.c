@@ -10,10 +10,15 @@ int loadData(Student_Management *management) {
         return 0;
     }
 
-    int capacity, number;
+    int capacity, number, autoSave;
 
     fread(&capacity, sizeof(int), 1, file);
     fread(&number, sizeof(int), 1, file);
+    
+    // Lire autoSave (peut ne pas exister dans les anciens fichiers)
+    if (fread(&autoSave, sizeof(int), 1, file) != 1) {
+        autoSave = 1; // Par défaut activé si ancien format
+    }
 
     if (management->list != NULL) {
         free(management->list);
@@ -21,6 +26,7 @@ int loadData(Student_Management *management) {
 
     management->capacity = capacity;
     management->number = number;
+    management->autoSave = autoSave;
     management->list = (Student *)malloc(capacity * sizeof(Student));
 
     if (management->list == NULL) {
@@ -49,6 +55,7 @@ void saveData(Student_Management *management) {
 
     fwrite(&management->capacity, sizeof(int), 1, file);
     fwrite(&management->number, sizeof(int), 1, file);
+    fwrite(&management->autoSave, sizeof(int), 1, file);
 
     fwrite(management->list, sizeof(Student), management->number, file);
 
@@ -58,4 +65,22 @@ void saveData(Student_Management *management) {
     printf(COLOR_RESET "\n");
 }
 
+int restoreData(Student_Management *management) {
+    return loadData(management);
+}
 
+void autoSaveIfEnabled(Student_Management *management) {
+    if (management->autoSave) {
+        FILE *file = fopen("data/students.dat", "wb");
+        if (file == NULL) {
+            return;
+        }
+
+        fwrite(&management->capacity, sizeof(int), 1, file);
+        fwrite(&management->number, sizeof(int), 1, file);
+        fwrite(&management->autoSave, sizeof(int), 1, file);
+        fwrite(management->list, sizeof(Student), management->number, file);
+
+        fclose(file);
+    }
+}

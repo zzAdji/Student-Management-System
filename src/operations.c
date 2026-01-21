@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../include/operations.h"
 #include "../include/utils.h"
+#include "../include/data.h"
 
 /* ===== CREATE ===== */
 /**
@@ -25,6 +26,7 @@ int addStudent(Student_Management *management, Student student) {
     management->list[management->number] = student;
     management->number++;
 
+    autoSaveIfEnabled(management);
     return 1;
 }
 
@@ -140,6 +142,7 @@ int modifyStudent(Student_Management *management, int index, int field, const ch
             return 0;
     }
     
+    autoSaveIfEnabled(management);
     return 1;
 }
 
@@ -185,6 +188,7 @@ int deleteStudent(Student_Management *management, int index) {
         }
     }
     
+    autoSaveIfEnabled(management);
     return 1;
 }
 
@@ -219,5 +223,6 @@ int deleteAllStudents(Student_Management *management) {
         return total_students;
     }
     
+    autoSaveIfEnabled(management);
     return total_students;
 }

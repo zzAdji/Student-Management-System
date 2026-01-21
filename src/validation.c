@@ -10,16 +10,10 @@ int isLeapYear(int year) {
 
 // TODO : Adapter la fonction pour valider les matricules de type XXENSPM0XXX et tout autre matricule de l'UMA. 
 int validateId(const char *id) {
-    if (!id || strlen(id) < 5) return 0;
-
-    /*for (int i = 0; id[i]; i++) {
-        if (!isalnum((unsigned char)id[i]))
-            return 0;
-    }*/
+    if (!id || strlen(id) < 8) return 0;
     return 1;
 }
 
-// TODO : Adapter la fonction pour valider les dates au format JJ/MM/AAAA et JJ-MM-AAAA en plus de JJ MM AAAA
 int validateDate(const char *date) {
     int d, m, y;
     if (sscanf(date, "%d/%d/%d", &d, &m, &y) != 3) {
@@ -97,11 +91,4 @@ void inputValidDate(char *dest, const char *prompt) {
 
         }
     } while (!valid);
-}
-
-// TODO : Implémenter la vérification de l'existance d'un matricule
-int idExists(Student_Management *management, const char *id) {
-    (void)management;
-    (void)id;
-    return 0;
 }

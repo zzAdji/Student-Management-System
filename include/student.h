@@ -37,6 +37,7 @@ typedef struct {
     Student *list;            // Tableau dynamique d'étudiants
     int number;               // Nombre actuel d'étudiants
     int capacity;             // Capacité maximale du tableau
+    int autoSave;             // 1 = auto-save activé, 0 = désactivé
 } Student_Management;
 
 /* ===== Gestion mémoire ===== */

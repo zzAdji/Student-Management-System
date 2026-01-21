@@ -35,11 +35,6 @@ void inputValidString(char *dest, size_t size, const char *prompt, int (*validat
 void inputValidDate(char *dest, const char *prompt);
 
 /**
- * Vérifier si un matricule existe déjà
- */
-int idExists(Student_Management *management, const char *id);
-
-/**
  * Vérifier année bissextile
  */
 int isLeapYear(int year);
