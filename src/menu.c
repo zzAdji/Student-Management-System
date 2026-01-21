@@ -10,6 +10,9 @@
 #include "../include/student.h"
 #include "../include/operations.h"
 #include "../include/validation.h"
+#include "../include/sort.h"
+#include "../include/search.h"
+
 
 int getUserChoice() {
     int choice;    
@@ -542,20 +545,20 @@ void displaySortMenu(Student_Management *management) {
 void processSortChoice(int choice, Student_Management *management) {
     switch (choice) {
         case 1:
-            // TODO: Implémenter le tri par nom avec qsort() et compareStudentsByName()
-            displaySuccess("TRI EFFECTUÉ", "Liste triée par nom (A-Z). [Mock]");
+            sortAlphabetically(management);
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par nom (A-Z).");
             displaySimpleFooter();
             displayStudentList(management);
             break;
         case 2:
-            // TODO: Implémenter le tri par option avec qsort() et compareStudentsByOption()
-            displaySuccess("TRI EFFECTUÉ", "Liste triée par option/filière. [Mock]");
+            sortByOption(management);
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par option/filière.");
             displaySimpleFooter();
             displayStudentList(management);
             break;
         case 3:
-            // TODO: Implémenter le tri par matricule avec qsort() et compareStudentsById()
-            displaySuccess("TRI EFFECTUÉ", "Liste triée par matricule. [Mock]");
+            sortById(management);
+            displaySuccess("TRI EFFECTUÉ", "Liste triée par matricule.");
             displaySimpleFooter();
             displayStudentList(management);
             break;
@@ -581,9 +584,9 @@ int displayBinarySearchMenu(Student_Management *management) {
         return -1;
     }
     
-    // TODO: Implémenter le tri par matricule avant la recherche dichotomique
-    displayInfo("Tri de la liste par matricule... [Mock]");
-    displaySuccess("TRIÉ", "Liste triée par matricule. [Mock]");
+    displayInfo("Tri de la liste par matricule...");
+    if (!isSorted(management)) sortById(management);
+    displaySuccess("TRIÉ", "Liste triée par matricule.");
     
     int termWidth = getTerminalWidth();
     int margin = (termWidth - 40) / 2;
@@ -597,11 +600,11 @@ int displayBinarySearchMenu(Student_Management *management) {
     char id[20];
     fgets(id, sizeof(id), stdin);
     id[strcspn(id, "\n")] = '\0';
-    
-    // TODO: Implémenter la recherche dichotomique avec binarySearch()
-    // Mock: Retourne l'index 0 si la liste n'est pas vide
-    if (management->number > 0) {
-        return 0; // Mock data
+
+    int index = binarySearch(management, id);
+
+    if (index > 0) {
+        return index;
     }
     
     printf("\n");
@@ -630,9 +633,8 @@ void displayStudentList(Student_Management *management) {
     int margin = (termWidth - tableWidth) / 2;
     if (margin < 0) margin = 0;
 
-    // TODO :  Affichage complet de toutes les données
     printSpaces(margin); printf("┌─────┬─────────────────┬──────────────┬──────────────┬────────────┬─────────────────┐\n");
-    printSpaces(margin); printf("│ No  │       ID        │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
+    printSpaces(margin); printf("│ No  │   Matricule     │     Nom      │    Prénom    │ Naissance  │     Option      │\n");
     printSpaces(margin); printf("├─────┼─────────────────┼──────────────┼──────────────┼────────────┼─────────────────┤\n");
     
     viewAllStudents(management);

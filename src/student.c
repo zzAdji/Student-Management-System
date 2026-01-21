@@ -38,7 +38,6 @@ int resizeManagement(Student_Management *management) {
     
     management->list = newList;
     management->capacity = newCapacity;
-    printf("Info: Capacity increased to %d\n", newCapacity);
     return 1; // SUCCESS
 }
 
