@@ -76,16 +76,24 @@ int displayRegisterStudentForm(Student_Management *management) {
     
     Student newStudent;
     
-    // Matricule
-    inputValidString(
-        newStudent.id,
-        sizeof(newStudent.id),
-        "Matricule (ex: 23ENSPM0443)    : ", 
-        validateId, 
-        "Le format de ce matricule est mauvais! Veillez réessayer!"
-    );
-    
+    // Matricule (avec vérification d'unicité)
+    do {
+        inputValidString(
+            newStudent.id,
+            sizeof(newStudent.id),
+            "Matricule (ex: 23ENSPM0443)    : ",
+            validateId,
+            "Le format de ce matricule est mauvais! Veillez réessayer!"
+        );
+        if (findStudentById(management, newStudent.id) != -1) {
+            displayError("MATRICULE EXISTANT", "Ce matricule existe déjà. Veuillez en saisir un autre !");
+        } else {
+            break;
+        }
+    } while (1);
+
     // Nom
+    
     inputValidString(
         newStudent.name, 
         sizeof(newStudent.name),
@@ -107,9 +115,27 @@ int displayRegisterStudentForm(Student_Management *management) {
     char buffer[100];
     inputValidDate(
         buffer, 
-        "Date de naissance (JJ MM AAAA) : "
+        "Date de naissance (JJ/MM/AAAA) : "
     );
-    sscanf(buffer, "%d %d %d", &newStudent.birth_date.day, &newStudent.birth_date.month, &newStudent.birth_date.year);
+    int n = sscanf(buffer, "%d/%d/%d",
+         &newStudent.birth_date.day,
+         &newStudent.birth_date.month, 
+         &newStudent.birth_date.year);
+         if(n != 3){
+            n = sscanf(buffer, "%d-%d-%d",
+         &newStudent.birth_date.day,
+         &newStudent.birth_date.month, 
+         &newStudent.birth_date.year);
+         }
+         if(n != 3){
+            n = sscanf(buffer, "%d %d %d",
+         &newStudent.birth_date.day,
+         &newStudent.birth_date.month, 
+         &newStudent.birth_date.year);
+         }
+         if(n != 3 ){
+            printf("Format invalide\n");
+         }
     // Genre
     inputValidString(
         buffer,
