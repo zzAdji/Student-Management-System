@@ -15,9 +15,8 @@ int loadData(Student_Management *management) {
     fread(&capacity, sizeof(int), 1, file);
     fread(&number, sizeof(int), 1, file);
     
-    // Lire autoSave (peut ne pas exister dans les anciens fichiers)
     if (fread(&autoSave, sizeof(int), 1, file) != 1) {
-        autoSave = 1; // Par défaut activé si ancien format
+        autoSave = 1;
     }
 
     if (management->list != NULL) {

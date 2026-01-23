@@ -130,4 +130,22 @@ void generateId(char *id, int number);
  */
 void safeCopy(char *dest, const char *src, int size);
 
+/**
+ * Tronque une chaîne UTF-8 à une largeur d'affichage donnée et ajoute "..." si nécessaire
+ * @param dest Buffer de destination
+ * @param src Chaîne source
+ * @param maxWidth Largeur d'affichage maximale (en caractères visibles)
+ * @param destSize Taille du buffer de destination
+ */
+void truncateWithEllipsis(char *dest, const char *src, int maxWidth, int destSize);
+
+/**
+ * Formate une chaîne pour l'affichage dans un tableau avec largeur fixe
+ * @param dest Buffer de destination
+ * @param src Chaîne source
+ * @param width Largeur d'affichage souhaitée
+ * @param destSize Taille du buffer de destination
+ */
+void formatTableCell(char *dest, const char *src, int width, int destSize);
+
 #endif

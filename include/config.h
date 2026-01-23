@@ -34,9 +34,18 @@
 #define MAX_FILIERE_LEN 50
 #define MAX_REGION_LEN 50
 
-// taille pour les buffers d'entree temporaires---
-
+// taille pour les buffers d'entree temporaires
 #define INITIAL_DB_CAPACITY 0
 #define DB_GROWTH_FACTOR 2
+
+// Nombre maximum d'options par département
+#define MAX_OPTIONS_PER_DEPT 10
+#define NUM_DEPARTMENTS 5
+
+// Largeurs de colonnes pour l'affichage en tableau
+#define ID_WIDTH 15
+#define NAME_WIDTH 12
+#define SURNAME_WIDTH 12
+#define OPTION_WIDTH 15
 
 #endif

@@ -19,7 +19,7 @@ typedef struct {
  * @brief Structure représentant un étudiant
  */
 typedef struct {
-    char id[MAX_MATRICULE_LEN];              // Matricule unique (ex: STU2024001)
+    char id[MAX_MATRICULE_LEN];              // Matricule unique
     char name[MAX_NOM_LEN];            // Nom de famille
     char surname[MAX_PRENOM_LEN];         // Prénom
     Date birth_date;          // Structure Date
@@ -39,6 +39,44 @@ typedef struct {
     int capacity;             // Capacité maximale du tableau
     int autoSave;             // 1 = auto-save activé, 0 = désactivé
 } Student_Management;
+
+/**
+ * @struct DepartmentInfo
+ * @brief Structure contenant les informations d'un département et ses options
+ */
+typedef struct {
+    const char *code;           // Code court du département (ex: "INFOTEL")
+    const char *displayName;    // Nom d'affichage complet
+    const char *options[MAX_OPTIONS_PER_DEPT]; // Options/filières disponibles
+    int optionCount;            // Nombre d'options disponibles
+} DepartmentInfo;
+
+/**
+ * Tableau des départements prédéfinis avec leurs options
+ * Accessible globalement via extern dans les fichiers .c
+ */
+extern const DepartmentInfo PREDEFINED_DEPARTMENTS[NUM_DEPARTMENTS];
+
+/**
+ * Recherche un département par son code
+ * @param code Code du département à rechercher
+ * @return Pointeur vers le département trouvé ou NULL si non trouvé
+ */
+const DepartmentInfo* findDepartmentByCode(const char *code);
+
+/**
+ * Affiche les options d'un département et retourne le choix de l'utilisateur
+ * @param dept Pointeur vers le département
+ * @param selectedOption Buffer pour stocker l'option sélectionnée
+ * @param bufferSize Taille du buffer
+ * @return 1 si succès, 0 si échec
+ */
+int selectOptionFromDepartment(const DepartmentInfo *dept, char *selectedOption, size_t bufferSize);
+
+/**
+ * Affiche la liste des départements prédéfinis
+ */
+void displayPredefinedDepartments(void);
 
 /* ===== Gestion mémoire ===== */
 /**

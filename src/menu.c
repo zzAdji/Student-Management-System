@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "../include/utils.h"
 #include "../include/validation.h"
 #include "../include/menu.h"
@@ -32,7 +33,20 @@ void displayStart(Student_Management *managment) {
 
     printCenterText("Combien d'étudiants avez vous pour l'instant ?");
     displayChoiceFooter();
-    managment->capacity = getUserChoice();
+    int newCapacity = getUserChoice();
+    
+    if (newCapacity < 1) {
+        newCapacity = 10;
+    }
+    
+    Student *newList = (Student *)realloc(managment->list, sizeof(Student) * newCapacity);
+    if (newList != NULL) {
+        managment->list = newList;
+        managment->capacity = newCapacity;
+    } else {
+        managment->list = (Student *)malloc(sizeof(Student) * 10);
+        managment->capacity = 10;
+    }
 }
 
 void displayMenu(Student_Management *management) {
@@ -149,6 +163,8 @@ int displayRegisterStudentForm(Student_Management *management) {
     );
     newStudent.gender = toupper(buffer[0]);
 
+    displayPredefinedDepartments();
+
     // Département
     inputValidString(
         newStudent.department,
@@ -158,14 +174,28 @@ int displayRegisterStudentForm(Student_Management *management) {
         "Le département est invalide! Veillez réessayer!"
     );
 
-    // Option/Filière
-    inputValidString(
-        newStudent.option, 
-        sizeof(newStudent.option),
-        "Option                         : ", 
-        validateString, 
-        "L'option est invalide! Veillez réessayer!"
-    );
+    const DepartmentInfo *dept = findDepartmentByCode(newStudent.department);
+    
+    if (dept != NULL) {
+    
+        strncpy(newStudent.department, dept->code, sizeof(newStudent.department) - 1);
+        newStudent.department[sizeof(newStudent.department) - 1] = '\0';
+        
+        if (!selectOptionFromDepartment(dept, newStudent.option, sizeof(newStudent.option))) {
+            displayError("ERREUR", "Impossible de sélectionner une option.");
+            displaySimpleFooter();
+            return 0;
+        }
+    } else {        
+        // Option/Filière
+        inputValidString(
+            newStudent.option, 
+            sizeof(newStudent.option),
+            "Option                         : ", 
+            validateString, 
+            "L'option est invalide! Veillez réessayer!"
+        );
+    }
 
     // Région d'origine
     inputValidString(

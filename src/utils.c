@@ -82,7 +82,7 @@ void displayHeaderStyled(char *title, const char *borderColor, const char *title
     
     // Calcul du centrage horizontal du bloc complet
     int termWidth = getTerminalWidth();
-    int boxWidth = innerWidth + 2; // +2 pour les bordures verticales
+    int boxWidth = innerWidth + 2;
     int leftMargin = (termWidth - boxWidth) / 2;
     if (leftMargin < 0) leftMargin = 0;
 
@@ -296,4 +296,95 @@ void safeCopy(char *dest, const char *src, int size) {
     if (size <= 0) return;
     strncpy(dest, src, size - 1);
     dest[size - 1] = '\0';
+}
+
+/**
+ * Tronque une chaîne UTF-8 à une largeur d'affichage donnée et ajoute "..." si nécessaire
+ * @param dest Buffer de destination (doit être assez grand pour contenir le résultat)
+ * @param src Chaîne source
+ * @param maxWidth Largeur d'affichage maximale (en caractères visibles)
+ * @param destSize Taille du buffer de destination
+ */
+void truncateWithEllipsis(char *dest, const char *src, int maxWidth, int destSize) {
+    if (dest == NULL || src == NULL || maxWidth <= 0 || destSize <= 0) {
+        if (dest != NULL && destSize > 0) dest[0] = '\0';
+        return;
+    }
+
+    int visibleLen = getVisibleLength(src);
+    
+    if (visibleLen <= maxWidth) {
+        safeCopy(dest, src, destSize);
+        return;
+    }
+
+    int targetWidth = maxWidth - 3;
+    if (targetWidth <= 0) targetWidth = 1;
+
+    int srcIndex = 0;
+    int destIndex = 0;
+    int currentWidth = 0;
+
+    while (src[srcIndex] != '\0' && currentWidth < targetWidth && destIndex < destSize - 4) {
+        unsigned char c = (unsigned char)src[srcIndex];
+        
+        int charBytes = 1;
+        if ((c & 0x80) == 0) {
+            charBytes = 1;
+        } else if ((c & 0xE0) == 0xC0) {
+            charBytes = 2;
+        } else if ((c & 0xF0) == 0xE0) {
+            charBytes = 3;
+        } else if ((c & 0xF8) == 0xF0) {
+            charBytes = 4;
+        } else if ((c & 0xC0) == 0x80) {
+            srcIndex++;
+            continue;
+        }
+
+        for (int i = 0; i < charBytes && src[srcIndex] != '\0' && destIndex < destSize - 4; i++) {
+            dest[destIndex++] = src[srcIndex++];
+        }
+        
+        currentWidth++;
+    }
+
+    dest[destIndex++] = '.';
+    dest[destIndex++] = '.';
+    dest[destIndex++] = '.';
+    dest[destIndex] = '\0';
+}
+
+/**
+ * Formate une chaîne pour l'affichage dans un tableau avec largeur fixe
+ * @param dest Buffer de destination
+ * @param src Chaîne source
+ * @param width Largeur d'affichage souhaitée
+ * @param destSize Taille du buffer de destination
+ */
+void formatTableCell(char *dest, const char *src, int width, int destSize) {
+    if (dest == NULL || src == NULL || width <= 0 || destSize <= 0) {
+        if (dest != NULL && destSize > 0) dest[0] = '\0';
+        return;
+    }
+
+    char truncated[256];
+    truncateWithEllipsis(truncated, src, width, sizeof(truncated));
+    
+    int visibleLen = getVisibleLength(truncated);
+    int padding = width - visibleLen;
+    if (padding < 0) padding = 0;
+
+    int destIndex = 0;
+    int srcIndex = 0;
+    
+    while (truncated[srcIndex] != '\0' && destIndex < destSize - 1) {
+        dest[destIndex++] = truncated[srcIndex++];
+    }
+    
+    for (int i = 0; i < padding && destIndex < destSize - 1; i++) {
+        dest[destIndex++] = ' ';
+    }
+    
+    dest[destIndex] = '\0';
 }
