@@ -24,4 +24,19 @@
 #define COLOR_BOLD_CYAN    "\033[1;36m"
 #define COLOR_BOLD_WHITE   "\033[1;37m"
 
+// Tailles maximales oiur les champs de l'étudiant
+#define MAX_MATRICULE_LEN 20
+#define MAX_NOM_LEN 50
+#define MAX_PRENOM_LEN 50
+#define MAX_DATE_NAISSANCE_LEN 11
+#define MAX_SEXE_LEN 2
+#define MAX_DEPARTEMENT_LEN 50
+#define MAX_FILIERE_LEN 50
+#define MAX_REGION_LEN 50
+
+// taille pour les buffers d'entree temporaires---
+
+#define INITIAL_DB_CAPACITY 0
+#define DB_GROWTH_FACTOR 2
+
 #endif

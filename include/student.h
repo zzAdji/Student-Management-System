@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include "config.h"
 /**
  * @struct Student
  * @brief Structure représentant un étudiant
@@ -19,14 +19,14 @@ typedef struct {
  * @brief Structure représentant un étudiant
  */
 typedef struct {
-    char id[20];              // Matricule unique (ex: STU2024001)
-    char name[50];            // Nom de famille
-    char surname[50];         // Prénom
+    char id[MAX_MATRICULE_LEN];              // Matricule unique (ex: STU2024001)
+    char name[MAX_NOM_LEN];            // Nom de famille
+    char surname[MAX_PRENOM_LEN];         // Prénom
     Date birth_date;          // Structure Date
     char gender;              // 'M' ou 'F'
-    char department[50];      // Département d'études
-    char option[50];          // Filière d'études
-    char native_region[50];   // Région d'origine
+    char department[MAX_DEPARTEMENT_LEN];      // Département d'études
+    char option[MAX_FILIERE_LEN];          // Filière d'études
+    char native_region[MAX_REGION_LEN];   // Région d'origine
 } Student;
 
 /**

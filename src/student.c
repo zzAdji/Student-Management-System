@@ -3,6 +3,7 @@
 #include "../include/student.h"
 #include <string.h>
 #include "../include/utils.h"
+#include "../include/config.h"
 
 /* ===== Initialisation ===== */
 void initManagement(Student_Management *management, int capacity) {
@@ -28,7 +29,7 @@ void freeManagement(Student_Management *management) {
 
 /* ===== Redimensionnement ===== */
 int resizeManagement(Student_Management *management) {
-    int newCapacity = management->capacity * 2;
+    int newCapacity = management->capacity * DB_GROWTH_FACTOR;
     Student *newList = (Student *)realloc(management->list,
                                           sizeof(Student) * newCapacity);
     

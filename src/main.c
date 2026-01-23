@@ -6,13 +6,14 @@
 #include"../include/search.h"
 #include "../include/data.h"
 #include"../include/sort.h"
+#include "../include/config.h"
 
 int main() {
     clearScreen();
     system("chcp 65001 > nul");
 
     Student_Management management;
-    initManagement(&management, 0);
+    initManagement(&management, INITIAL_DB_CAPACITY);
 
     if (loadData(&management) == 0) {
         displayStart(&management);
