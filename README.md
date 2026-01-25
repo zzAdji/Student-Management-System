@@ -1,3 +1,5 @@
+# Groupe 11 - TP Programmation en C
+
 # Système de Gestion des Étudiants
 
 ## Table des Matières
@@ -91,4 +93,4 @@ gcc src/*.c -Iinclude -o sms
 ./sms
 ```
 
-**Dernière mise à jour** : 05 Janvier 2026
+**Dernière mise à jour** : 25 Janvier 2026
